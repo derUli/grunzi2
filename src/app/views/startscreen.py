@@ -51,6 +51,7 @@ class StartScreen(View):
         self._music = music.play(loop=True)
 
     def on_update(self, delta_time: float):
+        """ On update """
 
         self._text.x = (self.window.width / 2) - (self._text.content_width / 2)
         self._text.y = self._text.content_height

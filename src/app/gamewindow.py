@@ -18,7 +18,7 @@ MINIMUM_SIZE = (1280, 720)
 
 class GameWindow(arcade.Window):
     """
-    Main application class.
+    Main application class
     """
 
     def __init__(self):
