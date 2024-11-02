@@ -1,4 +1,5 @@
 import gettext
+import logging
 import os
 
 import arcade
@@ -112,3 +113,6 @@ class StartScreen(View):
 
         self._fade_sprite.alpha = 0
         self._scene.add_sprite(SCENE_LAYER_FADEIN, self._fade_sprite)
+
+    def on_resize(self, width, height):
+        logging.info('Resize')
