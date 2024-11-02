@@ -3,6 +3,7 @@
 import gettext
 import logging
 import os
+import random
 import webbrowser
 
 import arcade
@@ -23,6 +24,17 @@ MARGIN = 10
 
 SCENE_LAYER_FADEIN = 'fadein'
 SCENE_LAYER_ICON = 'icon'
+SCENE_LAYER_PARTICLES = 'particles'
+
+PARTICLE_SPEED = 2
+
+PARTICLE_COLORS = [
+    (228, 255, 4, 200),
+    (210, 210, 210, 200),
+    (111, 186, 241, 200)
+]
+PARTICLES_SIZE_RANGE = 8
+PARTICLES_COUNT = 500
 
 URL_ITCH_IO = 'https://hog-games.itch.io/'
 
@@ -51,6 +63,7 @@ class StartScreen(View):
 
         # Text
         self.setup_text()
+        self.setup_particles()
         self.setup_icons(root_dir)
 
         # Play music
@@ -91,9 +104,28 @@ class StartScreen(View):
         )
         self._music = music.play(loop=True, volume=1)
 
+    def setup_particles(self):
+        """ Setup article animation """
+
+        try:
+            self._scene.remove_sprite_list_by_name(SCENE_LAYER_PARTICLES)
+        except KeyError:
+            pass
+
+        for i in range(0, PARTICLES_COUNT):
+            sprite = arcade.sprite.SpriteCircle(
+                color=random.choice(PARTICLE_COLORS),
+                soft=True,
+                radius=random.randint(1, PARTICLES_SIZE_RANGE)
+            )
+            sprite.center_x = random.randint(0, self.window.width)
+            sprite.center_y = random.randint(0, self.window.height)
+            self._scene.add_sprite(SCENE_LAYER_PARTICLES, sprite)
+
     def on_update(self, delta_time: float):
         """ On update """
 
+        self.on_update_particles()
         self._text_start.x = (self.window.width / 2) - (self._text_start.content_width / 2)
         self._text_start.y = self._text_start.content_height
 
@@ -116,18 +148,31 @@ class StartScreen(View):
 
                     logging.info('TODO: start game')
 
+    def on_update_particles(self):
+        """ Update particles """
+        particles = self._scene[SCENE_LAYER_PARTICLES]
+        for particle in particles:
+            particle.center_x -= PARTICLE_SPEED
+
+            if particle.right < 0:
+                particle.center_x = self.window.width + particle.width
+                particle.center_y = random.randint(0, self.window.height)
+
     def on_draw(self):
         """ On draw"""
 
         # Clear screen
         self.clear()
 
+        # Draw scene
+        self._scene.draw()
+
         # Draw text
         self._text_title.draw()
         self._text_start.draw()
 
-        # Draw scene
-        self._scene.draw()
+        if SCENE_LAYER_FADEIN in self._scene:
+            self._scene[SCENE_LAYER_FADEIN].draw()
 
     def on_key_press(self, symbol: int, modifiers: int):
         """ Handle keyboard input """
@@ -142,6 +187,8 @@ class StartScreen(View):
         """ On resize """
 
         logging.info("Resize to %s", (width, height))
+
+        self.setup_particles()
 
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int) -> bool | None:
         """ Handle mouse movement """
