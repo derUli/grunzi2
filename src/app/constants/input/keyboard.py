@@ -1,3 +1,4 @@
+""" Keyboard constants """
 import arcade
 
 KEY_ESCAPE = [arcade.key.ESCAPE]

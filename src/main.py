@@ -1,3 +1,5 @@
+""" Main file """
+
 import os
 
 import arcade

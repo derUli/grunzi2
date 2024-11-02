@@ -1,3 +1,5 @@
+""" The main menu """
+
 import gettext
 import logging
 import os
@@ -19,6 +21,8 @@ SCENE_LAYER_FADEIN = 'fadein'
 
 
 class StartScreen(View):
+    """ The main menu """
+
     def __init__(self, window: Window | None = None) -> None:
         """ Constructor """
 
@@ -65,7 +69,7 @@ class StartScreen(View):
         self._text.x = (self.window.width / 2) - (self._text.content_width / 2)
         self._text.y = self._text.content_height
 
-        """ On update scene """
+        # On fading in
         if self._fade_sprite is not None:
 
             self._fade_sprite.alpha = min(self._fade_sprite.alpha + FADE_SPEED, 255)
