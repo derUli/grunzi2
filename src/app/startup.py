@@ -1,4 +1,7 @@
 """ Game startup """
+
+# pylint: disable=C0103:
+
 import logging
 import platform
 import sys
@@ -9,7 +12,9 @@ import pyglet
 
 try:
     import sounddevice
-except:
+except OSError:
+    sounddevice = None
+except ImportError:
     sounddevice = None
 
 from app.gamewindow import GameWindow
@@ -47,6 +52,7 @@ class Startup:
         """
         Log hardware info
         """
+
         # Log OS info
         uname = platform.uname()
         logging.info(label_value('OS', f"{uname.system} {uname.version}"))

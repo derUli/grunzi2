@@ -1,3 +1,6 @@
+""" String utils """
+
+
 def label_value(label: str, value: any) -> str:
     """
     @param label: label text
