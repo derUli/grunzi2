@@ -32,7 +32,7 @@ class GameWindow(arcade.Window):
         super().__init__(
             width=w,
             height=h,
-            title='Untitled Game',
+            title=_('Welcome to Amerre'),
             fullscreen=FULLSCREEN,
             vsync=VSYNC,
             resizable=True,
