@@ -7,7 +7,7 @@ import arcade
 import psutil
 import pyglet
 
-from app.constants.settings import SETTINGS_DEFAULT_FULLSCREEN
+from app.constants.settings import SETTINGS_DEFAULT_FULLSCREEN, SETTINGS_DEFAULT_VSYNC
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
 
@@ -85,6 +85,7 @@ class Startup:
         """ Start game """
 
         fullscreen = SETTINGS_DEFAULT_FULLSCREEN
+        vsync = SETTINGS_DEFAULT_VSYNC
 
         args = self.get_args()
 
@@ -93,7 +94,15 @@ class Startup:
         elif args.window:
             fullscreen = False
 
-        window = GameWindow(fullscreen)
+        if args.vsync:
+            vsync = True
+        elif args.no_vsync:
+            vsync = False
+
+        window = GameWindow(
+            fullscreen=fullscreen,
+            vsync=vsync
+        )
         self.log_hardware_info(window)
         window.setup(self._root_dir)
         arcade.run()
@@ -115,6 +124,20 @@ class Startup:
             action='store_true',
             default=False,
             help='Run in fullscreen mode'
+        )
+
+        parser.add_argument(
+            '--vsync',
+            action='store_true',
+            default=False,
+            help='Enable vsync'
+        )
+
+        parser.add_argument(
+            '--no-vsync',
+            action='store_true',
+            default=False,
+            help='Disable vsync'
         )
 
         return parser.parse_args()

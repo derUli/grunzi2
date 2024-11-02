@@ -1,3 +1,4 @@
 """ Settings constants """
 
 SETTINGS_DEFAULT_FULLSCREEN = True
+SETTINGS_DEFAULT_VSYNC = True

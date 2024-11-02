@@ -15,7 +15,6 @@ from app.views.startscreen import StartScreen
 
 _ = gettext.gettext
 
-VSYNC = False
 DRAW_RATE = 1 / 9999
 UPDATE_RATE = 1 / 62
 CENTER_WINDOW = True
@@ -27,7 +26,7 @@ class GameWindow(arcade.Window):
     Main application class
     """
 
-    def __init__(self, fullscreen: bool = False):
+    def __init__(self, fullscreen: bool = True, vsync: bool = True):
         """ Constructor """
 
         w, h = MINIMUM_SIZE
@@ -44,7 +43,7 @@ class GameWindow(arcade.Window):
             height=h,
             title=_('Welcome to Amerre'),
             fullscreen=fullscreen,
-            vsync=VSYNC,
+            vsync=vsync,
             resizable=True,
             draw_rate=DRAW_RATE,
             update_rate=UPDATE_RATE,
