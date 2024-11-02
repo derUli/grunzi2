@@ -17,8 +17,10 @@ FONT_SIZE_TITLE = 80
 FADE_SPEED = 5
 FADE_MAX = 255
 MUSIC_FADE_SPEED = 0.01
+MARGIN = 10
 
 SCENE_LAYER_FADEIN = 'fadein'
+SCENE_LAYER_ICON = 'icon'
 
 
 class StartScreen(View):
@@ -32,6 +34,7 @@ class StartScreen(View):
         self._text_title = None
         self._fade_sprite = None
         self._scene = arcade.Scene()
+        self._icon_itch_io = None
         self._music = None
 
     def setup(self, root_dir: str):
@@ -42,6 +45,7 @@ class StartScreen(View):
 
         # Text
         self.setup_text()
+        self.setup_icons(root_dir)
 
         # Play music
         self.setup_music(root_dir)
@@ -63,6 +67,17 @@ class StartScreen(View):
             font_size=FONT_SIZE_TITLE
         )
 
+    def setup_icons(self, root_dir: str):
+        """ Setup menu icons """
+
+        self._icon_itch_io = arcade.sprite.Sprite(
+            path_or_texture=os.path.join(root_dir, 'resources', 'images', 'ui', 'itch-io.jpg'),
+            x=0,
+            y=0
+        )
+
+        self._scene.add_sprite(SCENE_LAYER_ICON, self._icon_itch_io)
+
     def setup_music(self, root_dir: str):
         """ Play music """
         music = arcade.load_sound(
@@ -79,6 +94,9 @@ class StartScreen(View):
 
         self._text_title.x = (self.window.width / 2) - (self._text_title.content_width / 2)
         self._text_title.y = self.window.height / 2
+
+        self._icon_itch_io.right = self.window.width - MARGIN
+        self._icon_itch_io.bottom = MARGIN
 
         # On fading in
         if self._fade_sprite is not None:
