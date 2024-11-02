@@ -28,13 +28,21 @@ class StartScreen(View):
         self._scene = arcade.Scene()
         self._music = None
 
-    def setup(self, root_dir):
+    def setup(self, root_dir: str):
         """ Setup the start screen """
 
         # Background color
         arcade.set_background_color(BACKGROUND_COLOR)
 
         # Text
+        self.setup_text()
+
+        # Play music
+        self.setup_music(root_dir)
+
+    def setup_text(self):
+        """ Setup text """
+
         text = _('Press any key to start')
 
         # TODO
@@ -43,8 +51,8 @@ class StartScreen(View):
         # text = _('Anderer Text')
         self._text = arcade.Text(text=text, x=0, y=0, font_size=FONT_SIZE)
 
-        # TODO: Particle Effekte
-
+    def setup_music(self, root_dir: str):
+        """ Play music """
         music = arcade.load_sound(
             os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
             streaming=True
@@ -115,4 +123,5 @@ class StartScreen(View):
         self._scene.add_sprite(SCENE_LAYER_FADEIN, self._fade_sprite)
 
     def on_resize(self, width, height):
-        logging.info('Resize')
+        """ On resize """
+        logging.info(f"Resize to {width}x{height}")

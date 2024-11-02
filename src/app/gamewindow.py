@@ -43,7 +43,7 @@ class GameWindow(arcade.Window):
             center_window=CENTER_WINDOW
         )
 
-    def setup(self, root_dir):
+    def setup(self, root_dir: str):
         """ Set up the main window here"""
 
         self._root_dir = root_dir
