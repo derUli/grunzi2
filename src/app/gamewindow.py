@@ -1,6 +1,8 @@
 import gettext
+import os
 
 import arcade
+import pyglet
 
 from app.views.startscreen import StartScreen
 
@@ -45,6 +47,11 @@ class GameWindow(arcade.Window):
         """ Set up the main window here"""
 
         self._root_dir = root_dir
+
+        icon = pyglet.image.load(
+            os.path.join(root_dir, 'resources', 'images', 'ui', 'icon.ico')
+        )
+        self.set_icon(icon)
 
         w, h = MINIMUM_SIZE
         self.set_minimum_size(w, h)
