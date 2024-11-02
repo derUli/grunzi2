@@ -1,7 +1,7 @@
+import gettext
+
 import arcade
 from arcade import View, Window
-
-import gettext
 
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 
@@ -13,6 +13,7 @@ FADE_SPEED = 5
 FADE_MAX = 255
 
 SCENE_LAYER_FADEIN = 'fadein'
+
 
 class StartScreen(View):
     def __init__(self, window: Window | None = None) -> None:
@@ -30,42 +31,48 @@ class StartScreen(View):
         arcade.set_background_color(BACKGROUND_COLOR)
 
         # Text
-        text =  _('Press any key to start')
+        text = _('Press any key to start')
 
         # TODO
 
         # if controller then
         # text = _('Anderer Text')
-        self._text = arcade.Text(text = text, x = 0, y = 0, font_size = FONT_SIZE)
+        self._text = arcade.Text(text=text, x=0, y=0, font_size=FONT_SIZE)
         self._text.x = (self.window.width / 2) - (self._text.content_width / 2)
         self._text.y = self._text.content_height
 
         # TODO: Particle Effekte
 
     def on_update(self, delta_time: float):
+        """ On update scene """
         if self._fade_sprite is not None and self._fade_sprite.alpha < FADE_MAX:
             self._fade_sprite.alpha += FADE_SPEED
 
-            if self._fade_sprite.alpha  > FADE_MAX:
+            if self._fade_sprite.alpha >= FADE_MAX:
                 self._fade_sprite.alpha = FADE_MAX
 
                 print('TODO: Spiel starten')
 
-
     def on_draw(self):
         """ On draw"""
+
+        # Clear screen
         self.clear()
+
+        # Draw text
         self._text.draw()
+
+        # Draw scene
         self._scene.draw()
 
-
     def on_key_press(self, symbol: int, modifiers: int):
+        """ Handle keyboard input """
+
         if symbol in KEY_ESCAPE:
             self.on_exit()
 
         if symbol in KEY_CONFIRM and self._fade_sprite is None:
             self.on_start_game()
-
 
     @staticmethod
     def on_exit() -> None:
