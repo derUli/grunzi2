@@ -1,4 +1,5 @@
 import gettext
+import os
 
 import arcade
 from arcade import View, Window
@@ -11,6 +12,7 @@ BACKGROUND_COLOR = (58, 154, 230, 255)
 FONT_SIZE = 20
 FADE_SPEED = 5
 FADE_MAX = 255
+MUSIC_FADE_SPEED = 0.01
 
 SCENE_LAYER_FADEIN = 'fadein'
 
@@ -23,8 +25,9 @@ class StartScreen(View):
         self._text = None
         self._fade_sprite = None
         self._scene = arcade.Scene()
+        self._music = None
 
-    def setup(self):
+    def setup(self, root_dir):
         """ Setup the start screen """
 
         # Background color
@@ -38,20 +41,37 @@ class StartScreen(View):
         # if controller then
         # text = _('Anderer Text')
         self._text = arcade.Text(text=text, x=0, y=0, font_size=FONT_SIZE)
-        self._text.x = (self.window.width / 2) - (self._text.content_width / 2)
-        self._text.y = self._text.content_height
 
         # TODO: Particle Effekte
 
+        music = arcade.load_sound(
+            os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
+            streaming = True
+        )
+        self._music = music.play(loop=True)
+
     def on_update(self, delta_time: float):
+
+        self._text.x = (self.window.width / 2) - (self._text.content_width / 2)
+        self._text.y = self._text.content_height
+
         """ On update scene """
-        if self._fade_sprite is not None and self._fade_sprite.alpha < FADE_MAX:
-            self._fade_sprite.alpha += FADE_SPEED
+        if self._fade_sprite is not None:
+
+            self._fade_sprite.alpha = min(self._fade_sprite.alpha + FADE_SPEED, 255)
 
             if self._fade_sprite.alpha >= FADE_MAX:
                 self._fade_sprite.alpha = FADE_MAX
 
-                print('TODO: Spiel starten')
+            if self._music:
+                self._music.volume = max (self._music.volume - MUSIC_FADE_SPEED, 0)
+                if self._music.volume <= 0:
+                    self._music.pause()
+                    self._music = None
+
+                    print('TODO: start game')
+
+
 
     def on_draw(self):
         """ On draw"""
