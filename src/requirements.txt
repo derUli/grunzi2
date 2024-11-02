@@ -1,3 +1,5 @@
 arcade==3.0.0dev37
 pylint
 pyglet
+psutil
+sounddevice

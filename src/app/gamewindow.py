@@ -1,4 +1,4 @@
-#pylint: disable=W0223
+# pylint: disable=W0223
 
 """ The Game window """
 
@@ -18,6 +18,7 @@ DRAW_RATE = 1 / 9999
 UPDATE_RATE = 1 / 62
 CENTER_WINDOW = True
 MINIMUM_SIZE = (1280, 720)
+
 
 class GameWindow(arcade.Window):
     """
