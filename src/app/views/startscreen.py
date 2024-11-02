@@ -13,6 +13,7 @@ _ = gettext.gettext
 
 BACKGROUND_COLOR = (58, 154, 230, 255)
 FONT_SIZE = 20
+FONT_SIZE_TITLE = 80
 FADE_SPEED = 5
 FADE_MAX = 255
 MUSIC_FADE_SPEED = 0.01
@@ -27,7 +28,8 @@ class StartScreen(View):
         """ Constructor """
 
         super().__init__(window)
-        self._text = None
+        self._text_start = None
+        self._text_title = None
         self._fade_sprite = None
         self._scene = arcade.Scene()
         self._music = None
@@ -53,7 +55,13 @@ class StartScreen(View):
 
         # if controller then
         # text = _('Anderer Text')
-        self._text = arcade.Text(text=text, x=0, y=0, font_size=FONT_SIZE)
+        self._text_start = arcade.Text(text=text, x=0, y=0, font_size=FONT_SIZE)
+        self._text_title = arcade.Text(
+            text=self.window.caption,
+            x=0,
+            y=0,
+            font_size=FONT_SIZE_TITLE
+        )
 
     def setup_music(self, root_dir: str):
         """ Play music """
@@ -66,8 +74,11 @@ class StartScreen(View):
     def on_update(self, delta_time: float):
         """ On update """
 
-        self._text.x = (self.window.width / 2) - (self._text.content_width / 2)
-        self._text.y = self._text.content_height
+        self._text_start.x = (self.window.width / 2) - (self._text_start.content_width / 2)
+        self._text_start.y = self._text_start.content_height
+
+        self._text_title.x = (self.window.width / 2) - (self._text_title.content_width / 2)
+        self._text_title.y = self.window.height / 2
 
         # On fading in
         if self._fade_sprite is not None:
@@ -89,7 +100,8 @@ class StartScreen(View):
         self.clear()
 
         # Draw text
-        self._text.draw()
+        self._text_title.draw()
+        self._text_start.draw()
 
         # Draw scene
         self._scene.draw()

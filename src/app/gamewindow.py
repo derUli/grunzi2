@@ -1,4 +1,7 @@
+#pylint: disable=W0223
+
 """ The Game window """
+
 import gettext
 import os
 
@@ -15,7 +18,6 @@ DRAW_RATE = 1 / 9999
 UPDATE_RATE = 1 / 62
 CENTER_WINDOW = True
 MINIMUM_SIZE = (1280, 720)
-
 
 class GameWindow(arcade.Window):
     """
@@ -56,7 +58,6 @@ class GameWindow(arcade.Window):
 
         w, h = MINIMUM_SIZE
         self.set_minimum_size(w, h)
-        self.set_maximum_size(1920, 1080)
         view = StartScreen()
         view.setup(root_dir)
         self.show_view(view)
