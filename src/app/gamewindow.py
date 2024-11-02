@@ -1,7 +1,6 @@
 """ The Game window """
 import gettext
 import os
-from typing import Sequence
 
 import arcade
 import pyglet
@@ -67,23 +66,3 @@ class GameWindow(arcade.Window):
         """ Window size """
 
         return self.width, self.height
-
-    def _recreate(self, changes: Sequence[str]) -> None:
-        """ Do nothing """
-
-        return
-
-    def _create(self) -> None:
-        """ Do nothing """
-
-        return
-
-    def get_clipboard_text(self):
-        """ Do nothing """
-
-        return
-
-    def set_clipboard_text(self, text):
-        """ Do nothing """
-
-        return

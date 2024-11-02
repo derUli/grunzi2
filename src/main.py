@@ -2,11 +2,9 @@
 
 import os
 
-import arcade
-
-from app.gamewindow import GameWindow
+from app.startup import Startup
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
-window = GameWindow()
-window.setup(root_dir)
-arcade.run()
+startup = Startup()
+startup.setup(root_dir)
+startup.start()
