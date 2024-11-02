@@ -70,16 +70,13 @@ class StartScreen(View):
 
             self._fade_sprite.alpha = min(self._fade_sprite.alpha + FADE_SPEED, 255)
 
-            if self._fade_sprite.alpha >= FADE_MAX:
-                self._fade_sprite.alpha = FADE_MAX
-
             if self._music:
                 self._music.volume = max(self._music.volume - MUSIC_FADE_SPEED, 0)
                 if self._music.volume <= 0:
                     self._music.pause()
                     self._music = None
 
-                    print('TODO: start game')
+                    logging.info('TODO: start game')
 
     def on_draw(self):
         """ On draw"""
@@ -124,4 +121,4 @@ class StartScreen(View):
 
     def on_resize(self, width, height):
         """ On resize """
-        logging.info(f"Resize to {width}x{height}")
+        logging.info("Resize to %s", (width, height))
