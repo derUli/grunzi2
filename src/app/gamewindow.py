@@ -1,10 +1,18 @@
+
 import arcade
+import pyglet
 
-FULLSCREEN = True
-VSYNC = True
+from app.views.startscreen import StartScreen
+
+import gettext
+_ = gettext.gettext
+
+
+FULLSCREEN = False
+VSYNC = False
 DRAW_RATE = 1 / 9999
-UPDATE_RATE = 60
-
+UPDATE_RATE = 1 / 62
+CENTER_WINDOW = True
 SCREEN_SIZE = (1366, 768)
 
 class GameWindow(arcade.Window):
@@ -13,7 +21,14 @@ class GameWindow(arcade.Window):
     """
 
     def __init__(self):
+        """ Constructor """
         w, h = SCREEN_SIZE
+        self.mode = None
+
+        if FULLSCREEN:
+            screen = pyglet.canvas.get_display().get_default_screen()
+            self.mode = screen.get_closest_mode(self.width, self.height)
+
         # Call the parent class and set up the window
         super().__init__(
             width=w,
@@ -21,21 +36,22 @@ class GameWindow(arcade.Window):
             fullscreen=FULLSCREEN,
             vsync=VSYNC,
             draw_rate=DRAW_RATE,
-            update_rate=UPDATE_RATE
+            update_rate=UPDATE_RATE,
+            center_window=CENTER_WINDOW
         )
 
-        arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
 
     def setup(self):
-        """Set up the game here. Call this function to restart the game."""
-        pass
+        """ Set up the main window here"""
 
-    def on_draw(self):
-        """Render the screen."""
+        if self.mode:
+            """ Change screen resolution if fullscreen """
+            self._set_fullscreen_mode(self.mode, self.width, self.height)
 
-        self.clear()
-        # Code to draw the screen goes here
-
+        view = StartScreen()
+        view.setup()
+        self.show_view(view)
 
     def size(self):
         return self.width, self.height
+
