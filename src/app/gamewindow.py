@@ -1,12 +1,11 @@
+import gettext
 
 import arcade
 import pyglet
 
 from app.views.startscreen import StartScreen
 
-import gettext
 _ = gettext.gettext
-
 
 FULLSCREEN = False
 VSYNC = False
@@ -14,6 +13,7 @@ DRAW_RATE = 1 / 9999
 UPDATE_RATE = 1 / 62
 CENTER_WINDOW = True
 SCREEN_SIZE = (1366, 768)
+
 
 class GameWindow(arcade.Window):
     """
@@ -40,7 +40,6 @@ class GameWindow(arcade.Window):
             center_window=CENTER_WINDOW
         )
 
-
     def setup(self):
         """ Set up the main window here"""
 
@@ -54,4 +53,3 @@ class GameWindow(arcade.Window):
 
     def size(self):
         return self.width, self.height
-
