@@ -1,6 +1,7 @@
 import arcade
 
 FULLSCREEN = True
+VSYNC = True
 DRAW_RATE = 1 / 9999
 UPDATE_RATE = 60
 
@@ -12,8 +13,16 @@ class GameWindow(arcade.Window):
     """
 
     def __init__(self):
+        w, h = SCREEN_SIZE
         # Call the parent class and set up the window
-        super().__init__(fullscreen=False, draw_rate=DRAW_RATE, update_rate=UPDATE_RATE)
+        super().__init__(
+            width=w,
+            height=h,
+            fullscreen=FULLSCREEN,
+            vsync=VSYNC,
+            draw_rate=DRAW_RATE,
+            update_rate=UPDATE_RATE
+        )
 
         arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
 
