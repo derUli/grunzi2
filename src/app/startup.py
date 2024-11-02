@@ -83,6 +83,6 @@ class Startup:
         """ Start game """
 
         window = GameWindow()
-        window.setup(self._root_dir)
         self.log_hardware_info(window)
+        window.setup(self._root_dir)
         arcade.run()

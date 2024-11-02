@@ -3,11 +3,13 @@
 import gettext
 import logging
 import os
+import webbrowser
 
 import arcade
 from arcade import View, Window
 
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
+from app.constants.input.mouse import BUTTON_LEFT_CLICK
 
 _ = gettext.gettext
 
@@ -21,6 +23,8 @@ MARGIN = 10
 
 SCENE_LAYER_FADEIN = 'fadein'
 SCENE_LAYER_ICON = 'icon'
+
+URL_ITCH_IO = 'https://hog-games.itch.io/'
 
 
 class StartScreen(View):
@@ -36,12 +40,14 @@ class StartScreen(View):
         self._scene = arcade.Scene()
         self._icon_itch_io = None
         self._music = None
+        self._last_hover = None
 
     def setup(self, root_dir: str):
         """ Setup the start screen """
 
         # Background color
         arcade.set_background_color(BACKGROUND_COLOR)
+        self.window.set_mouse_visible(True)
 
         # Text
         self.setup_text()
@@ -81,10 +87,9 @@ class StartScreen(View):
     def setup_music(self, root_dir: str):
         """ Play music """
         music = arcade.load_sound(
-            os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
-            streaming=True
+            os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3')
         )
-        self._music = music.play(loop=True)
+        self._music = music.play(loop=True, volume=1)
 
     def on_update(self, delta_time: float):
         """ On update """
@@ -133,14 +138,54 @@ class StartScreen(View):
         if symbol in KEY_CONFIRM and self._fade_sprite is None:
             self.on_start_game()
 
-    @staticmethod
-    def on_exit() -> None:
-        """ On exit game """
+    def on_resize(self, width, height):
+        """ On resize """
 
-        arcade.exit()
+        logging.info("Resize to %s", (width, height))
+
+    def on_mouse_motion(self, x: int, y: int, dx: int, dy: int) -> bool | None:
+        """ Handle mouse movement """
+        if self._last_hover:
+            if not self._last_hover.collides_with_point((x, y)):
+                self._last_hover.scale = 1.0
+                self._last_hover = None
+            return
+
+        sprites = [
+            self._icon_itch_io
+        ]
+
+        for sprite in sprites:
+            if sprite.collides_with_point((x, y)):
+                logging.info('Mouse entering item')
+
+                self._last_hover = sprite
+                self._last_hover.scale = 1.02
+                break
+
+    def on_mouse_press(self, x, y, button, modifiers) -> bool | None:
+        """ Handle mouse press """
+
+        if button not in BUTTON_LEFT_CLICK:
+            return
+
+        if not self._last_hover:
+            self.on_start_game()
+            return
+
+        if self._last_hover == self._icon_itch_io:
+            self.on_itch_io()
+
+    @staticmethod
+    def on_itch_io() -> None:
+        """ On open itch.io """
+
+        webbrowser.open_new_tab(URL_ITCH_IO)
 
     def on_start_game(self) -> None:
         """ On start new game """
+
+        self.window.set_mouse_visible(False)
 
         self._fade_sprite = arcade.sprite.SpriteSolidColor(
             width=self.window.width,
@@ -153,6 +198,8 @@ class StartScreen(View):
         self._fade_sprite.alpha = 0
         self._scene.add_sprite(SCENE_LAYER_FADEIN, self._fade_sprite)
 
-    def on_resize(self, width, height):
-        """ On resize """
-        logging.info("Resize to %s", (width, height))
+    @staticmethod
+    def on_exit() -> None:
+        """ On exit game """
+
+        arcade.exit()
