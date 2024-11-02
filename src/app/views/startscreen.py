@@ -9,6 +9,7 @@ import webbrowser
 import arcade
 from arcade import View, Window
 
+from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
 
@@ -59,7 +60,7 @@ class StartScreen(View):
 
         # Background color
         arcade.set_background_color(BACKGROUND_COLOR)
-        self.window.set_mouse_visible(True)
+        self.window.set_mouse_visible(not any(self.window.controllers))
 
         # Text
         self.setup_text()
@@ -72,9 +73,10 @@ class StartScreen(View):
     def setup_text(self):
         """ Setup text """
 
-        text = _('Press any key to start')
+        text = _('Press SPACE key to start')
 
-        # TODO
+        if any(self.window.controllers):
+            text = _('Press START button to start')
 
         # if controller then
         # text = _('Anderer Text')
@@ -192,6 +194,7 @@ class StartScreen(View):
 
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int) -> bool | None:
         """ Handle mouse movement """
+
         if self._last_hover:
             if not self._last_hover.collides_with_point((x, y)):
                 self._last_hover.scale = 1.0
@@ -223,11 +226,12 @@ class StartScreen(View):
         if self._last_hover == self._icon_itch_io:
             self.on_itch_io()
 
-    @staticmethod
-    def on_itch_io() -> None:
-        """ On open itch.io """
-
-        webbrowser.open_new_tab(URL_ITCH_IO)
+    def on_button_press(self, joystick, key) -> None:
+        """ On controller button press """
+        if key == KEY_START:
+            self.on_start_game()
+        elif key == KEY_BACK:
+            self.on_exit()
 
     def on_start_game(self) -> None:
         """ On start new game """
@@ -244,6 +248,12 @@ class StartScreen(View):
 
         self._fade_sprite.alpha = 0
         self._scene.add_sprite(SCENE_LAYER_FADEIN, self._fade_sprite)
+
+    @staticmethod
+    def on_itch_io() -> None:
+        """ On open itch.io """
+
+        webbrowser.open_new_tab(URL_ITCH_IO)
 
     @staticmethod
     def on_exit() -> None:
