@@ -1,14 +1,17 @@
 """ Game startup """
-
-# pylint: disable=C0103:
-
+import argparse
 import logging
 import platform
 import sys
-
 import arcade
 import psutil
 import pyglet
+
+from app.constants.settings import SETTINGS_DEFAULT_FULLSCREEN
+from app.gamewindow import GameWindow
+from app.utils.string import label_value
+
+# pylint: disable=C0103:
 
 try:
     import sounddevice
@@ -17,8 +20,6 @@ except OSError:
 except ImportError:
     sounddevice = None
 
-from app.gamewindow import GameWindow
-from app.utils.string import label_value
 
 
 class Startup:
@@ -28,6 +29,7 @@ class Startup:
         """ Constructor """
         self.args = None
         self._root_dir = None
+        self.args = None
 
     def setup(self, root_dir: str):
         """ Setup game startup """
@@ -79,10 +81,40 @@ class Startup:
         for audio in sounddevice.query_devices():
             logging.info(label_value('Audio', audio['name']))
 
-    def start(self):
+    def start(self) -> None:
         """ Start game """
 
-        window = GameWindow()
+        fullscreen = SETTINGS_DEFAULT_FULLSCREEN
+
+        args = self.get_args()
+
+        if args.fullscreen:
+            fullscreen = True
+        elif args.window:
+            fullscreen = False
+
+        window = GameWindow(fullscreen)
         self.log_hardware_info(window)
         window.setup(self._root_dir)
         arcade.run()
+
+    @staticmethod
+    def get_args() -> argparse.Namespace:
+        """ Get args """
+
+        parser = argparse.ArgumentParser()
+        parser.add_argument(
+            '--window',
+            action='store_true',
+            default=False,
+            help='Run in windowed mode'
+        )
+
+        parser.add_argument(
+            '--fullscreen',
+            action='store_true',
+            default=False,
+            help='Run in fullscreen mode'
+        )
+
+        return parser.parse_args()
