@@ -46,7 +46,7 @@ class StartScreen(View):
 
         music = arcade.load_sound(
             os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
-            streaming = True
+            streaming=True
         )
         self._music = music.play(loop=True)
 
@@ -64,14 +64,12 @@ class StartScreen(View):
                 self._fade_sprite.alpha = FADE_MAX
 
             if self._music:
-                self._music.volume = max (self._music.volume - MUSIC_FADE_SPEED, 0)
+                self._music.volume = max(self._music.volume - MUSIC_FADE_SPEED, 0)
                 if self._music.volume <= 0:
                     self._music.pause()
                     self._music = None
 
                     print('TODO: start game')
-
-
 
     def on_draw(self):
         """ On draw"""
