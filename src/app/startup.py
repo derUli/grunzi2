@@ -3,11 +3,15 @@ import argparse
 import logging
 import platform
 import sys
+
 import arcade
 import psutil
 import pyglet
 
-from app.constants.settings import SETTINGS_DEFAULT_FULLSCREEN, SETTINGS_DEFAULT_VSYNC
+from app.constants.settings import (SETTINGS_DEFAULT_FULLSCREEN,
+                                    SETTINGS_DEFAULT_VSYNC,
+                                    SETTINGS_DEFAULT_SIZE
+                                    )
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
 
@@ -19,7 +23,6 @@ except OSError:
     sounddevice = None
 except ImportError:
     sounddevice = None
-
 
 
 class Startup:
@@ -99,10 +102,28 @@ class Startup:
         elif args.no_vsync:
             vsync = False
 
+        size = args.size
+
+        size = size.lower()
+        width, height = size.split('x')
+
+        try:
+            width, height = int(width), int(height)
+        except ValueError:
+            logging.error('size has invalid format')
+            return
+
+        if width == 0 or height == 0:
+            logging.error('Width and height must be higher than 0')
+            return
+
         window = GameWindow(
             fullscreen=fullscreen,
-            vsync=vsync
+            vsync=vsync,
+            width=width,
+            height=height
         )
+
         self.log_hardware_info(window)
         window.setup(self._root_dir)
         arcade.run()
@@ -138,6 +159,13 @@ class Startup:
             action='store_true',
             default=False,
             help='Disable vsync'
+        )
+
+        parser.add_argument(
+            '--size',
+            action='store',
+            default=SETTINGS_DEFAULT_SIZE,
+            help=f'window size {SETTINGS_DEFAULT_SIZE}'
         )
 
         return parser.parse_args()

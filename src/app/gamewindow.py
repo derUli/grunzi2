@@ -26,7 +26,13 @@ class GameWindow(arcade.Window):
     Main application class
     """
 
-    def __init__(self, fullscreen: bool = True, vsync: bool = True):
+    def __init__(
+            self,
+            width: int,
+            height: int,
+            fullscreen: bool = True,
+            vsync: bool = True,
+    ):
         """ Constructor """
 
         w, h = MINIMUM_SIZE
