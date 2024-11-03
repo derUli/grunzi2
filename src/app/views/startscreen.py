@@ -56,7 +56,7 @@ class StartScreen(View):
         self._text_title = None
         self._text_version = None
 
-        self._scene = arcade.Scene()
+        self._scene = None
         self._icon_itch_io = None
         self._icon_exit = None
         self._last_hover = None
@@ -66,6 +66,8 @@ class StartScreen(View):
 
     def setup(self, root_dir: str):
         """ Setup the start screen """
+
+        super().setup(root_dir)
 
         # Background color
         arcade.set_background_color(BACKGROUND_COLOR)

@@ -16,3 +16,9 @@ class View(arcade.View):
         self._fade_sprite = None
         self._phase = None
         self._music = None
+
+
+    def setup(self, root_dir: str):
+        """ Setup view """
+        self._root_dir = root_dir
+        self._scene = arcade.scene.Scene()

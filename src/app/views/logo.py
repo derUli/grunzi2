@@ -26,12 +26,13 @@ class Logo(View):
     def setup(self, root_dir: str):
         """ Setup logo screen """
 
+        super().setup(root_dir)
+
         arcade.set_background_color(arcade.color.WHITE)
-        self._root_dir = root_dir
+
         logo_file = os.path.join(self._root_dir, 'resources', 'images', 'ui', 'hog-games.png')
         logo = arcade.sprite.Sprite(path_or_texture=logo_file, x=0, y=0)
 
-        self._scene = arcade.scene.Scene()
         self._scene.add_sprite(SCENE_LAYER_LOGO, logo)
 
         self._phase = None
