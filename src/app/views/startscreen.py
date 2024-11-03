@@ -123,7 +123,7 @@ class StartScreen(View):
         """ Setup article animation """
 
         try:
-            self._scene.remove_sprite_list_by_name(SCENE_LAYER_PARTICLES)
+            self._scene[SCENE_LAYER_PARTICLES].clear()
         except KeyError:
             pass
 
