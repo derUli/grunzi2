@@ -12,7 +12,7 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_FULLSCREEN,
     SETTINGS_DEFAULT_VSYNC,
     SETTINGS_DEFAULT_SIZE,
-    ANTIALIASING_CHOICES,
+    SETTINGS_ANTIALIASING_CHOICES,
     SETTINGS_DEFAULT_ANTIALIASING
 )
 from app.gamewindow import GameWindow
@@ -118,7 +118,7 @@ class Startup:
             return
 
         if width == 0 or height == 0:
-            logging.error('Width and height must be higher than 0')
+            logging.error('Width and height must be greater than 0')
             return
 
         samples = args.antialiasing
@@ -132,7 +132,8 @@ class Startup:
             width=width,
             height=height,
             antialiasing=antialiasing,
-            samples=samples
+            samples=samples,
+            center_window=args.center_window
         )
 
         self.log_hardware_info(window)
@@ -152,6 +153,13 @@ class Startup:
         )
 
         parser.add_argument(
+            '--center_window',
+            action='store_true',
+            default=False,
+            help='Run in windowed mode'
+        )
+
+        parser.add_argument(
             '--fullscreen',
             action='store_true',
             default=False,
@@ -162,21 +170,21 @@ class Startup:
             '--vsync',
             action='store_true',
             default=False,
-            help='Enable vsync'
+            help='Enable VSync'
         )
 
         parser.add_argument(
             '--no-vsync',
             action='store_true',
             default=False,
-            help='Disable vsync'
+            help='Disable VSync'
         )
 
         parser.add_argument(
             '--size',
             action='store',
             default=SETTINGS_DEFAULT_SIZE,
-            help=f'size of window'
+            help='size of window'
         )
 
         parser.add_argument(
@@ -184,7 +192,7 @@ class Startup:
             action='store',
             type=int,
             help='The antialiasing level',
-            choices=ANTIALIASING_CHOICES,
+            choices=SETTINGS_ANTIALIASING_CHOICES,
             default=SETTINGS_DEFAULT_ANTIALIASING
         )
 

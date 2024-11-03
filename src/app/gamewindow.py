@@ -10,6 +10,7 @@ import arcade
 import pyglet
 
 from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_FULLSCREEN
+from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.string import label_value
 from app.views.startscreen import StartScreen
 
@@ -17,9 +18,6 @@ _ = gettext.gettext
 
 DRAW_RATE = 1 / 9999
 UPDATE_RATE = 1 / 62
-CENTER_WINDOW = True
-MINIMUM_SIZE = (1280, 720)
-
 
 class GameWindow(arcade.Window):
     """
@@ -33,7 +31,8 @@ class GameWindow(arcade.Window):
             fullscreen: bool = True,
             vsync: bool = True,
             antialiasing: bool = True,
-            samples: int = 4
+            samples: int = 4,
+            center_window = False
     ):
         """ Constructor """
 
@@ -53,7 +52,7 @@ class GameWindow(arcade.Window):
             resizable=True,
             draw_rate=DRAW_RATE,
             update_rate=UPDATE_RATE,
-            center_window=CENTER_WINDOW,
+            center_window=center_window,
             antialiasing=antialiasing,
             samples=samples
         )
@@ -69,8 +68,9 @@ class GameWindow(arcade.Window):
         self.set_icon(icon)
         self.setup_controllers()
 
-        w, h = MINIMUM_SIZE
+        w, h = SETTINGS_SIZE_MINIUM
         self.set_minimum_size(w, h)
+
         view = StartScreen()
         view.setup(root_dir)
         self.show_view(view)
