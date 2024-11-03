@@ -16,7 +16,7 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_VSYNC,
     SETTINGS_DEFAULT_SIZE,
     SETTINGS_ANTIALIASING_CHOICES,
-    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE
+    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE, SETTINGS_DEFAULT_SHOW_FPS
 )
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
@@ -173,7 +173,8 @@ class Startup:
         window.set_visible(True)
 
         self.log_hardware_info(window)
-        window.setup(self._root_dir, show_intro=show_intro)
+
+        window.setup(self._root_dir, show_intro=show_intro, show_fps=args.show_fps)
         arcade.run()
 
     @staticmethod
@@ -181,6 +182,14 @@ class Startup:
         """ Get args """
 
         parser = argparse.ArgumentParser()
+
+        parser.add_argument(
+            '--fullscreen',
+            action='store_true',
+            default=False,
+            help='Run in fullscreen mode'
+        )
+
         parser.add_argument(
             '--window',
             action='store_true',
@@ -196,10 +205,19 @@ class Startup:
         )
 
         parser.add_argument(
-            '--fullscreen',
-            action='store_true',
-            default=False,
-            help='Run in fullscreen mode'
+            '-x',
+            action='store',
+            type=int,
+            required=False,
+            help='The X position of the window'
+        )
+
+        parser.add_argument(
+            '-y',
+            action='store',
+            type=int,
+            required=False,
+            help='The X position of the window'
         )
 
         parser.add_argument(
@@ -263,19 +281,10 @@ class Startup:
         )
 
         parser.add_argument(
-            '-x',
-            action='store',
-            type=int,
-            required=False,
-            help='The X position of the window'
-        )
-
-        parser.add_argument(
-            '-y',
-            action='store',
-            type=int,
-            required=False,
-            help='The X position of the window'
+            '--show-fps',
+            action='store_true',
+            default=SETTINGS_DEFAULT_SHOW_FPS,
+            help='Show FPS'
         )
 
         return parser.parse_args()

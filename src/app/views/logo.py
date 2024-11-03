@@ -78,6 +78,8 @@ class Logo(View):
         self.clear()
         self._scene.draw()
 
+        self.window.draw_after()
+
     def fade_to_startscreen(self, dt: float):
         """ Show StartScreen """
         self._phase = PHASE_FADE_OUT

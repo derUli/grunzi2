@@ -17,10 +17,14 @@ from app.constants.input.keyboard import KEY_SCREENSHOT
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.string import label_value
 from app.views.logo import Logo
-from app.views.startscreen import StartScreen
+from app.views.startscreen import StartScreen, FONT_SIZE_VERSION
 
 _ = gettext.gettext
 
+MARGIN = 10
+MAX_FPS_COUNT = 1
+
+FONT_SIZE_FPS = 16
 
 class GameWindow(arcade.Window):
     """
@@ -48,6 +52,7 @@ class GameWindow(arcade.Window):
         self._screen = None
         self._controller_manager = None
         self._controllers = []
+        self._fps_text = {}
 
         # Call the parent class and set up the window
         super().__init__(
@@ -65,7 +70,7 @@ class GameWindow(arcade.Window):
             samples=samples
         )
 
-    def setup(self, root_dir: str, show_intro: bool = True):
+    def setup(self, root_dir: str, show_intro: bool = True, show_fps: bool = False):
         """ Set up the main window here"""
 
         self._root_dir = root_dir
@@ -83,6 +88,9 @@ class GameWindow(arcade.Window):
             view = Logo()
         else:
             view = StartScreen()
+
+        if show_fps:
+            arcade.enable_timings()
 
         view.setup(root_dir)
         self.show_view(view)
@@ -171,3 +179,43 @@ class GameWindow(arcade.Window):
         sound.play(volume=VOLUME_SOUND_FX)
 
         return filename
+
+    def draw_after(self):
+        """ Draw after view """
+        self.draw_fps()
+
+    def draw_fps(self):
+        if not arcade.timings_enabled():
+            return
+
+        fps = round(arcade.get_fps())
+        fps_str = str(fps)
+
+        if fps_str in self._fps_text:
+            fps_text = self._fps_text[fps_str]
+        else:
+            fps_text = arcade.Text(
+                fps_str,
+                font_size=FONT_SIZE_FPS,
+                color=arcade.csscolor.LIME_GREEN,
+                x=0,
+                y=0
+            )
+
+            fps_text.x = MARGIN
+            fps_text.y = self.height - MARGIN - fps_text.content_height / 2
+
+            self._fps_text[fps_str] = fps_text
+
+            fps_text_len = len(self._fps_text)
+            if fps_text_len >= MAX_FPS_COUNT:
+                keys = list(self._fps_text.keys())[-MAX_FPS_COUNT:]
+
+                new_dict = {}
+
+                for key in keys:
+                    new_dict[key] = self._fps_text[key]
+
+                self._fps_text = new_dict
+
+        fps_text.draw()

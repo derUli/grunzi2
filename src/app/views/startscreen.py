@@ -21,6 +21,7 @@ BACKGROUND_COLOR = (58, 154, 230, 255)
 FONT_SIZE = 20
 FONT_SIZE_TITLE = 80
 FONT_SIZE_VERSION = 12
+
 FADE_SPEED = 5
 FADE_MAX = 255
 MUSIC_FADE_SPEED = 0.01
@@ -42,7 +43,6 @@ PARTICLES_SIZE_RANGE = 8
 PARTICLES_COUNT = 500
 
 URL_ITCH_IO = 'https://hog-games.itch.io/'
-
 
 class StartScreen(View):
     """ The main menu """
@@ -216,6 +216,8 @@ class StartScreen(View):
 
         if SCENE_LAYER_FADEIN in self._scene:
             self._scene[SCENE_LAYER_FADEIN].draw()
+
+        self.window.draw_after()
 
     def on_key_press(self, symbol: int, modifiers: int):
         """ Handle keyboard input """
