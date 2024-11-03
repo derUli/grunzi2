@@ -17,7 +17,7 @@ from app.views.view import View
 
 _ = gettext.gettext
 
-BACKGROUND_COLOR = (58, 154, 230, 255)
+BACKGROUND_COLOR = (58, 158, 236, 255)
 FONT_SIZE = 20
 FONT_SIZE_TITLE = 80
 FONT_SIZE_VERSION = 12

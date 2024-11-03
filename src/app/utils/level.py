@@ -7,10 +7,10 @@ import pyglet
 from app.constants.layers import LAYER_BACKDROP, LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
-PLAYER_MOVE_SPEED = 0.1
+PLAYER_MOVE_SPEED = 0.05
 PLAYER_MOVE_ANGLE = 1
 
-GRAVITY_SLOWMO = 0.001
+GRAVITY_SLOWMO = 0.05
 GRAVITY_DEFAULT = 1
 
 class Level:
@@ -33,9 +33,7 @@ class Level:
         self.load_tilemap(path)
 
         w, h = arcade.get_window().get_size()
-        zoom = h / VIEWPORT_BASE_H
         self._camera = arcade.camera.Camera2D(
-            zoom=zoom,
             position=(
                 w,
                 self._scene[LAYER_BACKDROP][0].top
@@ -58,7 +56,11 @@ class Level:
     def load_tilemap(self, path):
         """ Load tilemap """
 
-        self.tilemap = arcade.load_tilemap(path)
+
+        w, h = arcade.get_window().get_size()
+        zoom = h / VIEWPORT_BASE_H
+
+        self.tilemap = arcade.load_tilemap(path, scaling=zoom)
         self._scene = arcade.Scene.from_tilemap(self.tilemap)
 
     def update(self):
