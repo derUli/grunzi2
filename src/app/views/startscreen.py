@@ -29,6 +29,7 @@ MARGIN = 10
 SCENE_LAYER_FADEIN = 'fadein'
 SCENE_LAYER_ICON = 'icon'
 SCENE_LAYER_PARTICLES = 'particles'
+SCENE_LAYER_TEXT = 'Text'
 
 PARTICLE_SPEED = 2
 
@@ -57,8 +58,11 @@ class StartScreen(View):
         self._fade_sprite = None
         self._scene = arcade.Scene()
         self._icon_itch_io = None
-        self._music = None
         self._last_hover = None
+
+        self._music = None
+        self._sound_hover = None
+
 
     def setup(self, root_dir: str):
         """ Setup the start screen """
@@ -74,6 +78,7 @@ class StartScreen(View):
 
         # Play music
         self.setup_music(root_dir)
+        self.setup_sounds(root_dir)
 
     def setup_text(self):
         """ Setup text """
@@ -83,22 +88,27 @@ class StartScreen(View):
         if any(self.window.controllers):
             text = _('Press START button to start')
 
-        # if controller then
-        # text = _('Anderer Text')
-        self._text_start = arcade.Text(text=text, x=0, y=0, font_size=FONT_SIZE)
-        self._text_title = arcade.Text(
-            text=self.window.caption,
-            x=0,
-            y=0,
-            font_size=FONT_SIZE_TITLE
+        self._text_start = arcade.create_text_sprite(
+            text=text,
+            font_size=FONT_SIZE,
+            bold=True
         )
+        self._scene.add_sprite(SCENE_LAYER_TEXT, self._text_start)
 
-        self._text_version = arcade.Text(
-            text=" ".join([_('Version'), VERSION_STRING]),
-            x=0,
-            y=0,
-            font_size=FONT_SIZE_VERSION
+        self._text_title = arcade.create_text_sprite(
+            text=self.window.caption,
+            font_size=FONT_SIZE_TITLE,
+            bold=True
         )
+        self._scene.add_sprite(SCENE_LAYER_TEXT, self._text_title)
+
+        self._text_version = arcade.create_text_sprite(
+            text=" ".join([_('Version'), VERSION_STRING]),
+            font_size=FONT_SIZE_VERSION,
+            bold=True
+        )
+        self._scene.add_sprite(SCENE_LAYER_TEXT, self._text_version)
+
 
     def setup_icons(self, root_dir: str):
         """ Setup menu icons """
@@ -118,6 +128,11 @@ class StartScreen(View):
             streaming=True
         )
         self._music = music.play(loop=True, volume=VOLUME_MUSIC)
+
+    def setup_sounds(self, root_dir):
+        self._sound_hover = arcade.load_sound(
+            os.path.join(root_dir, 'resources', 'sounds', 'common', 'hover.mp3'),
+        )
 
     def setup_particles(self):
         """ Setup article animation """
@@ -141,14 +156,14 @@ class StartScreen(View):
         """ On update """
 
         self.on_update_particles()
-        self._text_start.x = (self.window.width / 2) - (self._text_start.content_width / 2)
-        self._text_start.y = self._text_start.content_height
+        self._text_start.center_x = self.window.width / 2
+        self._text_start.bottom = MARGIN
 
-        self._text_title.x = (self.window.width / 2) - (self._text_title.content_width / 2)
-        self._text_title.y = self.window.height / 2
+        self._text_title.center_x = self.window.width / 2
+        self._text_title.center_y = self.window.height / 2
 
-        self._text_version.x = MARGIN
-        self._text_version.y = MARGIN
+        self._text_version.left = MARGIN
+        self._text_version.bottom = MARGIN
 
         self._icon_itch_io.right = self.window.width - MARGIN
         self._icon_itch_io.bottom = MARGIN
@@ -185,11 +200,6 @@ class StartScreen(View):
         # Draw scene
         self._scene.draw()
 
-        # Draw text
-        self._text_title.draw()
-        self._text_start.draw()
-        self._text_version.draw()
-
         if SCENE_LAYER_FADEIN in self._scene:
             self._scene[SCENE_LAYER_FADEIN].draw()
 
@@ -212,12 +222,15 @@ class StartScreen(View):
             return
 
         sprites = [
-            self._icon_itch_io
+            self._icon_itch_io,
+            self._text_title
         ]
 
         for sprite in sprites:
             if sprite.collides_with_point((x, y)):
                 logging.info('Mouse entering item')
+
+                self._sound_hover.play()
 
                 self._last_hover = sprite
                 self._last_hover.scale = 1.02
@@ -229,7 +242,8 @@ class StartScreen(View):
         if button not in BUTTON_LEFT_CLICK:
             return
 
-        if not self._last_hover:
+        if self._last_hover == self._text_title:
+            self._sound_hover.play()
             self.on_start_game()
             return
 
@@ -238,6 +252,7 @@ class StartScreen(View):
 
     def on_button_press(self, joystick, key) -> None:
         """ On controller button press """
+
         if key == KEY_START:
             self.on_start_game()
         elif key == KEY_BACK:
