@@ -28,7 +28,7 @@ class Level:
         w, h = arcade.get_window().get_size()
         zoom = h / VIEWPORT_BASE_H
         self._camera = arcade.camera.Camera2D(
-            zoom=zoom,
+            zoom=1,
             position=(
                 w,
                 self.scene[LAYER_BACKDROP][0].top
@@ -44,7 +44,7 @@ class Level:
     def update(self):
         self.scroll_to_player()
 
-    def scroll_to_player(self, camera_speed=0.01):
+    def scroll_to_player(self, camera_speed=1):
         """
         Scroll the window to the player.
         This method will attempt to keep the player at least VIEWPORT_MARGIN
@@ -57,7 +57,12 @@ class Level:
         w, h = arcade.get_window().get_size()
 
         player = self.scene[LAYER_PLAYER][0]
-        x, y = player.center_x, player.center_y
+
+        x, y = player.left, player.bottom
+
+        x += w / 2
+        y += h / 2
+
 
         self._camera.position = arcade.math.lerp_2d(
             self._camera.position, (x, y), camera_speed
