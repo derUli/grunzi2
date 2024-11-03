@@ -17,12 +17,12 @@ from app.constants.input.keyboard import KEY_SCREENSHOT
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.string import label_value
 from app.views.logo import Logo
-from app.views.startscreen import StartScreen, FONT_SIZE_VERSION
+from app.views.startscreen import StartScreen
 
 _ = gettext.gettext
 
 MARGIN = 10
-MAX_FPS_COUNT = 500
+MAX_FPS_COUNT = 100
 
 FONT_SIZE_FPS = 16
 
@@ -91,7 +91,7 @@ class GameWindow(arcade.Window):
             view = StartScreen()
 
         if show_fps:
-            arcade.enable_timings()
+            arcade.enable_timings(max_history = 100)
 
         view.setup(root_dir)
         self.show_view(view)

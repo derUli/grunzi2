@@ -16,7 +16,7 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_VSYNC,
     SETTINGS_DEFAULT_SIZE,
     SETTINGS_ANTIALIASING_CHOICES,
-    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE, SETTINGS_DEFAULT_SHOW_FPS
+    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE
 )
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
@@ -173,8 +173,7 @@ class Startup:
         window.set_visible(True)
 
         self.log_hardware_info(window)
-
-        window.setup(self._root_dir, show_intro=show_intro, show_fps=args.show_fps)
+        window.setup(self._root_dir, show_intro=show_intro)
         arcade.run()
 
     @staticmethod
@@ -283,7 +282,7 @@ class Startup:
         parser.add_argument(
             '--show-fps',
             action='store_true',
-            default=SETTINGS_DEFAULT_SHOW_FPS,
+            default=False,
             help='Show FPS'
         )
 
