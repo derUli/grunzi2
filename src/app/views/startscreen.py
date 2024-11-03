@@ -139,6 +139,7 @@ class StartScreen(View):
 
     def setup_sounds(self, root_dir: str):
         """ Setup sounds """
+
         self._sound_hover = arcade.load_sound(
             os.path.join(root_dir, 'resources', 'sounds', 'common', 'hover.mp3'),
         )
