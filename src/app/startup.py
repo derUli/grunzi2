@@ -84,6 +84,9 @@ class Startup:
         logging.info(label_value('GPU MAX_TEXTURE_SIZE', window.ctx.info.MAX_TEXTURE_SIZE))
 
         logging.info(label_value('OpenGL version', pyglet.gl.gl_info.get_version_string()))
+        logging.info(
+            label_value('Screen resolution', pyglet.display.get_display().get_default_screen().get_mode())
+        )
 
         if not sounddevice:
             logging.info(label_value('Audio', 'Unknown'))

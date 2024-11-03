@@ -1,5 +1,4 @@
 """ Main game class """
-import arcade
 
 from app.utils.level import Level
 from app.views.view import View

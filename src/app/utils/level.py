@@ -1,13 +1,17 @@
 """ Level """
-import math
 import os
 
 import arcade
+import pyglet
 
-from app.constants.layers import LAYER_BACKDROP, LAYER_PLAYER
+from app.constants.layers import LAYER_BACKDROP, LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
+PLAYER_MOVE_SPEED = 0.005
+PLAYER_MOVE_ANGLE = 0
 
+GRAVITY_SLOWMO = 0.01
+GRAVITY_DEFAULT = 1
 
 class Level:
     """ Level """
@@ -15,9 +19,11 @@ class Level:
     def __init__(self):
         """ Constructor"""
 
-        self.scene = None
+        self._scene = None
         self.tilemap = None
         self._camera = None
+        self._physics_engine = None
+        self._can_walk = False
 
     def setup(self, root_dir: str, map_name: str):
         """ Setup level """
@@ -29,20 +35,35 @@ class Level:
         w, h = arcade.get_window().get_size()
         zoom = h / VIEWPORT_BASE_H
         self._camera = arcade.camera.Camera2D(
-            zoom=1,
+            zoom=zoom,
             position=(
                 w,
-                self.scene[LAYER_BACKDROP][0].top
+                self._scene[LAYER_BACKDROP][0].top
             )
         )
+
+        self.setup_physics_engine()
+
+        self.wait_for_begin()
+
+    def setup_physics_engine(self):
+        self._physics_engine = arcade.PhysicsEnginePlatformer(
+            self.player,
+            ladders=None,
+            walls=self._scene[LAYER_WALL],
+            gravity_constant=GRAVITY_SLOWMO
+        )
+
 
     def load_tilemap(self, path):
         """ Load tilemap """
 
         self.tilemap = arcade.load_tilemap(path)
-        self.scene = arcade.Scene.from_tilemap(self.tilemap)
+        self._scene = arcade.Scene.from_tilemap(self.tilemap)
 
     def update(self):
+        self.move_right()
+        self._physics_engine.update()
         self.scroll_to_player()
 
     def scroll_to_player(self, camera_speed=1):
@@ -57,24 +78,45 @@ class Level:
         """
         w, h = arcade.get_window().get_size()
 
-        player = self.scene[LAYER_PLAYER][0]
+        player = self.player
 
-        x, y = player.center_x, player.center_y
+        x, y = player.position
 
-        x = max(x, w / 2)
+        y = h
 
-        y += h / 2
-        y -= player.height / 2
+        y *= self._camera.zoom
 
-        zoom = round(self._camera.zoom, 2)
-
-        x += (1 - zoom) * x
-        y += (1 - zoom) * y
+        y = max(y, h)
 
         self._camera.position = arcade.math.lerp_2d(
             self._camera.position, (x, y), camera_speed
         )
 
     def draw(self):
+        """ Draw level """
+
         self._camera.use()
-        self.scene.draw()
+        self._scene.draw()
+
+    def move_right(self):
+
+        if not self._can_walk:
+            return
+
+        self.player.change_x += PLAYER_MOVE_SPEED
+        self.player.angle += PLAYER_MOVE_ANGLE
+
+        if self.player.angle > 360:
+            self.player.angle = self.player.angle - 360
+
+    @property
+    def player(self):
+        return self._scene[LAYER_PLAYER][0]
+
+    def wait_for_begin(self, dt: float = 0.0):
+        if self._physics_engine.can_jump():
+            self._can_walk = True
+            self._physics_engine.gravity_constants = GRAVITY_DEFAULT
+            return
+
+        pyglet.clock.schedule_once(self.wait_for_begin, 1 / 4)
