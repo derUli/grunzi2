@@ -153,7 +153,7 @@ class Startup:
         )
 
         parser.add_argument(
-            '--center_window',
+            '--center-window',
             action='store_true',
             default=False,
             help='Run in windowed mode'
