@@ -5,10 +5,14 @@
 import gettext
 import logging
 import os
+import time
 
 import arcade
 import pyglet
+import userpaths
 
+from app.constants.audio import VOLUME_SOUND_FX
+from app.constants.gameinfo import DIRECTORY_GAME_NAME
 from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_FULLSCREEN
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.string import label_value
@@ -18,6 +22,7 @@ _ = gettext.gettext
 
 DRAW_RATE = 1 / 9999
 UPDATE_RATE = 1 / 62
+
 
 class GameWindow(arcade.Window):
     """
@@ -32,7 +37,7 @@ class GameWindow(arcade.Window):
             vsync: bool = True,
             antialiasing: bool = True,
             samples: int = 4,
-            center_window = False
+            center_window=False
     ):
         """ Constructor """
 
@@ -134,7 +139,31 @@ class GameWindow(arcade.Window):
         """ On keyboard key presssed """
 
         if symbol in KEY_SCREENSHOT:
-            logging.warning('TODO: implement screenshot')
+            self.on_screenshot()
         elif symbol in KEY_FULLSCREEN:
             logging.info(label_value('Fullscreen', not self.fullscreen))
             self.set_fullscreen(not self.fullscreen)
+
+    def on_screenshot(self):
+        """ Save a screenshot """
+
+        screenshot_dir = str(os.path.join(userpaths.get_my_pictures(), DIRECTORY_GAME_NAME))
+
+        if not os.path.exists(screenshot_dir):
+            os.makedirs(screenshot_dir)
+
+        filename = os.path.join(screenshot_dir, time.strftime("%Y%m%d-%H%M%S") + '.jpg')
+
+        start = time.time()
+        image = arcade.get_image().convert('RGB')
+        image.save(filename, quality=90)
+        end = time.time() - start
+
+        logging.info(f"Screenshot saved as {filename} in {end} seconds")
+
+        sound = arcade.load_sound(
+            os.path.join(self._root_dir, 'resources', 'sounds', 'common', 'screenshot.mp3')
+        )
+        sound.play(volume=VOLUME_SOUND_FX)
+
+        return filename

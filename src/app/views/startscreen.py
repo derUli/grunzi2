@@ -9,6 +9,7 @@ import webbrowser
 import arcade
 from arcade import View, Window
 
+from app.constants.audio import VOLUME_MUSIC
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
@@ -105,7 +106,7 @@ class StartScreen(View):
             os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
             streaming=True
         )
-        self._music = music.play(loop=True, volume=1)
+        self._music = music.play(loop=True, volume=VOLUME_MUSIC)
 
     def setup_particles(self):
         """ Setup article animation """
