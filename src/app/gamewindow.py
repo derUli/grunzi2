@@ -15,6 +15,7 @@ from app.constants.audio import VOLUME_SOUND_FX
 from app.constants.gameinfo import DIRECTORY_GAME_NAME
 from app.constants.input.keyboard import KEY_SCREENSHOT
 from app.constants.settings import SETTINGS_SIZE_MINIUM
+from app.utils.fpscounter import FPSCounter
 from app.utils.string import label_value
 from app.views.logo import Logo
 from app.views.startscreen import StartScreen
@@ -22,9 +23,7 @@ from app.views.startscreen import StartScreen
 _ = gettext.gettext
 
 MARGIN = 10
-MAX_FPS_COUNT = 1000
 
-FONT_SIZE_FPS = 16
 
 class GameWindow(arcade.Window):
     """
@@ -52,7 +51,7 @@ class GameWindow(arcade.Window):
         self._screen = None
         self._controller_manager = None
         self._controllers = []
-        self._fps_text = {}
+        self._fps_counter = None
 
         # Call the parent class and set up the window
         super().__init__(
@@ -92,6 +91,8 @@ class GameWindow(arcade.Window):
 
         if show_fps:
             arcade.enable_timings()
+            self._fps_counter = FPSCounter()
+            self._fps_counter.setup(self)
 
         view.setup(root_dir)
         self.show_view(view)
@@ -181,43 +182,11 @@ class GameWindow(arcade.Window):
 
         return filename
 
+    def on_update(self, delta_time: float):
+        if self._fps_counter:
+            self._fps_counter.update()
+
     def draw_after(self):
         """ Draw after view """
-        self.draw_fps()
-
-    def draw_fps(self):
-        if not arcade.timings_enabled():
-            return
-
-        fps = round(arcade.get_fps())
-        fps_str = str(fps)
-
-        if fps_str in self._fps_text:
-            fps_text = self._fps_text[fps_str]
-        else:
-            fps_text = arcade.Text(
-                fps_str,
-                font_size=FONT_SIZE_FPS,
-                color=arcade.csscolor.LIME_GREEN,
-                x=0,
-                y=0
-            )
-
-            fps_text.x = MARGIN
-            fps_text.y = self.height - MARGIN - fps_text.content_height / 2
-
-            self._fps_text[fps_str] = fps_text
-
-            fps_text_len = len(self._fps_text)
-            if fps_text_len >= MAX_FPS_COUNT:
-                keys = list(self._fps_text.keys())[-MAX_FPS_COUNT:]
-
-                new_dict = {}
-
-                for key in keys:
-                    new_dict[key] = self._fps_text[key]
-
-                self._fps_text = new_dict
-
-
-        fps_text.draw()
+        if self._fps_counter:
+            self._fps_counter.draw()
