@@ -12,6 +12,7 @@ from app.constants.gameinfo import VERSION_STRING
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
+from app.views.game import Game
 from app.views.view import View
 
 _ = gettext.gettext
@@ -193,10 +194,13 @@ class StartScreen(View):
                     self._music.pause()
                     self._music = None
 
-                    logging.info('TODO: start game')
+                    view = Game()
+                    view.setup(self._root_dir)
+                    self.window.show_view(view)
 
     def on_update_particles(self):
         """ Update particles """
+
         particles = self._scene[SCENE_LAYER_PARTICLES]
         for particle in particles:
             particle.center_x -= PARTICLE_SPEED
