@@ -130,13 +130,15 @@ class StartScreen(View):
 
     def setup_music(self, root_dir: str):
         """ Play music """
+
         music = arcade.load_sound(
             os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
             streaming=True
         )
         self._music = music.play(loop=True, volume=VOLUME_MUSIC)
 
-    def setup_sounds(self, root_dir):
+    def setup_sounds(self, root_dir: str):
+        """ Setup sounds """
         self._sound_hover = arcade.load_sound(
             os.path.join(root_dir, 'resources', 'sounds', 'common', 'hover.mp3'),
         )
