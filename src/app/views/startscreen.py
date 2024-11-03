@@ -8,7 +8,6 @@ import webbrowser
 
 import arcade
 
-from app.constants.audio import VOLUME_MUSIC
 from app.constants.gameinfo import VERSION_STRING
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
@@ -44,6 +43,7 @@ PARTICLES_COUNT = 500
 
 URL_ITCH_IO = 'https://hog-games.itch.io/'
 
+
 class StartScreen(View):
     """ The main menu """
 
@@ -62,7 +62,6 @@ class StartScreen(View):
         self._last_hover = None
 
         self._sound_hover = None
-
 
     def setup(self, root_dir: str):
         """ Setup the start screen """
@@ -113,7 +112,6 @@ class StartScreen(View):
         )
         self._scene.add_sprite(SCENE_LAYER_TEXT, self._text_version)
 
-
     def setup_icons(self, root_dir: str):
         """ Setup menu icons """
 
@@ -138,7 +136,7 @@ class StartScreen(View):
             os.path.join(root_dir, 'resources', 'music', 'DeepSpace.mp3'),
             streaming=True
         )
-        self._music = music.play(loop=True, volume=VOLUME_MUSIC)
+        self._music = music.play(loop=True, volume=self.window.audio_volumes.volume_music)
 
     def setup_sounds(self, root_dir: str):
         """ Setup sounds """
@@ -249,7 +247,7 @@ class StartScreen(View):
             if sprite.collides_with_point((x, y)):
                 logging.info('Mouse entering item')
 
-                self._sound_hover.play()
+                self._sound_hover.play(volume=self.window.audio_volumes.volume_sound)
 
                 self._last_hover = sprite
                 self._last_hover.scale = 1.02

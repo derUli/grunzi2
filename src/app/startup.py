@@ -16,9 +16,11 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_VSYNC,
     SETTINGS_DEFAULT_SIZE,
     SETTINGS_ANTIALIASING_CHOICES,
-    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE
+    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE,
+    SETTINGS_DEFAULT_VOLUME_MUSIC, SETTINGS_DEFAULT_VOLUME_SOUND
 )
 from app.gamewindow import GameWindow
+from app.utils.audiovolumes import AudioVolumes
 from app.utils.string import label_value
 
 try:
@@ -173,7 +175,34 @@ class Startup:
         window.set_visible(True)
 
         self.log_hardware_info(window)
-        window.setup(self._root_dir, show_intro=show_intro, show_fps=args.show_fps)
+
+        volume_music = args.volume_music
+        volume_sound = args.volume_sound
+
+        if volume_music > 0:
+            volume_music = volume_music / 100
+
+        if volume_sound > 0:
+            volume_sound = volume_sound / 100
+
+        streaming = True
+
+        if args.streaming:
+            streaming = True
+
+        if args.no_streaming:
+            streaming = False
+
+        window.setup(
+            self._root_dir,
+            show_intro=show_intro,
+            show_fps=args.show_fps,
+            audio_volumes=AudioVolumes(
+                volume_music=volume_music,
+                volume_sound=volume_sound,
+                streaming=streaming,
+            )
+        )
         arcade.run()
 
     @staticmethod
@@ -284,6 +313,36 @@ class Startup:
             action='store_true',
             default=False,
             help='Show FPS'
+        )
+
+        parser.add_argument(
+            '--volume-music',
+            action='store',
+            type=int,
+            help='The music volume',
+            default=SETTINGS_DEFAULT_VOLUME_MUSIC
+        )
+
+        parser.add_argument(
+            '--volume-sound',
+            action='store',
+            type=int,
+            help='The sound volume',
+            default=SETTINGS_DEFAULT_VOLUME_SOUND
+        )
+
+        parser.add_argument(
+            '--streaming',
+            action='store_true',
+            default=False,
+            help='Enable audio streaming'
+        )
+
+        parser.add_argument(
+            '--no-streaming',
+            action='store_true',
+            default=False,
+            help='Disable audio streaming'
         )
 
         return parser.parse_args()

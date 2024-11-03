@@ -11,10 +11,10 @@ import arcade
 import pyglet
 import userpaths
 
-from app.constants.audio import VOLUME_SOUND_FX
 from app.constants.gameinfo import DIRECTORY_GAME_NAME
 from app.constants.input.keyboard import KEY_SCREENSHOT
 from app.constants.settings import SETTINGS_SIZE_MINIUM
+from app.utils.audiovolumes import AudioVolumes
 from app.utils.fpscounter import FPSCounter
 from app.utils.string import label_value
 from app.views.logo import Logo
@@ -52,6 +52,7 @@ class GameWindow(arcade.Window):
         self._controller_manager = None
         self._controllers = []
         self._fps_counter = None
+        self._audio_volumes = None
 
         # Call the parent class and set up the window
         super().__init__(
@@ -70,10 +71,17 @@ class GameWindow(arcade.Window):
             gc_mode='auto'
         )
 
-    def setup(self, root_dir: str, show_intro: bool = True, show_fps: bool = False):
+    def setup(
+            self,
+            root_dir: str,
+            audio_volumes: AudioVolumes,
+            show_intro: bool = True,
+            show_fps: bool = False,
+    ):
         """ Set up the main window here"""
 
         self._root_dir = root_dir
+        self._audio_volumes = audio_volumes
 
         icon = pyglet.image.load(
             os.path.join(root_dir, 'resources', 'images', 'ui', 'icon.ico')
@@ -178,7 +186,7 @@ class GameWindow(arcade.Window):
         sound = arcade.load_sound(
             os.path.join(self._root_dir, 'resources', 'sounds', 'common', 'screenshot.mp3')
         )
-        sound.play(volume=VOLUME_SOUND_FX)
+        sound.play(volume=self._audio_volumes.volume_audio)
 
         return filename
 
@@ -190,3 +198,7 @@ class GameWindow(arcade.Window):
         """ Draw after view """
         if self._fps_counter:
             self._fps_counter.draw()
+
+    @property
+    def audio_volumes(self):
+        return self._audio_volumes
