@@ -68,9 +68,9 @@ class StartScreen(View):
         self.window.set_mouse_visible(not any(self.window.controllers))
 
         # Text
+        self.setup_particles()
         self.setup_text()
         self.setup_icons(root_dir)
-        self.setup_particles()
 
         # Play music
         self.setup_music(root_dir)
