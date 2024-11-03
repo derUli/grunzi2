@@ -32,12 +32,14 @@ class GameWindow(arcade.Window):
             width: int = 1280,
             height: int = 720,
             fullscreen: bool = True,
+            visible: bool = True,
             vsync: bool = True,
             draw_rate: int = 1 / 60,
             update_rate=1 / 60,
             center_window=False,
             antialiasing: bool = True,
             samples: int = 4,
+
     ):
         """ Constructor """
 
@@ -53,6 +55,7 @@ class GameWindow(arcade.Window):
             height=height,
             title=_('Welcome to Amerre'),
             fullscreen=fullscreen,
+            visible=visible,
             vsync=vsync,
             resizable=False,
             draw_rate=draw_rate,

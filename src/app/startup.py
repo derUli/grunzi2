@@ -7,6 +7,7 @@ import sys
 import arcade
 import psutil
 import pyglet
+from attr.converters import optional
 
 from app.constants.settings import (
     SETTINGS_DEFAULT_FULLSCREEN,
@@ -155,8 +156,21 @@ class Startup:
             samples=samples,
             center_window=args.center_window,
             draw_rate=draw_rate,
-            update_rate=update_rate
+            update_rate=update_rate,
+            visible=False
         )
+
+        # Set window location based on arguments
+        x, y = window.get_location()
+
+        if args.x is not None:
+            x = args.x
+
+        if args.y is not None:
+            y = args.y
+
+        window.set_location(x, y)
+        window.set_visible(True)
 
         self.log_hardware_info(window)
         window.setup(self._root_dir, show_intro=show_intro)
@@ -178,7 +192,7 @@ class Startup:
             '--center-window',
             action='store_true',
             default=False,
-            help='Run in windowed mode'
+            help='Center window on screen'
         )
 
         parser.add_argument(
@@ -206,21 +220,21 @@ class Startup:
             '--size',
             action='store',
             default=SETTINGS_DEFAULT_SIZE,
-            help='size of window'
+            help='Size of window'
         )
 
         parser.add_argument(
             '--intro',
             action='store_true',
             default=False,
-            help='Show Intro'
+            help='Show intro'
         )
 
         parser.add_argument(
             '--no-intro',
             action='store_true',
             default=False,
-            help='Don\'t show Intro'
+            help='Don\'t show intro'
         )
 
         parser.add_argument(
@@ -246,6 +260,22 @@ class Startup:
             help='The antialiasing level',
             choices=SETTINGS_ANTIALIASING_CHOICES,
             default=SETTINGS_DEFAULT_ANTIALIASING
+        )
+
+        parser.add_argument(
+            '-x',
+            action='store',
+            type=int,
+            required=False,
+            help = 'The X position of the window'
+        )
+
+        parser.add_argument(
+            '-y',
+            action='store',
+            type=int,
+            required=False,
+            help = 'The X position of the window'
         )
 
         return parser.parse_args()
