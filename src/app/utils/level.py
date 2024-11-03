@@ -7,7 +7,7 @@ import pyglet
 from app.constants.layers import LAYER_BACKDROP, LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
-PLAYER_MOVE_SPEED = 0.005
+PLAYER_MOVE_SPEED = 0.1
 PLAYER_MOVE_ANGLE = 1
 
 GRAVITY_SLOWMO = 0.001
@@ -81,12 +81,6 @@ class Level:
         player = self.player
 
         x, y = player.position
-
-        y = h
-
-        y *= self._camera.zoom
-
-        y = max(y, h)
 
         self._camera.position = arcade.math.lerp_2d(
             self._camera.position, (x, y), camera_speed

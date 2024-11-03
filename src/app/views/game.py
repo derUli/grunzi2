@@ -18,6 +18,7 @@ class Game(View):
         super().setup(root_dir)
 
         self._level = Level()
+        self.window.set_mouse_visible(False)
 
     def setup_level(self, map_name: str):
         self._level.setup(self._root_dir, map_name)
