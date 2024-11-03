@@ -186,7 +186,7 @@ class GameWindow(arcade.Window):
         sound = arcade.load_sound(
             os.path.join(self._root_dir, 'resources', 'sounds', 'common', 'screenshot.mp3')
         )
-        sound.play(volume=self._audio_volumes.volume_audio)
+        sound.play(volume=self._audio_volumes.volume_sound)
 
         return filename
 

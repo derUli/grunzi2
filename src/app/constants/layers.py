@@ -1,0 +1,2 @@
+LAYER_BACKDROP = 'Backdrop'
+LAYER_PLAYER = 'Player'

@@ -8,7 +8,7 @@ import webbrowser
 
 import arcade
 
-from app.constants.gameinfo import VERSION_STRING
+from app.constants.gameinfo import VERSION_STRING, MAPS
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
@@ -196,6 +196,7 @@ class StartScreen(View):
 
                     view = Game()
                     view.setup(self._root_dir)
+                    view.setup_level(MAPS[0])
                     self.window.show_view(view)
 
     def on_update_particles(self):
@@ -234,6 +235,9 @@ class StartScreen(View):
 
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int) -> bool | None:
         """ Handle mouse movement """
+
+        if self._fade_sprite:
+            return
 
         if self._last_hover:
             if not self._last_hover.collides_with_point((x, y)):
