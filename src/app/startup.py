@@ -13,7 +13,7 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_VSYNC,
     SETTINGS_DEFAULT_SIZE,
     SETTINGS_ANTIALIASING_CHOICES,
-    SETTINGS_DEFAULT_ANTIALIASING
+    SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE
 )
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
@@ -133,6 +133,11 @@ class Startup:
         samples = args.antialiasing
         antialiasing = samples > 0
 
+        draw_rate = 1 / 9999
+
+        if args.draw_rate > 0:
+            draw_rate = 1 / args.draw_rate
+
         window = GameWindow(
             fullscreen=fullscreen,
             vsync=vsync,
@@ -140,7 +145,8 @@ class Startup:
             height=height,
             antialiasing=antialiasing,
             samples=samples,
-            center_window=args.center_window
+            center_window=args.center_window,
+            draw_rate=draw_rate
         )
 
         self.log_hardware_info(window)
@@ -206,6 +212,14 @@ class Startup:
             action='store_true',
             default=False,
             help='Don\'t show Intro'
+        )
+
+        parser.add_argument(
+            '--draw-rate',
+            action='store',
+            type=int,
+            help='The draw rate',
+            default=SETTINGS_DEFAULT_DRAW_RATE
         )
 
         parser.add_argument(

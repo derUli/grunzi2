@@ -57,7 +57,6 @@ class Logo(View):
 
         self._phase = PHASE_FADE_IN
 
-
     def on_update(self, delta_time: float):
         """ On update """
         if self._phase == PHASE_NEXT:
