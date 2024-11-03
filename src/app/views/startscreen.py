@@ -82,6 +82,8 @@ class StartScreen(View):
         self.setup_music(root_dir)
         self.setup_sounds(root_dir)
 
+        self.on_update(0)
+
     def setup_text(self):
         """ Setup text """
 

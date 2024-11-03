@@ -22,7 +22,7 @@ from app.views.startscreen import StartScreen, FONT_SIZE_VERSION
 _ = gettext.gettext
 
 MARGIN = 10
-MAX_FPS_COUNT = 1
+MAX_FPS_COUNT = 500
 
 FONT_SIZE_FPS = 16
 
@@ -67,7 +67,8 @@ class GameWindow(arcade.Window):
             update_rate=update_rate,
             center_window=center_window,
             antialiasing=antialiasing,
-            samples=samples
+            samples=samples,
+            gc_mode='auto'
         )
 
     def setup(self, root_dir: str, show_intro: bool = True, show_fps: bool = False):
