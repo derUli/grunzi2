@@ -176,7 +176,7 @@ class Startup:
             '--size',
             action='store',
             default=SETTINGS_DEFAULT_SIZE,
-            help=f'window size {SETTINGS_DEFAULT_SIZE}'
+            help=f'size of window'
         )
 
         parser.add_argument(
