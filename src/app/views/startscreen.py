@@ -58,6 +58,7 @@ class StartScreen(View):
         self._fade_sprite = None
         self._scene = arcade.Scene()
         self._icon_itch_io = None
+        self._icon_exit = None
         self._last_hover = None
 
         self._music = None
@@ -118,8 +119,14 @@ class StartScreen(View):
             x=0,
             y=0
         )
-
         self._scene.add_sprite(SCENE_LAYER_ICON, self._icon_itch_io)
+
+        self._icon_exit = arcade.sprite.Sprite(
+            path_or_texture=os.path.join(root_dir, 'resources', 'images', 'ui', 'exit.jpg'),
+            x=0,
+            y=0
+        )
+        self._scene.add_sprite(SCENE_LAYER_ICON, self._icon_exit)
 
     def setup_music(self, root_dir: str):
         """ Play music """
@@ -167,6 +174,9 @@ class StartScreen(View):
 
         self._icon_itch_io.right = self.window.width - MARGIN
         self._icon_itch_io.bottom = MARGIN
+
+        self._icon_exit.right = self.window.width - MARGIN
+        self._icon_exit.top = self.window.height - MARGIN
 
         # On fading in
         if self._fade_sprite is not None:
@@ -223,7 +233,8 @@ class StartScreen(View):
 
         sprites = [
             self._icon_itch_io,
-            self._text_title
+            self._text_title,
+            self._icon_exit
         ]
 
         for sprite in sprites:
@@ -243,12 +254,13 @@ class StartScreen(View):
             return
 
         if self._last_hover == self._text_title:
-            self._sound_hover.play()
             self.on_start_game()
-            return
 
         if self._last_hover == self._icon_itch_io:
             self.on_itch_io()
+
+        if self._last_hover == self._icon_exit:
+            self.on_exit()
 
     def on_button_press(self, joystick, key) -> None:
         """ On controller button press """
