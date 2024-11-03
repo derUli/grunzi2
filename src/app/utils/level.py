@@ -1,4 +1,5 @@
 """ Level """
+import math
 import os
 
 import arcade
@@ -58,11 +59,17 @@ class Level:
 
         player = self.scene[LAYER_PLAYER][0]
 
-        x, y = player.left, player.bottom
+        x, y = player.center_x, player.center_y
 
-        x += w / 2
+        x = max(x, w / 2)
+
         y += h / 2
+        y -= player.height / 2
 
+        zoom = round(self._camera.zoom, 2)
+
+        x += (1 - zoom) * x
+        y += (1 - zoom) * y
 
         self._camera.position = arcade.math.lerp_2d(
             self._camera.position, (x, y), camera_speed
