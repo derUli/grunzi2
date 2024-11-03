@@ -10,6 +10,7 @@ import arcade
 from arcade import View, Window
 
 from app.constants.audio import VOLUME_MUSIC
+from app.constants.gameinfo import VERSION_STRING
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
@@ -19,6 +20,7 @@ _ = gettext.gettext
 BACKGROUND_COLOR = (58, 154, 230, 255)
 FONT_SIZE = 20
 FONT_SIZE_TITLE = 80
+FONT_SIZE_VERSION = 12
 FADE_SPEED = 5
 FADE_MAX = 255
 MUSIC_FADE_SPEED = 0.01
@@ -50,6 +52,8 @@ class StartScreen(View):
         super().__init__(window)
         self._text_start = None
         self._text_title = None
+        self._text_version = None
+
         self._fade_sprite = None
         self._scene = arcade.Scene()
         self._icon_itch_io = None
@@ -87,6 +91,13 @@ class StartScreen(View):
             x=0,
             y=0,
             font_size=FONT_SIZE_TITLE
+        )
+
+        self._text_version = arcade.Text(
+            text=" ".join([_('Version'), VERSION_STRING]),
+            x=0,
+            y=0,
+            font_size=FONT_SIZE_VERSION
         )
 
     def setup_icons(self, root_dir: str):
@@ -136,6 +147,9 @@ class StartScreen(View):
         self._text_title.x = (self.window.width / 2) - (self._text_title.content_width / 2)
         self._text_title.y = self.window.height / 2
 
+        self._text_version.x = MARGIN
+        self._text_version.y = MARGIN
+
         self._icon_itch_io.right = self.window.width - MARGIN
         self._icon_itch_io.bottom = MARGIN
 
@@ -174,6 +188,7 @@ class StartScreen(View):
         # Draw text
         self._text_title.draw()
         self._text_start.draw()
+        self._text_version.draw()
 
         if SCENE_LAYER_FADEIN in self._scene:
             self._scene[SCENE_LAYER_FADEIN].draw()
