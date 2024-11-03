@@ -16,6 +16,7 @@ from app.constants.gameinfo import DIRECTORY_GAME_NAME
 from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_FULLSCREEN
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.string import label_value
+from app.views.logo import Logo
 from app.views.startscreen import StartScreen
 
 _ = gettext.gettext
@@ -62,7 +63,7 @@ class GameWindow(arcade.Window):
             samples=samples
         )
 
-    def setup(self, root_dir: str):
+    def setup(self, root_dir: str, show_intro: bool = True):
         """ Set up the main window here"""
 
         self._root_dir = root_dir
@@ -76,7 +77,11 @@ class GameWindow(arcade.Window):
         w, h = SETTINGS_SIZE_MINIUM
         self.set_minimum_size(w, h)
 
-        view = StartScreen()
+        if show_intro:
+            view = Logo()
+        else:
+            view = StartScreen()
+
         view.setup(root_dir)
         self.show_view(view)
 

@@ -33,6 +33,9 @@ class Startup:
 
     def __init__(self):
         """ Constructor """
+
+        super().__init__()
+
         self.args = None
         self._root_dir = None
         self.args = None
@@ -106,8 +109,14 @@ class Startup:
         elif args.no_vsync:
             vsync = False
 
-        size = args.size
+        show_intro = True
 
+        if args.intro:
+            show_intro = True
+        elif args.no_intro:
+            show_intro = False
+
+        size = args.size
         size = size.lower()
         width, height = size.split('x')
 
@@ -124,8 +133,6 @@ class Startup:
         samples = args.antialiasing
         antialiasing = samples > 0
 
-        print(samples, antialiasing)
-
         window = GameWindow(
             fullscreen=fullscreen,
             vsync=vsync,
@@ -137,7 +144,7 @@ class Startup:
         )
 
         self.log_hardware_info(window)
-        window.setup(self._root_dir)
+        window.setup(self._root_dir, show_intro=show_intro)
         arcade.run()
 
     @staticmethod
@@ -185,6 +192,20 @@ class Startup:
             action='store',
             default=SETTINGS_DEFAULT_SIZE,
             help='size of window'
+        )
+
+        parser.add_argument(
+            '--intro',
+            action='store_true',
+            default=False,
+            help='Show Intro'
+        )
+
+        parser.add_argument(
+            '--no-intro',
+            action='store_true',
+            default=False,
+            help='Don\'t show Intro'
         )
 
         parser.add_argument(
