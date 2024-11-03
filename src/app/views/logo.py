@@ -3,9 +3,9 @@ import os
 
 import arcade
 import pyglet
-from arcade import View
 
 from app.views.startscreen import StartScreen
+from app.views.view import View
 
 SCENE_LAYER_LOGO = 'Logo'
 SCENE_LAYER_FADE = 'Fade'
@@ -22,15 +22,6 @@ LOGO_LENGTH = 3
 
 class Logo(View):
     """ Logo splash screen"""
-
-    def __init__(self):
-        """ Constructor """
-
-        super().__init__()
-        self._root_dir = None
-        self._scene = None
-        self._fade_sprite = None
-        self._phase = None
 
     def setup(self, root_dir: str):
         """ Setup logo screen """

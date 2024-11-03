@@ -1,4 +1,7 @@
 """ Game startup """
+
+# pylint: disable=C0103:
+
 import argparse
 import logging
 import platform
@@ -17,8 +20,6 @@ from app.constants.settings import (
 )
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
-
-# pylint: disable=C0103:
 
 try:
     import sounddevice
@@ -266,7 +267,7 @@ class Startup:
             action='store',
             type=int,
             required=False,
-            help = 'The X position of the window'
+            help='The X position of the window'
         )
 
         parser.add_argument(
@@ -274,7 +275,7 @@ class Startup:
             action='store',
             type=int,
             required=False,
-            help = 'The X position of the window'
+            help='The X position of the window'
         )
 
         return parser.parse_args()

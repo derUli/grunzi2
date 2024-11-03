@@ -7,13 +7,13 @@ import random
 import webbrowser
 
 import arcade
-from arcade import View, Window
 
 from app.constants.audio import VOLUME_MUSIC
 from app.constants.gameinfo import VERSION_STRING
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
+from app.views.view import View
 
 _ = gettext.gettext
 
@@ -47,21 +47,20 @@ URL_ITCH_IO = 'https://hog-games.itch.io/'
 class StartScreen(View):
     """ The main menu """
 
-    def __init__(self, window: Window | None = None) -> None:
+    def __init__(self) -> None:
         """ Constructor """
 
-        super().__init__(window)
+        super().__init__()
+
         self._text_start = None
         self._text_title = None
         self._text_version = None
 
-        self._fade_sprite = None
         self._scene = arcade.Scene()
         self._icon_itch_io = None
         self._icon_exit = None
         self._last_hover = None
 
-        self._music = None
         self._sound_hover = None
 
 
