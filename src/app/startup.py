@@ -17,7 +17,7 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_SIZE,
     SETTINGS_ANTIALIASING_CHOICES,
     SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE,
-    SETTINGS_DEFAULT_VOLUME_MUSIC, SETTINGS_DEFAULT_VOLUME_SOUND
+    SETTINGS_DEFAULT_VOLUME_MUSIC, SETTINGS_DEFAULT_VOLUME_SOUND, SETTINGS_DEFAULT_VOLUME_MASTER
 )
 from app.gamewindow import GameWindow
 from app.utils.audiovolumes import AudioVolumes
@@ -178,12 +178,16 @@ class Startup:
 
         volume_music = args.volume_music
         volume_sound = args.volume_sound
+        volume_master = args.volume_master
 
         if volume_music > 0:
             volume_music = volume_music / 100
 
         if volume_sound > 0:
             volume_sound = volume_sound / 100
+
+        if volume_master > 0:
+            volume_master = volume_master / 100
 
         streaming = True
 
@@ -200,6 +204,7 @@ class Startup:
             audio_volumes=AudioVolumes(
                 volume_music=volume_music,
                 volume_sound=volume_sound,
+                volume_master=volume_master,
                 streaming=streaming,
             )
         )
@@ -329,6 +334,14 @@ class Startup:
             type=int,
             help='The sound volume',
             default=SETTINGS_DEFAULT_VOLUME_SOUND
+        )
+
+        parser.add_argument(
+            '--volume-master',
+            action='store',
+            type=int,
+            help='The master volume',
+            default=SETTINGS_DEFAULT_VOLUME_MASTER
         )
 
         parser.add_argument(
