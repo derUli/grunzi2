@@ -65,8 +65,8 @@ class StartScreen(View):
 
         # Text
         self.setup_text()
-        self.setup_particles()
         self.setup_icons(root_dir)
+        self.setup_particles()
 
         # Play music
         self.setup_music(root_dir)
