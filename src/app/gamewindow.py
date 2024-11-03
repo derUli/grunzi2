@@ -22,7 +22,7 @@ from app.views.startscreen import StartScreen
 _ = gettext.gettext
 
 MARGIN = 10
-MAX_FPS_COUNT = 100
+MAX_FPS_COUNT = 1000
 
 FONT_SIZE_FPS = 16
 
@@ -91,7 +91,7 @@ class GameWindow(arcade.Window):
             view = StartScreen()
 
         if show_fps:
-            arcade.enable_timings(max_history = 100)
+            arcade.enable_timings()
 
         view.setup(root_dir)
         self.show_view(view)
@@ -218,5 +218,6 @@ class GameWindow(arcade.Window):
                     new_dict[key] = self._fps_text[key]
 
                 self._fps_text = new_dict
+
 
         fps_text.draw()

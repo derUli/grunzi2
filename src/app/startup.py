@@ -173,7 +173,7 @@ class Startup:
         window.set_visible(True)
 
         self.log_hardware_info(window)
-        window.setup(self._root_dir, show_intro=show_intro)
+        window.setup(self._root_dir, show_intro=show_intro, show_fps=args.show_fps)
         arcade.run()
 
     @staticmethod
