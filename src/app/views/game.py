@@ -14,7 +14,8 @@ class Game(View):
 
     def setup(self, root_dir: str):
         """ Setup game"""
-        self._root_dir = root_dir = root_dir
+
+        super().setup(root_dir)
 
         arcade.set_background_color(arcade.color.RED)
 
