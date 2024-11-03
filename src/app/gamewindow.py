@@ -28,14 +28,14 @@ class GameWindow(arcade.Window):
 
     def __init__(
             self,
-            width: int,
-            height: int,
+            width: int = 1280,
+            height: int = 720,
             fullscreen: bool = True,
             vsync: bool = True,
+            antialiasing: bool = True,
+            samples: int = 4
     ):
         """ Constructor """
-
-        w, h = MINIMUM_SIZE
 
         self._mode = None
         self._root_dir = None
@@ -45,15 +45,17 @@ class GameWindow(arcade.Window):
 
         # Call the parent class and set up the window
         super().__init__(
-            width=w,
-            height=h,
+            width=width,
+            height=height,
             title=_('Welcome to Amerre'),
             fullscreen=fullscreen,
             vsync=vsync,
             resizable=True,
             draw_rate=DRAW_RATE,
             update_rate=UPDATE_RATE,
-            center_window=CENTER_WINDOW
+            center_window=CENTER_WINDOW,
+            antialiasing=antialiasing,
+            samples=samples
         )
 
     def setup(self, root_dir: str):

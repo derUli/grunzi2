@@ -8,10 +8,13 @@ import arcade
 import psutil
 import pyglet
 
-from app.constants.settings import (SETTINGS_DEFAULT_FULLSCREEN,
-                                    SETTINGS_DEFAULT_VSYNC,
-                                    SETTINGS_DEFAULT_SIZE
-                                    )
+from app.constants.settings import (
+    SETTINGS_DEFAULT_FULLSCREEN,
+    SETTINGS_DEFAULT_VSYNC,
+    SETTINGS_DEFAULT_SIZE,
+    ANTIALIASING_CHOICES,
+    SETTINGS_DEFAULT_ANTIALIASING
+)
 from app.gamewindow import GameWindow
 from app.utils.string import label_value
 
@@ -91,6 +94,7 @@ class Startup:
         vsync = SETTINGS_DEFAULT_VSYNC
 
         args = self.get_args()
+        logging.info(args)
 
         if args.fullscreen:
             fullscreen = True
@@ -117,11 +121,18 @@ class Startup:
             logging.error('Width and height must be higher than 0')
             return
 
+        samples = args.antialiasing
+        antialiasing = samples > 0
+
+        print(samples, antialiasing)
+
         window = GameWindow(
             fullscreen=fullscreen,
             vsync=vsync,
             width=width,
-            height=height
+            height=height,
+            antialiasing=antialiasing,
+            samples=samples
         )
 
         self.log_hardware_info(window)
@@ -166,6 +177,15 @@ class Startup:
             action='store',
             default=SETTINGS_DEFAULT_SIZE,
             help=f'window size {SETTINGS_DEFAULT_SIZE}'
+        )
+
+        parser.add_argument(
+            '--antialiasing',
+            action='store',
+            type=int,
+            help='The antialiasing level',
+            choices=ANTIALIASING_CHOICES,
+            default=SETTINGS_DEFAULT_ANTIALIASING
         )
 
         return parser.parse_args()
