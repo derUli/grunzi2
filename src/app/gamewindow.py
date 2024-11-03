@@ -13,7 +13,7 @@ import userpaths
 
 from app.constants.audio import VOLUME_SOUND_FX
 from app.constants.gameinfo import DIRECTORY_GAME_NAME
-from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_FULLSCREEN
+from app.constants.input.keyboard import KEY_SCREENSHOT
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.string import label_value
 from app.views.logo import Logo
@@ -55,7 +55,7 @@ class GameWindow(arcade.Window):
             title=_('Welcome to Amerre'),
             fullscreen=fullscreen,
             vsync=vsync,
-            resizable=True,
+            resizable=False,
             draw_rate=DRAW_RATE,
             update_rate=UPDATE_RATE,
             center_window=center_window,
@@ -145,9 +145,6 @@ class GameWindow(arcade.Window):
 
         if symbol in KEY_SCREENSHOT:
             self.on_screenshot()
-        elif symbol in KEY_FULLSCREEN:
-            logging.info(label_value('Fullscreen', not self.fullscreen))
-            self.set_fullscreen(not self.fullscreen)
 
     def on_screenshot(self):
         """ Save a screenshot """

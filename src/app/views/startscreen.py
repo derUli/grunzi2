@@ -202,13 +202,6 @@ class StartScreen(View):
         if symbol in KEY_CONFIRM and self._fade_sprite is None:
             self.on_start_game()
 
-    def on_resize(self, width, height):
-        """ On resize """
-
-        logging.info("Resize to %s", (width, height))
-
-        self.setup_particles()
-
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int) -> bool | None:
         """ Handle mouse movement """
 

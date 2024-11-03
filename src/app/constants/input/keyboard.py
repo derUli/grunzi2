@@ -11,4 +11,3 @@ KEY_CONFIRM = [
 ]
 
 KEY_SCREENSHOT = [arcade.key.F12]
-KEY_FULLSCREEN = [arcade.key.F11]
