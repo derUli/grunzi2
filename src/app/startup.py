@@ -7,7 +7,6 @@ import sys
 import arcade
 import psutil
 import pyglet
-from attr.converters import optional
 
 from app.constants.settings import (
     SETTINGS_DEFAULT_FULLSCREEN,
