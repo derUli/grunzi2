@@ -147,10 +147,36 @@ class GameWindow(arcade.Window):
         if hasattr(self.current_view, 'on_button_press'):
             self.current_view.on_button_press(joystick, key)
         else:
-            logging.error(
+            logging.debug(
                 label_value(
                     self.current_view.__class__.__qualname__,
                     'on_button_press not implemented'
+                )
+            )
+
+    def on_button_release(self, joystick, key) -> None:
+        """ On controller button released """
+
+        if hasattr(self.current_view, 'on_button_release'):
+            self.current_view.on_button_release(joystick, key)
+        else:
+            logging.debug(
+                label_value(
+                    self.current_view.__class__.__qualname__,
+                    'on_button_release not implemented'
+                )
+            )
+
+    def on_stick_motion(self, joystick, stick, value):
+        """ On stick motion """
+
+        if hasattr(self.current_view, 'on_stick_motion'):
+            self.current_view.on_stick_motion(joystick, stick, value)
+        else:
+            logging.debug(
+                label_value(
+                    self.current_view.__class__.__qualname__,
+                    'on_stick_motion not implemented'
                 )
             )
 
