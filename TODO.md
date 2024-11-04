@@ -18,3 +18,4 @@
 * Lokalisierung per GNU GetText
 * Sprachdateien auch in Englisch
 * Untertitel in Deutsch und Englisch
+* Pausen-Menü
