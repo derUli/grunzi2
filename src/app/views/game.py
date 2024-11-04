@@ -1,4 +1,5 @@
 """ Main game class """
+import arcade
 from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
@@ -58,7 +59,6 @@ class Game(View):
             self._jump = True
         elif symbol in KEY_SPRINT:
             self._sprint = True
-
 
     def on_key_release(self, _symbol: int, _modifiers: int):
         """ On key release"""

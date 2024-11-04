@@ -3,7 +3,10 @@
 # pylint: disable=C0103:
 
 import argparse
+import gettext
+import locale
 import logging
+import os
 import platform
 import sys
 
@@ -48,6 +51,7 @@ class Startup:
 
         self._root_dir = root_dir
         self.setup_logging()
+        self.setup_locale()
 
     @staticmethod
     def setup_logging():
@@ -61,8 +65,15 @@ class Startup:
             handlers=handlers
         )
 
+    def setup_locale(self) -> None:
+        """ setup locale """
+
+        locale_path = os.path.join(self._root_dir, 'resources', 'locales')
+        os.environ['LANG'] = ':'.join(locale.getlocale())
+        gettext.install('messages', locale_path)
+
     @staticmethod
-    def log_hardware_info(window: arcade.Window) -> None:
+    def log_system_info(window: arcade.Window) -> None:
         """
         Log hardware info
         """
@@ -95,6 +106,8 @@ class Startup:
         # Log the audio devices
         for audio in sounddevice.query_devices():
             logging.info(label_value('Audio', audio['name']))
+
+        logging.info(label_value('Locale', locale.getlocale()))
 
     def start(self) -> None:
         """ Start game """
@@ -177,7 +190,7 @@ class Startup:
         window.set_location(x, y)
         window.set_visible(True)
 
-        self.log_hardware_info(window)
+        self.log_system_info(window)
 
         volume_music = args.volume_music
         volume_sound = args.volume_sound
