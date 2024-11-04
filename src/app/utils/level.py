@@ -179,6 +179,7 @@ class Level:
         pyglet.clock.schedule_once(self.wait_for_begin, 1 / 4)
 
     def update_clouds(self):
+        """ Move the clouds """
         clouds = self._scene[LAYER_CLOUD]
 
         width = self.tilemap.width * self.tilemap.tile_width
