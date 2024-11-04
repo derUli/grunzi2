@@ -14,5 +14,5 @@ class AudioVolumes:
         """ Constructor """
 
         self.volume_music = volume_music * volume_master
-        self.volume_sound = volume_sound  * volume_master
+        self.volume_sound = volume_sound * volume_master
         self.streaming = streaming

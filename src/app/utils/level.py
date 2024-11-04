@@ -4,14 +4,18 @@ import os
 import arcade
 import pyglet
 
-from app.constants.layers import LAYER_BACKDROP, LAYER_PLAYER, LAYER_WALL
+from app.constants.layers import LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
-PLAYER_MOVE_SPEED = 0.05
+PLAYER_MOVE_SPEED = 2
 PLAYER_MOVE_ANGLE = 1
 
-GRAVITY_SLOWMO = 0.05
+GRAVITY_SLOWMO = 0.0025
 GRAVITY_DEFAULT = 1
+
+ALPHA_SPEED = 1
+ALPHA_MAX = 255
+
 
 class Level:
     """ Level """
@@ -33,12 +37,8 @@ class Level:
         self.load_tilemap(path)
 
         w, h = arcade.get_window().get_size()
-        self._camera = arcade.camera.Camera2D(
-            position=(
-                w,
-                self._scene[LAYER_BACKDROP][0].top
-            )
-        )
+        self._camera = arcade.camera.Camera2D()
+        self.scroll_to_player()
 
         self.setup_physics_engine()
 
@@ -52,10 +52,8 @@ class Level:
             gravity_constant=GRAVITY_SLOWMO
         )
 
-
     def load_tilemap(self, path):
         """ Load tilemap """
-
 
         w, h = arcade.get_window().get_size()
         zoom = h / VIEWPORT_BASE_H
@@ -63,7 +61,10 @@ class Level:
         self.tilemap = arcade.load_tilemap(path, scaling=zoom)
         self._scene = arcade.Scene.from_tilemap(self.tilemap)
 
+        self.player.alpha = 0
+
     def update(self):
+        self.player.alpha = min(self.player.alpha + ALPHA_SPEED, 255)
         self.move_right()
         self._physics_engine.update()
         self.scroll_to_player()
@@ -99,7 +100,7 @@ class Level:
         if not self._can_walk:
             return
 
-        self.player.change_x += PLAYER_MOVE_SPEED
+        self.player.change_x = PLAYER_MOVE_SPEED
         self.player.angle += PLAYER_MOVE_ANGLE
 
         if self.player.angle > 360:
