@@ -12,6 +12,9 @@ PLAYER_MOVE_SPEED = 5
 PLAYER_JUMP_SPEED = 30
 PLAYER_MOVE_ANGLE = 2
 
+MODIFIER_WALK = 1.0
+MODIFIER_SPRINT = 1.3
+
 GRAVITY_SLOWMO = 0.0025
 GRAVITY_DEFAULT = 1
 
@@ -65,13 +68,19 @@ class Level:
 
         self.player.alpha = 0
 
-    def update(self, move_horizontal: int = None, jump: bool = False):
+    def update(
+            self,
+            move_horizontal: int = None,
+            jump: bool = False,
+            sprint: bool = False
+    ):
         if jump:
             self.jump()
+
         if move_horizontal == FACE_RIGHT:
-            self.move_right()
+            self.move_right(sprint)
         elif move_horizontal == FACE_LEFT:
-            self.move_left()
+            self.move_left(sprint)
         else:
             self.move_stop()
 
@@ -105,28 +114,38 @@ class Level:
         self._camera.use()
         self._scene.draw()
 
-    def move_right(self):
+
+    def move_left(self, sprint: bool = False):
 
         if not self._can_walk:
             return
 
-        self.player.change_x = PLAYER_MOVE_SPEED
-        self.player.angle += PLAYER_MOVE_ANGLE
+        modifier = MODIFIER_WALK
 
-        if self.player.angle > 360:
-            self.player.angle = self.player.angle - 360
+        if sprint:
+            modifier = MODIFIER_SPRINT
 
-
-    def move_left(self):
-
-        if not self._can_walk:
-            return
-
-        self.player.change_x = -PLAYER_MOVE_SPEED
-        self.player.angle -= PLAYER_MOVE_ANGLE
+        self.player.change_x = -PLAYER_MOVE_SPEED * modifier
+        self.player.angle -= PLAYER_MOVE_ANGLE * modifier
 
         if self.player.angle <= 0 :
             self.player.angle = 360 - abs(self.player.angle)
+
+    def move_right(self, sprint: bool = False):
+
+        if not self._can_walk:
+            return
+
+        modifier = MODIFIER_WALK
+
+        if sprint:
+            modifier = MODIFIER_SPRINT
+
+        self.player.change_x = PLAYER_MOVE_SPEED * modifier
+        self.player.angle += PLAYER_MOVE_ANGLE * modifier
+
+        if self.player.angle > 360:
+            self.player.angle = self.player.angle - 360
 
     def move_stop(self):
         if not self._can_walk:

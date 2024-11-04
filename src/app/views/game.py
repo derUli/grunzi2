@@ -1,7 +1,7 @@
 """ Main game class """
 from arcade import FACE_LEFT, FACE_RIGHT
 
-from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP
+from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
 from app.utils.level import Level
 from app.views.view import View
 
@@ -15,6 +15,7 @@ class Game(View):
         self._level = None
         self._move_horizontal = None
         self._jump = False
+        self._sprint = False
 
     def setup(self, root_dir: str):
         """ Setup game"""
@@ -29,7 +30,11 @@ class Game(View):
 
     def on_update(self, delta_time: float):
         """ On level update """
-        self._level.update(move_horizontal=self._move_horizontal, jump=self._jump)
+        self._level.update(
+            move_horizontal=self._move_horizontal,
+            jump=self._jump,
+            sprint=self._sprint
+        )
 
         if self._jump:
             self._jump = False
@@ -51,8 +56,8 @@ class Game(View):
             self._move_horizontal = FACE_RIGHT
         elif symbol in KEY_JUMP:
             self._jump = True
-        else:
-            self._move_horizontal = None
+        elif symbol in KEY_SPRINT:
+            self._sprint = True
 
 
     def on_key_release(self, _symbol: int, _modifiers: int):
@@ -62,3 +67,5 @@ class Game(View):
             self._move_horizontal = None
         elif self._move_horizontal == FACE_RIGHT and _symbol in KEY_RIGHT:
             self._move_horizontal = None
+        elif self._sprint and _symbol in KEY_SPRINT:
+            self._sprint = False
