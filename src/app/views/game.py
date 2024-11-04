@@ -81,6 +81,7 @@ class Game(View):
 
     def on_stick_motion(self, joystick, stick, value):
         """ On stick motion """
+
         if stick == LEFTSTICK:
             x, y = value
             x, y = round(x), round(y)
@@ -102,5 +103,7 @@ class Game(View):
             self._sprint = True
 
     def on_button_release(self, joystick, key):
+        """ On controller button release """
+
         if key == KEY_LEFT:
             self._sprint = False
