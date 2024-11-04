@@ -230,3 +230,7 @@ class GameWindow(arcade.Window):
         """ Get audio volumes """
 
         return self._audio_volumes
+
+    @property
+    def root_dir(self):
+        return self._root_dir

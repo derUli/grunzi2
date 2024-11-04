@@ -37,6 +37,7 @@ class Game(View):
         """ On level update """
         self._level.update(
             delta_time=delta_time,
+            window=self.window,
             move_horizontal=self._move_horizontal,
             jump=self._jump,
             sprint=self._sprint
@@ -91,7 +92,6 @@ class Game(View):
             else:
                 self._move_horizontal = None
 
-
     def on_button_press(self, joystick, key) -> None:
         """ On controller button press """
 
@@ -100,7 +100,6 @@ class Game(View):
 
         if key == LEFTSTICK:
             self._sprint = True
-
 
     def on_button_release(self, joystick, key):
         if key == KEY_LEFT:

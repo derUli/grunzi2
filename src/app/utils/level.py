@@ -1,11 +1,14 @@
 """ Level """
+import logging
 import os
 
 import arcade
 import pyglet
 from arcade import FACE_RIGHT, FACE_LEFT
 
-from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD
+from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD, LAYERS_FIRST_VOICEOVER
+from app.utils.audiovolumes import AudioVolumes
+from app.utils.voiceovers import play_voiceover, VOICEOVER_DEFAULT
 
 VIEWPORT_BASE_H = 1080
 PLAYER_MOVE_SPEED = 5
@@ -23,6 +26,10 @@ ALPHA_MAX = 255
 
 CLOUD_SPEED = 0.25
 
+LIGHT_LAUNCHING_MOVEMENT_SPEED = 10
+LIGHT_LAUNCHING_ROTATING_SPEED = 5
+LIGHT_COLLISION_CHECK_THRESHOLD = 100
+
 
 class Level:
     """ Level """
@@ -35,6 +42,7 @@ class Level:
         self._camera = None
         self._physics_engine = None
         self._can_walk = False
+        self._launching_sprite = None
 
     def setup(self, root_dir: str, map_name: str):
         """ Setup level """
@@ -43,12 +51,10 @@ class Level:
 
         self.load_tilemap(path)
 
-        w, h = arcade.get_window().get_size()
         self._camera = arcade.camera.Camera2D()
         self.scroll_to_player()
 
         self.setup_physics_engine()
-
         self.wait_for_begin()
 
     def setup_physics_engine(self):
@@ -68,17 +74,19 @@ class Level:
 
         self.tilemap = arcade.load_tilemap(path, scaling=zoom)
         self._scene = arcade.Scene.from_tilemap(self.tilemap)
-
         self.player.alpha = 0
+        self._music = None
 
     def update(
             self,
             delta_time: float,
+            window,
             move_horizontal: int = None,
             jump: bool = False,
             sprint: bool = False
     ):
         """ Update """
+
         if jump:
             self.jump()
 
@@ -96,6 +104,11 @@ class Level:
         self.update_clouds()
         self._scene.update(delta_time)
         self._scene.update_animation(delta_time)
+        self.check_collision_lights(window.root_dir, window.audio_volumes)
+        self.update_collision_light()
+
+        if self._music and not self._music.playing:
+            self._music.delete()
 
     def scroll_to_player(self, camera_speed=1):
         """ Scroll the window to the player. """
@@ -163,7 +176,6 @@ class Level:
 
         self._physics_engine.disable_multi_jump()
 
-
         self._physics_engine.jump(PLAYER_JUMP_SPEED)
 
     @property
@@ -194,3 +206,42 @@ class Level:
 
             if cloud.right <= 0:
                 cloud.right = width - abs(cloud.right)
+
+    def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
+        if self._launching_sprite:
+            return
+
+        if LAYERS_FIRST_VOICEOVER in self._scene:
+            for sprite in self._scene[LAYERS_FIRST_VOICEOVER]:
+                if arcade.get_distance_between_sprites(self.player, sprite) > LIGHT_COLLISION_CHECK_THRESHOLD:
+                    continue
+
+                logging.info(f'Collided with {LAYERS_FIRST_VOICEOVER}')
+                self._launching_sprite = sprite
+
+                arcade.load_sound(
+                    os.path.join(root_dir, 'resources', 'sounds', 'lights', 'missle-launch-001.mp3'),
+                    streaming=volumes.streaming
+                ).play(volume=volumes.volume_sound)
+
+                pyglet.clock.schedule_once(
+                    play_voiceover,
+                    3,
+                    root_dir,
+                    VOICEOVER_DEFAULT,
+                    volumes
+                )
+
+    def update_collision_light(self):
+        if not self._launching_sprite:
+            return
+
+        self._launching_sprite.center_y += LIGHT_LAUNCHING_MOVEMENT_SPEED
+        self._launching_sprite.angle = min(self._launching_sprite.angle + LIGHT_LAUNCHING_ROTATING_SPEED, 360)
+
+        if self._launching_sprite.angle >= 360:
+            self._launching_sprite.angle = 0
+
+        if self._launching_sprite.bottom <= 0:
+            self._launching_sprite.remove_from_sprite_lists()
+            self._launching_sprite = None
