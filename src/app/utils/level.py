@@ -74,6 +74,7 @@ class Level:
             jump: bool = False,
             sprint: bool = False
     ):
+        """ Update """
         if jump:
             self.jump()
 
@@ -114,9 +115,8 @@ class Level:
         self._camera.use()
         self._scene.draw()
 
-
     def move_left(self, sprint: bool = False):
-
+        """ Move left """
         if not self._can_walk:
             return
 
@@ -128,10 +128,11 @@ class Level:
         self.player.change_x = -PLAYER_MOVE_SPEED * modifier
         self.player.angle -= PLAYER_MOVE_ANGLE * modifier
 
-        if self.player.angle <= 0 :
+        if self.player.angle <= 0:
             self.player.angle = 360 - abs(self.player.angle)
 
     def move_right(self, sprint: bool = False):
+        """ Move right """
 
         if not self._can_walk:
             return
@@ -148,12 +149,15 @@ class Level:
             self.player.angle = self.player.angle - 360
 
     def move_stop(self):
+        """ Stop walking """
+
         if not self._can_walk:
             return
 
         self.player.change_x = 0
 
     def jump(self):
+        """ Do jump """
         if not self._physics_engine.can_jump(y_distance=10):
             return
 
@@ -162,10 +166,12 @@ class Level:
     @property
     def player(self):
         """ The player sprite """
+
         return self._scene[LAYER_PLAYER][0]
 
     def wait_for_begin(self, dt: float = 0.0):
         """ Wait for begin of level """
+
         if self._physics_engine.can_jump():
             self._can_walk = True
             self._physics_engine.gravity_constant = GRAVITY_DEFAULT

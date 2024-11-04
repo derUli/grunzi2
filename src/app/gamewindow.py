@@ -201,4 +201,6 @@ class GameWindow(arcade.Window):
 
     @property
     def audio_volumes(self):
+        """ Get audio volumes """
+
         return self._audio_volumes

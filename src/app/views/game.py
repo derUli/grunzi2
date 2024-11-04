@@ -1,5 +1,4 @@
 """ Main game class """
-import arcade
 from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
@@ -12,7 +11,9 @@ class Game(View):
 
     def __init__(self):
         """ Constructor """
+
         super().__init__()
+
         self._level = None
         self._move_horizontal = None
         self._jump = False
@@ -27,6 +28,8 @@ class Game(View):
         self.window.set_mouse_visible(False)
 
     def setup_level(self, map_name: str):
+        """ Setup level """
+
         self._level.setup(self._root_dir, map_name)
 
     def on_update(self, delta_time: float):
@@ -47,17 +50,19 @@ class Game(View):
         self._level.draw()
         self.window.draw_after()
 
-
     def on_key_press(self, symbol: int, modifiers: int):
         """ On key press """
 
         if symbol in KEY_LEFT:
             self._move_horizontal = FACE_LEFT
-        elif symbol in KEY_RIGHT:
+
+        if symbol in KEY_RIGHT:
             self._move_horizontal = FACE_RIGHT
-        elif symbol in KEY_JUMP:
+
+        if symbol in KEY_JUMP:
             self._jump = True
-        elif symbol in KEY_SPRINT:
+
+        if symbol in KEY_SPRINT:
             self._sprint = True
 
     def on_key_release(self, _symbol: int, _modifiers: int):
@@ -65,7 +70,8 @@ class Game(View):
 
         if self._move_horizontal == FACE_LEFT and _symbol in KEY_LEFT:
             self._move_horizontal = None
-        elif self._move_horizontal == FACE_RIGHT and _symbol in KEY_RIGHT:
+        if self._move_horizontal == FACE_RIGHT and _symbol in KEY_RIGHT:
             self._move_horizontal = None
-        elif self._sprint and _symbol in KEY_SPRINT:
+
+        if self._sprint and _symbol in KEY_SPRINT:
             self._sprint = False
