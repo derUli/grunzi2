@@ -1,22 +1,24 @@
 """ Level """
 import logging
 import os
+import random
 
 import arcade
 import pyglet
 from arcade import FACE_RIGHT, FACE_LEFT
 
-from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD, LAYERS_FIRST_VOICEOVER
+from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD, LAYERS_VOICEOVER, LAYER_FIRST_VOICEOVER
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovers import play_voiceover, VOICEOVER_DEFAULT
 
 VIEWPORT_BASE_H = 1080
-PLAYER_MOVE_SPEED = 5
+PLAYER_MOVE_SPEED = 4
 PLAYER_JUMP_SPEED = 20
 PLAYER_MOVE_ANGLE = 2
 
 MODIFIER_WALK = 1.0
 MODIFIER_SPRINT = 1.0
+MODIFIER_SPEECH = 1.0
 
 GRAVITY_SLOWMO = 0.0025
 GRAVITY_DEFAULT = 1
@@ -43,8 +45,10 @@ class Level:
         self._physics_engine = None
         self._can_walk = False
         self._launching_sprite = None
+        self._voice_playing = False
+        self._randomized_voiceovers = []
 
-    def setup(self, root_dir: str, map_name: str):
+    def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
 
         path = os.path.join(root_dir, 'resources', 'maps', f"{map_name}.tmx")
@@ -57,14 +61,30 @@ class Level:
         self.setup_physics_engine()
         self.wait_for_begin()
 
+        # TODO: play music by map triggers
+        music_file = os.path.join(root_dir, 'resources', 'music', 'BeforeDawn.mp3')
+        sound = arcade.load_sound(music_file, streaming=audio_volumes.streaming)
+        self._music = sound.play(volume=audio_volumes.volume_music)
+        self.setup_randomize_voicers()
+
     def setup_physics_engine(self):
         """ Setup physics engine """
+
         self._physics_engine = arcade.PhysicsEnginePlatformer(
             self.player,
             ladders=None,
             walls=self._scene[LAYER_WALL],
             gravity_constant=GRAVITY_SLOWMO
         )
+
+    def setup_randomize_voicers(self):
+        voiceovers = []
+        for i in range(1, 3):
+            voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
+
+        random.shuffle(voiceovers)
+
+        self._randomized_voiceovers = voiceovers
 
     def load_tilemap(self, path):
         """ Load tilemap """
@@ -137,6 +157,9 @@ class Level:
         if sprint:
             modifier = MODIFIER_SPRINT
 
+        if self._voice_playing:
+            modifier = MODIFIER_SPEECH
+
         self.player.change_x = -PLAYER_MOVE_SPEED * modifier
         self.player.angle -= PLAYER_MOVE_ANGLE * modifier
 
@@ -153,6 +176,9 @@ class Level:
 
         if sprint:
             modifier = MODIFIER_SPRINT
+
+        if self._voice_playing:
+            modifier = MODIFIER_SPEECH
 
         self.player.change_x = PLAYER_MOVE_SPEED * modifier
         self.player.angle += PLAYER_MOVE_ANGLE * modifier
@@ -174,9 +200,12 @@ class Level:
         if not self._physics_engine.can_jump(y_distance=5):
             return
 
-        self._physics_engine.disable_multi_jump()
+        speed = PLAYER_JUMP_SPEED
 
-        self._physics_engine.jump(PLAYER_JUMP_SPEED)
+        if self._voice_playing:
+            speed *= MODIFIER_SPEECH
+
+        self._physics_engine.jump(speed)
 
     @property
     def player(self):
@@ -208,29 +237,45 @@ class Level:
                 cloud.right = width - abs(cloud.right)
 
     def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
-        if self._launching_sprite:
+        if self._launching_sprite or self._voice_playing:
             return
 
-        if LAYERS_FIRST_VOICEOVER in self._scene:
-            for sprite in self._scene[LAYERS_FIRST_VOICEOVER]:
-                if arcade.get_distance_between_sprites(self.player, sprite) > LIGHT_COLLISION_CHECK_THRESHOLD:
-                    continue
+        found = None
 
-                logging.info(f'Collided with {LAYERS_FIRST_VOICEOVER}')
-                self._launching_sprite = sprite
+        for layer in LAYERS_VOICEOVER:
+            if layer in self._scene:
+                for sprite in self._scene[layer]:
+                    if arcade.get_distance_between_sprites(self.player, sprite) < LIGHT_COLLISION_CHECK_THRESHOLD:
+                        logging.info(f'Collided with {layer}')
+                        self._launching_sprite = sprite
+                        found = layer
+                        break
 
-                arcade.load_sound(
-                    os.path.join(root_dir, 'resources', 'sounds', 'lights', 'missle-launch-001.mp3'),
-                    streaming=volumes.streaming
-                ).play(volume=volumes.volume_sound)
+        if not found:
+            return
 
-                pyglet.clock.schedule_once(
-                    play_voiceover,
-                    3,
-                    root_dir,
-                    VOICEOVER_DEFAULT,
-                    volumes
-                )
+        arcade.load_sound(
+            os.path.join(root_dir, 'resources', 'sounds', 'lights', 'missle-launch-001.mp3'),
+            streaming=volumes.streaming
+        ).play(volume=volumes.volume_sound)
+
+        self._voice_playing = True
+
+        if found == LAYER_FIRST_VOICEOVER:
+            voiceover = VOICEOVER_DEFAULT
+        else:
+
+            # TODO: randomize
+            voiceover = self._randomized_voiceovers.pop()
+
+        pyglet.clock.schedule_once(
+            play_voiceover,
+            2,
+            root_dir,
+            voiceover,
+            volumes,
+            self.on_speech_completed
+        )
 
     def update_collision_light(self):
         if not self._launching_sprite:
@@ -242,6 +287,12 @@ class Level:
         if self._launching_sprite.angle >= 360:
             self._launching_sprite.angle = 0
 
-        if self._launching_sprite.bottom <= 0:
+        map_height = self.tilemap.height * self.tilemap.tile_height
+
+        if self._launching_sprite.bottom > map_height:
             self._launching_sprite.remove_from_sprite_lists()
             self._launching_sprite = None
+
+    def on_speech_completed(self):
+        logging.info('Speech completed')
+        self._voice_playing = False

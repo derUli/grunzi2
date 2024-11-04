@@ -3,6 +3,7 @@ from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
+from app.utils.audiovolumes import AudioVolumes
 from app.utils.level import Level
 from app.views.view import View
 
@@ -31,7 +32,7 @@ class Game(View):
     def setup_level(self, map_name: str):
         """ Setup level """
 
-        self._level.setup(self._root_dir, map_name)
+        self._level.setup(self._root_dir, map_name, self.window.audio_volumes)
 
     def on_update(self, delta_time: float):
         """ On level update """

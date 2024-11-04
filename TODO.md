@@ -19,3 +19,4 @@
 * Untertitel in Deutsch und Englisch
 * Pausen-Menü
 * Ability to remap controls
+* Seperater Lautstärke-Regler für Sprachausgabe

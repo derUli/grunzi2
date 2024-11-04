@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="240" height="53" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3a9eec" nextlayerid="16" nextobjectid="6">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="240" height="53" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3a9eec" nextlayerid="17" nextobjectid="9">
  <tileset firstgid="1" name="Backdrop" tilewidth="5120" tileheight="1706" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="1">
@@ -296,10 +296,14 @@
 </data>
  </layer>
  <objectgroup id="15" name="FirstVoiceOver">
-  <object id="3" gid="62" x="7653.33" y="2695.33" width="128" height="128"/>
+  <object id="3" gid="62" x="6345.09" y="2732.18" width="128" height="128"/>
+ </objectgroup>
+ <objectgroup id="16" name="RandomVoiceOver">
+  <object id="7" gid="62" x="2999" y="1572" width="128" height="128"/>
+  <object id="8" gid="62" x="11338" y="2314" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="6" name="Player">
-  <object id="2" gid="3" x="6204.82" y="302.304" width="200" height="200"/>
+  <object id="2" gid="3" x="5614.76" y="206.243" width="200" height="200"/>
  </objectgroup>
  <layer id="14" name="Cloud" width="240" height="53">
   <data encoding="csv">

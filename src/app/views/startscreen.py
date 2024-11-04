@@ -197,6 +197,7 @@ class StartScreen(View):
                     view = Game()
                     view.setup(self._root_dir)
                     view.setup_level(MAPS[0])
+
                     self.window.show_view(view)
 
     def on_update_particles(self):
