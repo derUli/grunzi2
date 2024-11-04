@@ -5,7 +5,7 @@ import arcade
 import pyglet
 from arcade import FACE_RIGHT, FACE_LEFT
 
-from app.constants.layers import LAYER_PLAYER, LAYER_WALL
+from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD
 
 VIEWPORT_BASE_H = 1080
 PLAYER_MOVE_SPEED = 5
@@ -20,6 +20,8 @@ GRAVITY_DEFAULT = 1
 
 ALPHA_SPEED = 1
 ALPHA_MAX = 255
+
+CLOUD_SPEED = 0.25
 
 
 class Level:
@@ -70,7 +72,7 @@ class Level:
 
     def update(
             self,
-            delta_time:  float,
+            delta_time: float,
             move_horizontal: int = None,
             jump: bool = False,
             sprint: bool = False
@@ -90,20 +92,12 @@ class Level:
         self._physics_engine.update()
         self.scroll_to_player()
 
+        self.update_clouds()
         self._scene.update(delta_time)
         self._scene.update_animation(delta_time)
 
     def scroll_to_player(self, camera_speed=1):
-        """
-        Scroll the window to the player.
-        This method will attempt to keep the player at least VIEWPORT_MARGIN
-        pixels away from the edge.
-
-        if CAMERA_SPEED is 1, the camera will immediately move to the desired position.
-        Anything between 0 and 1 will have the camera move to the location with a smoother
-        pan.
-        """
-        w, h = arcade.get_window().get_size()
+        """ Scroll the window to the player. """
 
         player = self.player
 
@@ -162,6 +156,7 @@ class Level:
 
     def jump(self):
         """ Do jump """
+
         if not self._physics_engine.can_jump(y_distance=10):
             return
 
@@ -182,3 +177,14 @@ class Level:
             return
 
         pyglet.clock.schedule_once(self.wait_for_begin, 1 / 4)
+
+    def update_clouds(self):
+        clouds = self._scene[LAYER_CLOUD]
+
+        width = self.tilemap.width * self.tilemap.tile_width
+
+        for cloud in clouds:
+            cloud.center_x -= CLOUD_SPEED
+
+            if cloud.right <= 0:
+                cloud.right = width - abs(cloud.right)

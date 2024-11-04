@@ -1,4 +1,3 @@
-* Wolken animieren
 * Springen
 * Voice-Lichtbälle einfügen
 * Sprachsegmente zufällig positionieren außer erstes
