@@ -8,8 +8,8 @@ from arcade import FACE_RIGHT, FACE_LEFT
 from app.constants.layers import LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
-PLAYER_MOVE_SPEED = 7
-PLAYER_JUMP_SPEED = 30
+PLAYER_MOVE_SPEED = 5
+PLAYER_JUMP_SPEED = 20
 PLAYER_MOVE_ANGLE = 2
 
 MODIFIER_WALK = 1.0
@@ -70,6 +70,7 @@ class Level:
 
     def update(
             self,
+            delta_time:  float,
             move_horizontal: int = None,
             jump: bool = False,
             sprint: bool = False
@@ -88,6 +89,9 @@ class Level:
         self.player.alpha = min(self.player.alpha + ALPHA_SPEED, 255)
         self._physics_engine.update()
         self.scroll_to_player()
+
+        self._scene.update(delta_time)
+        self._scene.update_animation(delta_time)
 
     def scroll_to_player(self, camera_speed=1):
         """

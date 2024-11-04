@@ -35,6 +35,7 @@ class Game(View):
     def on_update(self, delta_time: float):
         """ On level update """
         self._level.update(
+            delta_time = delta_time,
             move_horizontal=self._move_horizontal,
             jump=self._jump,
             sprint=self._sprint
