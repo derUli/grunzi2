@@ -65,7 +65,7 @@ class Level:
 
     def update(self):
         self.player.alpha = min(self.player.alpha + ALPHA_SPEED, 255)
-        self.move_right()
+        self.move_left()
         self._physics_engine.update()
         self.scroll_to_player()
 
@@ -105,6 +105,19 @@ class Level:
 
         if self.player.angle > 360:
             self.player.angle = self.player.angle - 360
+
+
+    def move_left(self):
+
+        if not self._can_walk:
+            return
+
+        self.player.change_x = -PLAYER_MOVE_SPEED
+        self.player.angle -= PLAYER_MOVE_ANGLE
+
+        if self.player.angle <= 0 :
+            self.player.angle = 360 - abs(self.player.angle)
+
 
     @property
     def player(self):

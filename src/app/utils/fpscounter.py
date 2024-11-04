@@ -17,12 +17,14 @@ class FPSCounter:
         self._fps_text = {}
         self._window = None
         self._current_fps = None
+        self._fps_camera = None
 
     def setup(self, window: arcade.Window):
         """ Setup FPSCounter """
 
         self._fps_text = {}
         self._window = window
+        self._fps_camera = arcade.camera.Camera2D()
 
     def update(self) -> None:
         """ Update fps counter """
@@ -66,5 +68,7 @@ class FPSCounter:
 
     def draw(self):
         """ Draw fps counter text """
+
+        self._fps_camera.use()
         if self._current_fps and self._current_fps in self._fps_text:
             self._fps_text[self._current_fps].draw()
