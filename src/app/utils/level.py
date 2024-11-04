@@ -9,7 +9,8 @@ from app.constants.layers import LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
 PLAYER_MOVE_SPEED = 5
-PLAYER_MOVE_ANGLE = 1
+PLAYER_JUMP_SPEED = 30
+PLAYER_MOVE_ANGLE = 2
 
 GRAVITY_SLOWMO = 0.0025
 GRAVITY_DEFAULT = 1
@@ -64,7 +65,9 @@ class Level:
 
         self.player.alpha = 0
 
-    def update(self, move_horizontal: int = None):
+    def update(self, move_horizontal: int = None, jump: bool = False):
+        if jump:
+            self.jump()
         if move_horizontal == FACE_RIGHT:
             self.move_right()
         elif move_horizontal == FACE_LEFT:
@@ -130,6 +133,12 @@ class Level:
             return
 
         self.player.change_x = 0
+
+    def jump(self):
+        if not self._physics_engine.can_jump(y_distance=10):
+            return
+
+        self.player.change_y = PLAYER_JUMP_SPEED
 
     @property
     def player(self):
