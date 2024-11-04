@@ -28,7 +28,7 @@ class Logo(View):
         """ Setup logo screen """
 
         super().setup(root_dir)
-
+        self.window.set_mouse_visible(False)
         arcade.set_background_color(arcade.color.WHITE)
 
         logo_file = os.path.join(self._root_dir, 'resources', 'images', 'ui', 'hog-games.png')

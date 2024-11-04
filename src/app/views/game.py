@@ -24,6 +24,7 @@ class Game(View):
     def setup(self, root_dir: str):
         """ Setup game"""
 
+        self.window.set_mouse_visible(False)
         super().setup(root_dir)
 
         self._level = Level()
