@@ -62,7 +62,13 @@ class Logo(View):
 
             if self._fade_sprite.alpha <= 0:
                 sound_number = random.randint(1, 5)
-                file = os.path.join(self._root_dir, 'resources', 'sounds', 'grunt', f'{sound_number:03d}.mp3')
+                file = os.path.join(
+                    self._root_dir,
+                    'resources',
+                    'sounds',
+                    'grunt',
+                    f'{sound_number:03d}.mp3'
+                )
                 sound = arcade.load_sound(file, streaming=self.window.audio_volumes.streaming)
                 sound.play(volume=self.window.audio_volumes.volume_sound)
 

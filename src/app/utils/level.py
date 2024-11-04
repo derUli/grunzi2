@@ -52,6 +52,7 @@ class Level:
         self.wait_for_begin()
 
     def setup_physics_engine(self):
+        """ Setup physics engine """
         self._physics_engine = arcade.PhysicsEnginePlatformer(
             self.player,
             ladders=None,
@@ -180,6 +181,7 @@ class Level:
 
     def update_clouds(self):
         """ Move the clouds """
+
         clouds = self._scene[LAYER_CLOUD]
 
         width = self.tilemap.width * self.tilemap.tile_width
