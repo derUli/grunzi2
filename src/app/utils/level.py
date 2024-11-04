@@ -121,9 +121,11 @@ class Level:
 
     @property
     def player(self):
+        """ The player sprite """
         return self._scene[LAYER_PLAYER][0]
 
     def wait_for_begin(self, dt: float = 0.0):
+        """ Wait for begin of level """
         if self._physics_engine.can_jump():
             self._can_walk = True
             self._physics_engine.gravity_constants = GRAVITY_DEFAULT
