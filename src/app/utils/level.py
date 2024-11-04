@@ -3,11 +3,12 @@ import os
 
 import arcade
 import pyglet
+from arcade import FACE_RIGHT, FACE_LEFT
 
 from app.constants.layers import LAYER_PLAYER, LAYER_WALL
 
 VIEWPORT_BASE_H = 1080
-PLAYER_MOVE_SPEED = 2
+PLAYER_MOVE_SPEED = 5
 PLAYER_MOVE_ANGLE = 1
 
 GRAVITY_SLOWMO = 0.0025
@@ -63,9 +64,15 @@ class Level:
 
         self.player.alpha = 0
 
-    def update(self):
+    def update(self, move_horizontal: int = None):
+        if move_horizontal == FACE_RIGHT:
+            self.move_right()
+        elif move_horizontal == FACE_LEFT:
+            self.move_left()
+        else:
+            self.move_stop()
+
         self.player.alpha = min(self.player.alpha + ALPHA_SPEED, 255)
-        self.move_left()
         self._physics_engine.update()
         self.scroll_to_player()
 
@@ -118,6 +125,11 @@ class Level:
         if self.player.angle <= 0 :
             self.player.angle = 360 - abs(self.player.angle)
 
+    def move_stop(self):
+        if not self._can_walk:
+            return
+
+        self.player.change_x = 0
 
     @property
     def player(self):
@@ -128,7 +140,7 @@ class Level:
         """ Wait for begin of level """
         if self._physics_engine.can_jump():
             self._can_walk = True
-            self._physics_engine.gravity_constants = GRAVITY_DEFAULT
+            self._physics_engine.gravity_constant = GRAVITY_DEFAULT
             return
 
         pyglet.clock.schedule_once(self.wait_for_begin, 1 / 4)
