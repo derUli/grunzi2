@@ -79,6 +79,7 @@ class Game(View):
             self._sprint = False
 
     def on_stick_motion(self, joystick, stick, value):
+        """ On stick motion """
         if stick == LEFTSTICK:
             x, y = value
             x, y = round(x), round(y)

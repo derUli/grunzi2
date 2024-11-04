@@ -158,10 +158,13 @@ class Level:
     def jump(self):
         """ Do jump """
 
-        if not self._physics_engine.can_jump(y_distance=10):
+        if not self._physics_engine.can_jump(y_distance=5):
             return
 
-        self.player.change_y = PLAYER_JUMP_SPEED
+        self._physics_engine.disable_multi_jump()
+
+
+        self._physics_engine.jump(PLAYER_JUMP_SPEED)
 
     @property
     def player(self):
