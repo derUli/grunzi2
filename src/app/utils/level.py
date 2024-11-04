@@ -13,11 +13,11 @@ from app.utils.voiceovers import play_voiceover, VOICEOVER_DEFAULT
 
 VIEWPORT_BASE_H = 1080
 PLAYER_MOVE_SPEED = 4
-PLAYER_JUMP_SPEED = 20
+PLAYER_JUMP_SPEED = 15
 PLAYER_MOVE_ANGLE = 2
 
 MODIFIER_WALK = 1.0
-MODIFIER_SPRINT = 1.0
+MODIFIER_SPRINT = 1.3
 MODIFIER_SPEECH = 1.0
 
 GRAVITY_SLOWMO = 0.0025
@@ -79,7 +79,7 @@ class Level:
 
     def setup_randomize_voicers(self):
         voiceovers = []
-        for i in range(1, 3):
+        for i in range(1, 4):
             voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
 
         random.shuffle(voiceovers)

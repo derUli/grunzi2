@@ -240,6 +240,8 @@ class StartScreen(View):
         if self._fade_sprite:
             return
 
+        self.window.set_mouse_visible(True)
+
         if self._last_hover:
             if not self._last_hover.collides_with_point((x, y)):
                 self._last_hover.scale = 1.0

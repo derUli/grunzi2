@@ -124,22 +124,22 @@ class GameWindow(arcade.Window):
             self._controllers.append(controller)
 
         @self._controller_manager.event
-        def on_connect(gamepad) -> None:
+        def on_connect(controller) -> None:
             """ On controller connect """
             logging.info(label_value('Controller connected', controller))
 
-            gamepad.open()
-            gamepad.push_handlers(self)
+            controller.open()
+            controller.push_handlers(self)
 
-            self._controllers.append(gamepad)
+            self._controllers.append(controller)
 
         @self._controller_manager.event
-        def on_disconnect(gamepad):
+        def on_disconnect(controller):
             """ On controller disconnect """
             logging.info(label_value('Controller disconnected', controller))
-            gamepad.pop_handlers()
-            gamepad.close()
-            self._controllers.remove(gamepad)
+            controller.pop_handlers()
+            controller.close()
+            self._controllers.remove(controller)
 
     def on_button_press(self, joystick, key) -> None:
         """ On controller button pressed """
