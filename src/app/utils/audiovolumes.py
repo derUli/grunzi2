@@ -6,16 +6,47 @@ class AudioVolumes:
 
     def __init__(
             self,
-            volume_music: float,
-            volume_sound: float,
-            volume_master: float,
-            volume_speech: float,
+            volume_music: int,
+            volume_sound: int,
+            volume_master: int,
+            volume_speech: int,
             streaming: bool = True
     ):
         """ Constructor """
 
-        self.volume_music = volume_music * volume_master
-        self.volume_sound = volume_sound * volume_master
-        self.volume_speech = volume_speech * volume_master
+        self._volume_music = volume_music
+        self._volume_sound = volume_sound
+        self._volume_speech = volume_speech
+        self._volume_master = volume_master
 
         self.streaming = streaming
+
+
+    @property
+    def volume_master(self):
+        if self._volume_master <= 0:
+            return 0
+
+        return self._volume_master / 100
+
+    @property
+    def volume_music(self):
+        if self._volume_music <= 0:
+            return 0
+
+        return self._volume_music / 100 * self.volume_master
+
+    @property
+    def volume_sound(self):
+        if self._volume_sound <= 0:
+            return 0
+
+        return self._volume_sound / 100 * self.volume_master
+
+    @property
+    def volume_speech(self):
+        if self._volume_speech <= 0:
+            return 0
+
+        return self._volume_speech / 100 * self.volume_master
+

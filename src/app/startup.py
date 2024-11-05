@@ -199,20 +199,7 @@ class Startup:
         volume_music = args.volume_music
         volume_sound = args.volume_sound
         volume_speech = args.volume_speech
-
         volume_master = args.volume_master
-
-        if volume_music > 0:
-            volume_music = volume_music / 100
-
-        if volume_sound > 0:
-            volume_sound = volume_sound / 100
-
-        if volume_speech > 0:
-            volume_speech = volume_speech / 100
-
-        if volume_master > 0:
-            volume_master = volume_master / 100
 
         streaming = True
 
