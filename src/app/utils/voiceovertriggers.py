@@ -66,7 +66,7 @@ class VoiceOverTiggers:
 
         return playback
 
-    def pop(self, first = False) -> str:
+    def pop(self, first=False) -> str:
         """ Pop voiceover """
 
         if first:

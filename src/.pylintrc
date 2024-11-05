@@ -1,4 +1,5 @@
-[DESIGN]
+[PYLINT]
 max-positional-arguments=10
 max-args=10
 disable=logging-fstring-interpolation
+additional-builtins=_

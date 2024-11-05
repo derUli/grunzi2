@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-05 19:46+0100\n"
+"POT-Creation-Date: 2024-11-05 19:48+0100\n"
 "PO-Revision-Date: 2024-11-05 19:44+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: app/gamewindow.py:62
+#: app/gamewindow.py:60
 msgid "Welcome to Amerre"
 msgstr "Willkommen in Amerre"
 
-#: app/views/startscreen.py:92
+#: app/views/startscreen.py:90
 msgid "Press SPACE key to start"
 msgstr "Drücken Sie die Leertaste zum Starten"
 
-#: app/views/startscreen.py:95
+#: app/views/startscreen.py:93
 msgid "Press START button to start"
 msgstr "Drücken Sie START zum Starten"
 
-#: app/views/startscreen.py:112
+#: app/views/startscreen.py:110
 msgid "Version"
 msgstr "Version"
 

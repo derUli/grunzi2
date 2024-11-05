@@ -2,7 +2,6 @@
 
 """ The Game window """
 
-import gettext
 import logging
 import os
 import time
@@ -19,8 +18,6 @@ from app.utils.fpscounter import FPSCounter
 from app.utils.string import label_value
 from app.views.logo import Logo
 from app.views.startscreen import StartScreen
-
-_ = gettext.gettext
 
 MARGIN = 10
 

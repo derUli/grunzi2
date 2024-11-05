@@ -2,7 +2,6 @@
 
 import logging
 import os
-import random
 
 import arcade
 import pyglet
@@ -16,7 +15,7 @@ from app.constants.layers import (
     LAYER_FIRST_VOICEOVER
 )
 from app.utils.audiovolumes import AudioVolumes
-from app.utils.voiceovertriggers import VoiceOverTiggers, VOICEOVER_DEFAULT
+from app.utils.voiceovertriggers import VoiceOverTiggers
 
 VIEWPORT_BASE_H = 1440
 PLAYER_MOVE_SPEED = 4
@@ -270,7 +269,7 @@ class Level:
         self._voiceover_triggers.playing = True
 
         voiceover = self._voiceover_triggers.pop(
-            first = found == LAYER_FIRST_VOICEOVER
+            first=found == LAYER_FIRST_VOICEOVER
         )
 
         pyglet.clock.schedule_once(

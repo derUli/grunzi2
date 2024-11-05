@@ -1,6 +1,5 @@
 """ The main menu """
 
-import gettext
 import logging
 import os
 import random
@@ -14,8 +13,6 @@ from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
 from app.views.game import Game
 from app.views.view import View
-
-_ = gettext.gettext
 
 BACKGROUND_COLOR = (58, 158, 236, 255)
 FONT_SIZE = 20
