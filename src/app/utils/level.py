@@ -53,6 +53,7 @@ class Level:
         self._can_walk = False
         self._launching_sprite = None
         self._voiceover_triggers = None
+        self._music = None
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
@@ -300,4 +301,3 @@ class Level:
         if self._launching_sprite.bottom > map_height:
             self._launching_sprite.remove_from_sprite_lists()
             self._launching_sprite = None
-
