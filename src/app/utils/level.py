@@ -11,13 +11,13 @@ from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD, LAYERS_V
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovers import play_voiceover, VOICEOVER_DEFAULT
 
-VIEWPORT_BASE_H = 1080
+VIEWPORT_BASE_H = 1440
 PLAYER_MOVE_SPEED = 4
-PLAYER_JUMP_SPEED = 18
+PLAYER_JUMP_SPEED = 16
 PLAYER_MOVE_ANGLE = 2
 
 MODIFIER_WALK = 1.0
-MODIFIER_SPRINT = 1.3
+MODIFIER_SPRINT = 1.4
 MODIFIER_SPEECH = 1.0
 
 GRAVITY_SLOWMO = 0.002
@@ -56,7 +56,7 @@ class Level:
         self.load_tilemap(path)
 
         self._camera = arcade.camera.Camera2D()
-        self.scroll_to_player()
+        self.scroll_to_player(camera_speed=1)
 
         self.setup_physics_engine()
         self.wait_for_begin()
@@ -132,7 +132,7 @@ class Level:
     def update_fixed(self):
         self._physics_engine.update()
 
-    def scroll_to_player(self, camera_speed=1):
+    def scroll_to_player(self, camera_speed=0.2):
         """ Scroll the window to the player. """
 
         player = self.player
