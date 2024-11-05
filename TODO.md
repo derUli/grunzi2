@@ -1,5 +1,4 @@
 * Springen
-* Voice-Lichtbälle einfügen
 * Sprachsegmente zufällig positionieren außer erstes
 * Leitern
 * Klettern
@@ -11,12 +10,8 @@
 * 4 Kapitel
 * Teil des ersten Kapitels als Demo umsetzen
 * Fonts fürs UI suchen
-* Bewegung per Tastatur
 * Bewegung per Controller
 * Tutorial
-* Lokalisierung per GNU GetText
-* Sprachdateien auch in Englisch
+* Sprachausgabe auch in Englisch
 * Untertitel in Deutsch und Englisch
 * Pausen-Menü
-* Ability to remap controls
-* Seperater Lautstärke-Regler für Sprachausgabe
