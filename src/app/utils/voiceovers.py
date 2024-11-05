@@ -20,7 +20,7 @@ def play_voiceover(dt: float, root_dir: str, voiceover: str, audio_volumes: Audi
 
     sound = arcade.load_sound(voiceover_path(root_dir, voiceover), streaming=audio_volumes.streaming)
 
-    playback = sound.play(volume=audio_volumes.volume_sound)
+    playback = sound.play(volume=audio_volumes.volume_speech)
     playback.on_player_eos = on_player_eos
 
     return playback

@@ -20,7 +20,8 @@ from app.constants.settings import (
     SETTINGS_DEFAULT_SIZE,
     SETTINGS_ANTIALIASING_CHOICES,
     SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE,
-    SETTINGS_DEFAULT_VOLUME_MUSIC, SETTINGS_DEFAULT_VOLUME_SOUND, SETTINGS_DEFAULT_VOLUME_MASTER
+    SETTINGS_DEFAULT_VOLUME_MUSIC, SETTINGS_DEFAULT_VOLUME_SOUND, SETTINGS_DEFAULT_VOLUME_MASTER,
+    SETTINGS_DEFAULT_VOLUME_SPEECH
 )
 from app.gamewindow import GameWindow
 from app.utils.audiovolumes import AudioVolumes
@@ -197,6 +198,8 @@ class Startup:
 
         volume_music = args.volume_music
         volume_sound = args.volume_sound
+        volume_speech = args.volume_speech
+
         volume_master = args.volume_master
 
         if volume_music > 0:
@@ -204,6 +207,9 @@ class Startup:
 
         if volume_sound > 0:
             volume_sound = volume_sound / 100
+
+        if volume_speech > 0:
+            volume_speech = volume_speech / 100
 
         if volume_master > 0:
             volume_master = volume_master / 100
@@ -224,6 +230,7 @@ class Startup:
                 volume_music=volume_music,
                 volume_sound=volume_sound,
                 volume_master=volume_master,
+                volume_speech=volume_speech,
                 streaming=streaming,
             )
         )
@@ -345,6 +352,14 @@ class Startup:
             type=int,
             help='The music volume',
             default=SETTINGS_DEFAULT_VOLUME_MUSIC
+        )
+
+        parser.add_argument(
+            '--volume-speech',
+            action='store',
+            type=int,
+            help='The music volume',
+            default=SETTINGS_DEFAULT_VOLUME_SPEECH
         )
 
         parser.add_argument(

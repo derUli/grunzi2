@@ -9,10 +9,13 @@ class AudioVolumes:
             volume_music: float,
             volume_sound: float,
             volume_master: float,
+            volume_speech: float,
             streaming: bool = True
     ):
         """ Constructor """
 
         self.volume_music = volume_music * volume_master
         self.volume_sound = volume_sound * volume_master
+        self.volume_speech = volume_speech * volume_master
+
         self.streaming = streaming
