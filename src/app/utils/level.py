@@ -77,6 +77,8 @@ class Level:
         )
 
     def setup_randomize_voicers(self):
+        """ Setup randomized voiceovers """
+
         voiceovers = []
         for i in range(1, 5):
             voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
@@ -129,6 +131,8 @@ class Level:
             self._music.delete()
 
     def update_fixed(self):
+        """ On Fixed update """
+
         self._physics_engine.update()
 
     def scroll_to_player(self, camera_speed=1):
@@ -150,6 +154,7 @@ class Level:
 
     def move_left(self, sprint: bool = False):
         """ Move left """
+
         if not self._can_walk:
             return
 
@@ -238,6 +243,7 @@ class Level:
                 cloud.right = width - abs(cloud.right)
 
     def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
+        """ Check for collisions with lights """
         if self._launching_sprite or self._voice_playing:
             return
 
@@ -265,8 +271,6 @@ class Level:
         if found == LAYER_FIRST_VOICEOVER:
             voiceover = VOICEOVER_DEFAULT
         else:
-
-            # TODO: randomize
             voiceover = self._randomized_voiceovers.pop()
 
         pyglet.clock.schedule_once(
@@ -279,6 +283,8 @@ class Level:
         )
 
     def update_collision_light(self):
+        """ Update voiceover light """
+
         if not self._launching_sprite:
             return
 
@@ -295,5 +301,7 @@ class Level:
             self._launching_sprite = None
 
     def on_speech_completed(self):
+        """ Executed after voice playback is completed """
+
         logging.info('Speech completed')
         self._voice_playing = False

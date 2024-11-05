@@ -219,11 +219,14 @@ class GameWindow(arcade.Window):
         return filename
 
     def on_update(self, delta_time: float):
+        """ On update """
+
         if self._fps_counter:
             self._fps_counter.update()
 
     def draw_after(self):
         """ Draw after view """
+
         if self._fps_counter:
             self._fps_counter.draw()
 
@@ -235,4 +238,5 @@ class GameWindow(arcade.Window):
 
     @property
     def root_dir(self):
+        """ Root directory """
         return self._root_dir

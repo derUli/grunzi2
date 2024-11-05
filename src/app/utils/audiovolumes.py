@@ -21,32 +21,38 @@ class AudioVolumes:
 
         self.streaming = streaming
 
-
     @property
-    def volume_master(self):
+    def volume_master(self) -> float:
+        """ Master volume converted to float """
+
         if self._volume_master <= 0:
-            return 0
+            return 0.0
 
         return self._volume_master / 100
 
     @property
-    def volume_music(self):
+    def volume_music(self) -> float:
+        """ Music volume converted to float """
+
         if self._volume_music <= 0:
-            return 0
+            return 0.0
 
         return self._volume_music / 100 * self.volume_master
 
     @property
-    def volume_sound(self):
+    def volume_sound(self) -> float:
+        """ Sound volume converted to float """
+
         if self._volume_sound <= 0:
-            return 0
+            return 0.0
 
         return self._volume_sound / 100 * self.volume_master
 
     @property
-    def volume_speech(self):
+    def volume_speech(self) -> float:
+        """ Speech volume converted to float """
+
         if self._volume_speech <= 0:
-            return 0
+            return 0.0
 
         return self._volume_speech / 100 * self.volume_master
-
