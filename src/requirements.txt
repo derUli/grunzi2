@@ -4,3 +4,4 @@ pyglet
 psutil
 sounddevice
 userpaths
+Babel
