@@ -7,7 +7,13 @@ import arcade
 import pyglet
 from arcade import FACE_RIGHT, FACE_LEFT
 
-from app.constants.layers import LAYER_PLAYER, LAYER_WALL, LAYER_CLOUD, LAYERS_VOICEOVER, LAYER_FIRST_VOICEOVER
+from app.constants.layers import (
+    LAYER_PLAYER,
+    LAYER_WALL,
+    LAYER_CLOUD,
+    LAYERS_VOICEOVER,
+    LAYER_FIRST_VOICEOVER
+)
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovers import play_voiceover, VOICEOVER_DEFAULT
 
@@ -252,7 +258,10 @@ class Level:
         for layer in LAYERS_VOICEOVER:
             if layer in self._scene:
                 for sprite in self._scene[layer]:
-                    if arcade.get_distance_between_sprites(self.player, sprite) < LIGHT_COLLISION_CHECK_THRESHOLD:
+                    if arcade.get_distance_between_sprites(
+                            self.player,
+                            sprite
+                    ) < LIGHT_COLLISION_CHECK_THRESHOLD:
                         logging.info(f'Collided with {layer}')
                         self._launching_sprite = sprite
                         found = layer
@@ -289,7 +298,10 @@ class Level:
             return
 
         self._launching_sprite.center_y += LIGHT_LAUNCHING_MOVEMENT_SPEED
-        self._launching_sprite.angle = min(self._launching_sprite.angle + LIGHT_LAUNCHING_ROTATING_SPEED, 360)
+        self._launching_sprite.angle = min(
+            self._launching_sprite.angle + LIGHT_LAUNCHING_ROTATING_SPEED,
+            360
+        )
 
         if self._launching_sprite.angle >= 360:
             self._launching_sprite.angle = 0
