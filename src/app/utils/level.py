@@ -1,4 +1,5 @@
 """ Level """
+
 import logging
 import os
 import random
@@ -15,7 +16,7 @@ from app.constants.layers import (
     LAYER_FIRST_VOICEOVER
 )
 from app.utils.audiovolumes import AudioVolumes
-from app.utils.voiceovers import play_voiceover, VOICEOVER_DEFAULT
+from app.utils.voiceovertriggers import VoiceOverTiggers, VOICEOVER_DEFAULT
 
 VIEWPORT_BASE_H = 1440
 PLAYER_MOVE_SPEED = 4
@@ -51,7 +52,7 @@ class Level:
         self._physics_engine = None
         self._can_walk = False
         self._launching_sprite = None
-        self._voice_playing = False
+        self.voiceover_triggers = None
         self._randomized_voiceovers = []
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
@@ -71,6 +72,7 @@ class Level:
         sound = arcade.load_sound(music_file, streaming=audio_volumes.streaming)
         self._music = sound.play(volume=audio_volumes.volume_music)
         self.setup_randomize_voicers()
+        self.scroll_to_player()
 
     def setup_physics_engine(self):
         """ Setup physics engine """
@@ -84,6 +86,8 @@ class Level:
 
     def setup_randomize_voicers(self):
         """ Setup randomized voiceovers """
+
+        self.voiceover_triggers = VoiceOverTiggers()
 
         voiceovers = []
         for i in range(1, 5):
@@ -169,7 +173,7 @@ class Level:
         if sprint:
             modifier = MODIFIER_SPRINT
 
-        if self._voice_playing:
+        if self.voiceover_triggers.playing:
             modifier = MODIFIER_SPEECH
 
         self.player.change_x = -PLAYER_MOVE_SPEED * modifier
@@ -189,7 +193,7 @@ class Level:
         if sprint:
             modifier = MODIFIER_SPRINT
 
-        if self._voice_playing:
+        if self.voiceover_triggers.playing:
             modifier = MODIFIER_SPEECH
 
         self.player.change_x = PLAYER_MOVE_SPEED * modifier
@@ -214,7 +218,7 @@ class Level:
 
         speed = PLAYER_JUMP_SPEED
 
-        if self._voice_playing:
+        if self.voiceover_triggers.playing:
             speed *= MODIFIER_SPEECH
 
         self._physics_engine.jump(speed)
@@ -250,7 +254,7 @@ class Level:
 
     def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
         """ Check for collisions with lights """
-        if self._launching_sprite or self._voice_playing:
+        if self._launching_sprite or self.voiceover_triggers.playing:
             return
 
         found = None
@@ -275,7 +279,7 @@ class Level:
             streaming=volumes.streaming
         ).play(volume=volumes.volume_sound)
 
-        self._voice_playing = True
+        self.voiceover_triggers.playing = True
 
         if found == LAYER_FIRST_VOICEOVER:
             voiceover = VOICEOVER_DEFAULT
@@ -283,12 +287,11 @@ class Level:
             voiceover = self._randomized_voiceovers.pop()
 
         pyglet.clock.schedule_once(
-            play_voiceover,
+            self.voiceover_triggers.play_voiceover,
             2,
             root_dir,
             voiceover,
-            volumes,
-            self.on_speech_completed
+            volumes
         )
 
     def update_collision_light(self):
@@ -312,8 +315,3 @@ class Level:
             self._launching_sprite.remove_from_sprite_lists()
             self._launching_sprite = None
 
-    def on_speech_completed(self):
-        """ Executed after voice playback is completed """
-
-        logging.info('Speech completed')
-        self._voice_playing = False
