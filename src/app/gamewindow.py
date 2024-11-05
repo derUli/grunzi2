@@ -180,6 +180,19 @@ class GameWindow(arcade.Window):
                 )
             )
 
+    def on_trigger_motion(self, joystick, stick, value):
+        """ On stick motion """
+
+        if hasattr(self.current_view, 'on_trigger_motion'):
+            self.current_view.on_trigger_motion(joystick, stick, value)
+        else:
+            logging.debug(
+                label_value(
+                    self.current_view.__class__.__qualname__,
+                    'on_trigger_motion not implemented'
+                )
+            )
+
     @property
     def controllers(self):
         """ Get controllers """

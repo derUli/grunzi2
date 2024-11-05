@@ -1,7 +1,7 @@
 """ Main game class """
 from arcade import FACE_LEFT, FACE_RIGHT
 
-from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT
+from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
 from app.utils.level import Level
 from app.views.view import View
@@ -97,9 +97,14 @@ class Game(View):
             else:
                 self._move_horizontal = None
 
+    def on_trigger_motion(self, joystick, trigger: str, value: float):
+        """ On trigger motion """
+
+        if trigger == LEFT_TRIGGER:
+            self._sprint = round(value) >= 1.0
+
     def on_button_press(self, joystick, key) -> None:
         """ On controller button press """
-
         if key == KEY_A:
             self._jump = True
 

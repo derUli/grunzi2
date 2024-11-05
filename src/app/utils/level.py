@@ -53,6 +53,7 @@ class Level:
         self._launching_sprite = None
         self._voiceover_triggers = None
         self._music = None
+        self._atmo = None
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
@@ -68,8 +69,12 @@ class Level:
 
         # TODO: play music by map triggers
         music_file = os.path.join(root_dir, 'resources', 'music', 'BeforeDawn.mp3')
-        sound = arcade.load_sound(music_file, streaming=audio_volumes.streaming)
-        self._music = sound.play(volume=audio_volumes.volume_music)
+        music = arcade.load_sound(music_file, streaming=audio_volumes.streaming)
+        self._music = music.play(volume=audio_volumes.volume_music)
+
+        atmo_file = os.path.join(root_dir, 'resources', 'sounds', 'atmos', f"{map_name}.mp3")
+        atmo = arcade.load_sound(atmo_file, streaming=audio_volumes.streaming)
+        self._atmo = atmo.play(volume=audio_volumes.volume_sound, loop=True)
 
         self._voiceover_triggers = VoiceOverTiggers().setup()
         self.scroll_to_player()
