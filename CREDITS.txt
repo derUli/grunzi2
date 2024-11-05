@@ -2,6 +2,7 @@ Images:
 https://www.publicdomainpictures.net/de/
 https://opengameart.org/content/light-magic-effect
 https://opengameart.org/content/ivy
+https://opengameart.org/content/ivy-hedge
 
 Sounds:
 Author: Tim Mortimer
