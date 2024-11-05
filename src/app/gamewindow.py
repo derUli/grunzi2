@@ -42,6 +42,7 @@ class GameWindow(arcade.Window):
             center_window=False,
             antialiasing: bool = True,
             samples: int = 4,
+            fixed_rate: float = 1 / 60
 
     ):
         """ Constructor """
@@ -68,7 +69,8 @@ class GameWindow(arcade.Window):
             center_window=center_window,
             antialiasing=antialiasing,
             samples=samples,
-            gc_mode='auto'
+            gc_mode='auto',
+            fixed_rate=fixed_rate
         )
 
     def setup(

@@ -118,7 +118,6 @@ class Level:
             self.move_stop()
 
         self.player.alpha = min(self.player.alpha + ALPHA_SPEED, 255)
-        self._physics_engine.update()
         self.scroll_to_player()
 
         self.update_clouds()
@@ -129,6 +128,9 @@ class Level:
 
         if self._music and not self._music.playing:
             self._music.delete()
+
+    def update_fixed(self):
+        self._physics_engine.update()
 
     def scroll_to_player(self, camera_speed=1):
         """ Scroll the window to the player. """

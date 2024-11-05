@@ -171,6 +171,7 @@ class Startup:
 
         window = GameWindow(
             fullscreen=fullscreen,
+            visible=False,
             vsync=vsync,
             width=width,
             height=height,
@@ -179,7 +180,7 @@ class Startup:
             center_window=args.center_window,
             draw_rate=draw_rate,
             update_rate=update_rate,
-            visible=False
+            fixed_rate=update_rate
         )
 
         # Set window location based on arguments
