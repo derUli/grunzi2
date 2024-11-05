@@ -52,8 +52,7 @@ class Level:
         self._physics_engine = None
         self._can_walk = False
         self._launching_sprite = None
-        self.voiceover_triggers = None
-        self._randomized_voiceovers = []
+        self._voiceover_triggers = None
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
@@ -71,7 +70,8 @@ class Level:
         music_file = os.path.join(root_dir, 'resources', 'music', 'BeforeDawn.mp3')
         sound = arcade.load_sound(music_file, streaming=audio_volumes.streaming)
         self._music = sound.play(volume=audio_volumes.volume_music)
-        self.setup_randomize_voicers()
+
+        self._voiceover_triggers = VoiceOverTiggers().setup()
         self.scroll_to_player()
 
     def setup_physics_engine(self):
@@ -83,19 +83,6 @@ class Level:
             walls=self._scene[LAYER_WALL],
             gravity_constant=GRAVITY_SLOWMO
         )
-
-    def setup_randomize_voicers(self):
-        """ Setup randomized voiceovers """
-
-        self.voiceover_triggers = VoiceOverTiggers()
-
-        voiceovers = []
-        for i in range(1, 5):
-            voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
-
-        random.shuffle(voiceovers)
-
-        self._randomized_voiceovers = voiceovers
 
     def load_tilemap(self, path):
         """ Load tilemap """
@@ -173,7 +160,7 @@ class Level:
         if sprint:
             modifier = MODIFIER_SPRINT
 
-        if self.voiceover_triggers.playing:
+        if self._voiceover_triggers.playing:
             modifier = MODIFIER_SPEECH
 
         self.player.change_x = -PLAYER_MOVE_SPEED * modifier
@@ -193,7 +180,7 @@ class Level:
         if sprint:
             modifier = MODIFIER_SPRINT
 
-        if self.voiceover_triggers.playing:
+        if self._voiceover_triggers.playing:
             modifier = MODIFIER_SPEECH
 
         self.player.change_x = PLAYER_MOVE_SPEED * modifier
@@ -218,7 +205,7 @@ class Level:
 
         speed = PLAYER_JUMP_SPEED
 
-        if self.voiceover_triggers.playing:
+        if self._voiceover_triggers.playing:
             speed *= MODIFIER_SPEECH
 
         self._physics_engine.jump(speed)
@@ -254,7 +241,7 @@ class Level:
 
     def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
         """ Check for collisions with lights """
-        if self._launching_sprite or self.voiceover_triggers.playing:
+        if self._launching_sprite or self._voiceover_triggers.playing:
             return
 
         found = None
@@ -279,15 +266,14 @@ class Level:
             streaming=volumes.streaming
         ).play(volume=volumes.volume_sound)
 
-        self.voiceover_triggers.playing = True
+        self._voiceover_triggers.playing = True
 
-        if found == LAYER_FIRST_VOICEOVER:
-            voiceover = VOICEOVER_DEFAULT
-        else:
-            voiceover = self._randomized_voiceovers.pop()
+        voiceover = self._voiceover_triggers.pop(
+            first = found == LAYER_FIRST_VOICEOVER
+        )
 
         pyglet.clock.schedule_once(
-            self.voiceover_triggers.play_voiceover,
+            self._voiceover_triggers.play_voiceover,
             2,
             root_dir,
             voiceover,

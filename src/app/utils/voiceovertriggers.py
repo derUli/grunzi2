@@ -1,6 +1,7 @@
 """ Voice over trigger handling """
 import logging
 import os
+import random
 
 import arcade
 
@@ -16,6 +17,21 @@ class VoiceOverTiggers:
     def __init__(self):
         """ Voice over trigger handling """
         self.playing = False
+        self.randomized_voiceovers = []
+
+    def setup(self):
+        """ Setup """
+
+        voiceovers = []
+
+        for i in range(1, 5):
+            voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
+
+        random.shuffle(voiceovers)
+
+        self.randomized_voiceovers = voiceovers
+
+        return self
 
     def on_speech_completed(self) -> None:
         """ Executed after voice playback is completed """
@@ -23,7 +39,8 @@ class VoiceOverTiggers:
         logging.info('Speech completed')
         self.playing = False
 
-    def voiceover_path(self, root_dir: str, voiceover) -> str:
+    @staticmethod
+    def voiceover_path(root_dir: str, voiceover: str) -> str:
         """ Get path to voiceover """
 
         return os.path.join(root_dir, 'resources', 'speech', voiceover)
@@ -48,3 +65,11 @@ class VoiceOverTiggers:
         playback.on_player_eos = self.on_speech_completed
 
         return playback
+
+    def pop(self, first = False) -> str:
+        """ Pop voiceover """
+
+        if first:
+            return VOICEOVER_DEFAULT
+
+        return self.randomized_voiceovers.pop(0)
