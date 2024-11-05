@@ -5,3 +5,5 @@ psutil
 sounddevice
 userpaths
 Babel
+duty
+optimize-images
