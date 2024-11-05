@@ -50,12 +50,15 @@ class Logo(View):
 
         self._phase = PHASE_FADE_IN
 
+        return self
+
     def on_update(self, delta_time: float):
         """ On update """
+
+        super().on_update(delta_time)
+
         if self._phase == PHASE_NEXT:
-            view = StartScreen()
-            view.setup(root_dir=self._root_dir)
-            self.window.show_view(view)
+            self.window.show_view(StartScreen().setup(root_dir=self._root_dir))
 
         if self._phase == PHASE_FADE_IN:
             self._fade_sprite.alpha = max(self._fade_sprite.alpha - FADE_SPEED, 0)

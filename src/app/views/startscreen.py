@@ -84,6 +84,8 @@ class StartScreen(View):
 
         self.on_update(0)
 
+        return self
+
     def setup_text(self):
         """ Setup text """
 

@@ -95,17 +95,15 @@ class GameWindow(arcade.Window):
         self.set_minimum_size(w, h)
 
         if show_intro:
-            view = Logo()
+            view = Logo
         else:
-            view = StartScreen()
+            view = StartScreen
 
         if show_fps:
             arcade.enable_timings()
-            self._fps_counter = FPSCounter()
-            self._fps_counter.setup(self)
+            self._fps_counter = FPSCounter().setup(self)
 
-        view.setup(root_dir)
-        self.show_view(view)
+        self.show_view(view().setup(root_dir))
 
     @property
     def size(self):

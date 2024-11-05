@@ -54,6 +54,8 @@ class Startup:
         self.setup_logging()
         self.setup_locale()
 
+        return self
+
     @staticmethod
     def setup_logging():
         """ Configure logger """

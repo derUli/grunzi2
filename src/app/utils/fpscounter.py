@@ -25,6 +25,7 @@ class FPSCounter:
         self._fps_text = {}
         self._window = window
         self._fps_camera = arcade.camera.Camera2D()
+        return self
 
     def update(self) -> None:
         """ Update fps counter """
