@@ -10,11 +10,12 @@ VOICEOVER_DEFAULT = 'text00.mp3'
 
 
 def voiceover_path(root_dir: str, voiceover):
+    """ Get path to voiceover """
     return os.path.join(root_dir, 'resources', 'speech', voiceover)
 
 
 def play_voiceover(dt: float, root_dir: str, voiceover: str, audio_volumes: AudioVolumes, on_player_eos):
-    # TODO: separate volume for speech
+    """ Play voiceover """
 
     logging.info(label_value('Speech completed', voiceover))
 
