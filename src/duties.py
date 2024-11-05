@@ -1,3 +1,5 @@
+""" Duty tasks """
+
 from duty import duty
 from duty.context import Context
 
@@ -22,4 +24,10 @@ def hello(ctx: Context):
 def optimize(ctx: Context):
     """ Optimize images """
 
-    ctx.run('optimize-images .')
+    print(ctx.run('optimize-images .'))
+
+
+def pylint(ctx: Context):
+    """ Lint  code """
+
+    print(ctx.run('pylint .'))

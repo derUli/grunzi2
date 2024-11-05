@@ -3,8 +3,10 @@ import logging
 
 import arcade
 
-FONT_SIZE_FPS = 16
-FONT_COLOR_FPS = arcade.csscolor.LIME_GREEN
+from app.constants.fonts import FONT_CONSOLA_MONO
+
+FONT_SIZE_FPS = 14
+FONT_COLOR_FPS = arcade.csscolor.WHITE
 MAX_FPS_COUNT = 5000
 MARGIN = 10
 
@@ -44,6 +46,7 @@ class FPSCounter:
 
         fps_text = arcade.Text(
             self._current_fps,
+            font_name=FONT_CONSOLA_MONO,
             font_size=FONT_SIZE_FPS,
             color=FONT_COLOR_FPS,
             x=0,

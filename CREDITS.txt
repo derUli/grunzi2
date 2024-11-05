@@ -12,3 +12,7 @@ Distributor: OpenGameArt.org
 
 Music:
 https://audionautix.com/
+
+Fonts:
+https://www.1001freefonts.com/marker-felt.font
+https://www.dafont.com/consola-mono.font

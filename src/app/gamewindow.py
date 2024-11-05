@@ -86,6 +86,7 @@ class GameWindow(arcade.Window):
             os.path.join(root_dir, 'resources', 'images', 'ui', 'icon.ico')
         )
         self.set_icon(icon)
+        self.setup_fonts()
         self.setup_controllers()
 
         w, h = SETTINGS_SIZE_MINIUM
@@ -140,6 +141,24 @@ class GameWindow(arcade.Window):
             controller.pop_handlers()
             controller.close()
             self._controllers.remove(controller)
+
+    def setup_fonts(self):
+        """ Load fonts """
+
+        fonts = [
+            'MarkerFelt.ttf',
+            'consolamonobook.ttf'
+        ]
+
+        for font in fonts:
+            arcade.load_font(
+                os.path.join(
+                    self._root_dir,
+                    'resources',
+                    'fonts',
+                    font
+                )
+            )
 
     def on_button_press(self, joystick, key) -> None:
         """ On controller button pressed """

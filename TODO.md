@@ -1,6 +1,5 @@
 * Leitern
 * Klettern
-* Springen
 * Musik-Untermalung
 * Atmos
 * Exe bauen für Windows

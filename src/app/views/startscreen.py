@@ -7,6 +7,7 @@ import webbrowser
 
 import arcade
 
+from app.constants.fonts import FONT_MARKER_FELT, FONT_CONSOLA_MONO
 from app.constants.gameinfo import VERSION_STRING, MAPS
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
@@ -93,6 +94,7 @@ class StartScreen(View):
 
         self._text_start = arcade.create_text_sprite(
             text=text,
+            font_name=FONT_MARKER_FELT,
             font_size=FONT_SIZE,
             bold=True
         )
@@ -100,6 +102,7 @@ class StartScreen(View):
 
         self._text_title = arcade.create_text_sprite(
             text=self.window.caption,
+            font_name=FONT_MARKER_FELT,
             font_size=FONT_SIZE_TITLE,
             bold=True
         )
@@ -107,6 +110,7 @@ class StartScreen(View):
 
         self._text_version = arcade.create_text_sprite(
             text=" ".join([_('Version'), VERSION_STRING]),
+            font_name=FONT_CONSOLA_MONO,
             font_size=FONT_SIZE_VERSION,
             bold=True
         )
