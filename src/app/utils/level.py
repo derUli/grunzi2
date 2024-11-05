@@ -56,7 +56,6 @@ class Level:
         self.load_tilemap(path)
 
         self._camera = arcade.camera.Camera2D()
-        self.scroll_to_player(camera_speed=1)
 
         self.setup_physics_engine()
         self.wait_for_begin()
@@ -132,7 +131,7 @@ class Level:
     def update_fixed(self):
         self._physics_engine.update()
 
-    def scroll_to_player(self, camera_speed=0.2):
+    def scroll_to_player(self, camera_speed=1):
         """ Scroll the window to the player. """
 
         player = self.player
