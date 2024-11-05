@@ -110,6 +110,7 @@ class GameWindow(arcade.Window):
 
     def setup_controllers(self):
         """ Setup controllers """
+
         self._controller_manager = pyglet.input.ControllerManager()
         controllers = self._controller_manager.get_controllers()
         for controller in controllers:
@@ -123,6 +124,7 @@ class GameWindow(arcade.Window):
         @self._controller_manager.event
         def on_connect(controller) -> None:
             """ On controller connect """
+
             logging.info(label_value('Controller connected', controller))
 
             controller.open()
@@ -133,6 +135,7 @@ class GameWindow(arcade.Window):
         @self._controller_manager.event
         def on_disconnect(controller):
             """ On controller disconnect """
+
             logging.info(label_value('Controller disconnected', controller))
             controller.pop_handlers()
             controller.close()

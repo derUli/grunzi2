@@ -241,6 +241,7 @@ class Level:
 
     def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
         """ Check for collisions with lights """
+
         if self._launching_sprite or self._voiceover_triggers.playing:
             return
 
