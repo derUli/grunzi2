@@ -558,7 +558,6 @@
   <object id="8" gid="70" x="11326" y="2362" width="128" height="128"/>
   <object id="9" gid="70" x="14200" y="700" width="128" height="128"/>
   <object id="15" gid="70" x="15390" y="2408" width="128" height="128"/>
-  <object id="16" gid="70" x="17268" y="2512" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="6" name="Player">
   <object id="2" gid="3" x="5836" y="209.243" width="200" height="200"/>
