@@ -24,7 +24,7 @@ class VoiceOverTiggers:
 
         voiceovers = []
 
-        for i in range(1, 5):
+        for i in range(1, 6):
             voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
 
         random.shuffle(voiceovers)
