@@ -38,7 +38,9 @@ LIGHT_LAUNCHING_MOVEMENT_SPEED = 10
 LIGHT_LAUNCHING_ROTATING_SPEED = 5
 LIGHT_COLLISION_CHECK_THRESHOLD = 100
 
-VOLUME_MUSIC_MODIFIER = 0.5
+VOLUME_MUSIC_MODIFIER = 0.4
+VOLUME_ATMO_MODIFIER = 0.1
+
 
 class Level:
     """ Level """
@@ -75,7 +77,7 @@ class Level:
 
         atmo_file = os.path.join(root_dir, 'resources', 'sounds', 'atmos', f"{map_name}.mp3")
         atmo = arcade.load_sound(atmo_file, streaming=audio_volumes.streaming)
-        self._atmo = atmo.play(volume=audio_volumes.volume_sound, loop=True)
+        self._atmo = atmo.play(volume=audio_volumes.volume_sound * VOLUME_ATMO_MODIFIER, loop=True)
 
         self._voiceover_triggers = VoiceOverTiggers().setup()
         self.scroll_to_player()
