@@ -38,6 +38,7 @@ LIGHT_LAUNCHING_MOVEMENT_SPEED = 10
 LIGHT_LAUNCHING_ROTATING_SPEED = 5
 LIGHT_COLLISION_CHECK_THRESHOLD = 100
 
+VOLUME_MUSIC_MODIFIER = 0.5
 
 class Level:
     """ Level """
@@ -70,7 +71,7 @@ class Level:
         # TODO: play music by map triggers
         music_file = os.path.join(root_dir, 'resources', 'music', 'BeforeDawn.mp3')
         music = arcade.load_sound(music_file, streaming=audio_volumes.streaming)
-        self._music = music.play(volume=audio_volumes.volume_music)
+        self._music = music.play(volume=audio_volumes.volume_music * VOLUME_MUSIC_MODIFIER)
 
         atmo_file = os.path.join(root_dir, 'resources', 'sounds', 'atmos', f"{map_name}.mp3")
         atmo = arcade.load_sound(atmo_file, streaming=audio_volumes.streaming)
