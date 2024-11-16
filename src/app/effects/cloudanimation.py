@@ -10,7 +10,7 @@ class CloudAnimation:
 
     def __init__(self):
         """ Constructor """
-        self._scence = None
+        self._scene = None
         self._tilemap = None
 
     def setup(self, scene, tilemap):
