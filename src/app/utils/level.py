@@ -10,10 +10,10 @@ from arcade import FACE_RIGHT, FACE_LEFT
 from app.constants.layers import (
     LAYER_PLAYER,
     LAYER_WALL,
-    LAYER_CLOUD,
     LAYERS_VOICEOVER,
     LAYER_FIRST_VOICEOVER
 )
+from app.effects.cloudanimation import CloudAnimation
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovertriggers import VoiceOverTiggers
 
@@ -31,8 +31,6 @@ GRAVITY_DEFAULT = 1
 
 ALPHA_SPEED = 1
 ALPHA_MAX = 255
-
-CLOUD_SPEED = 0.25
 
 LIGHT_LAUNCHING_MOVEMENT_SPEED = 10
 LIGHT_LAUNCHING_ROTATING_SPEED = 5
@@ -57,6 +55,7 @@ class Level:
         self._voiceover_triggers = None
         self._music = None
         self._atmo = None
+        self._animations = []
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
@@ -81,6 +80,12 @@ class Level:
 
         self._voiceover_triggers = VoiceOverTiggers().setup()
         self.scroll_to_player()
+        self._animations = [
+            CloudAnimation()
+        ]
+
+        for animation in self._animations:
+            animation.setup(self._scene, self.tilemap)
 
     def setup_physics_engine(self):
         """ Setup physics engine """
@@ -126,11 +131,13 @@ class Level:
         self.player.alpha = min(self.player.alpha + ALPHA_SPEED, 255)
         self.scroll_to_player()
 
-        self.update_clouds()
         self._scene.update(delta_time)
         self._scene.update_animation(delta_time)
         self.check_collision_lights(window.root_dir, window.audio_volumes)
         self.update_collision_light()
+
+        for animation in self._animations:
+            animation.update()
 
         if self._music and not self._music.playing:
             self._music.delete()
@@ -233,19 +240,6 @@ class Level:
             return
 
         pyglet.clock.schedule_once(self.wait_for_begin, 1 / 4)
-
-    def update_clouds(self):
-        """ Move the clouds """
-
-        clouds = self._scene[LAYER_CLOUD]
-
-        width = self.tilemap.width * self.tilemap.tile_width
-
-        for cloud in clouds:
-            cloud.center_x -= CLOUD_SPEED
-
-            if cloud.right <= 0:
-                cloud.right = width - abs(cloud.right)
 
     def check_collision_lights(self, root_dir: str, volumes: AudioVolumes):
         """ Check for collisions with lights """
