@@ -37,6 +37,9 @@ class VoiceOverTiggers:
         """ Executed after voice playback is completed """
 
         logging.info('Speech completed')
+
+        if not any(self.randomized_voiceovers):
+            logging.info('All voiceovers played')
         self.playing = False
 
     @staticmethod
@@ -74,4 +77,8 @@ class VoiceOverTiggers:
 
         if not any(self.randomized_voiceovers):
             return None
+
         return self.randomized_voiceovers.pop(0)
+
+    def any(self):
+        return any(self.randomized_voiceovers)

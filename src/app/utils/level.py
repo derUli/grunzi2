@@ -276,7 +276,7 @@ class Level:
         )
 
         if not voiceover:
-            logging.info('All voiceovers played')
+            logging.error('No voiceovers left')
             return
 
         pyglet.clock.schedule_once(
