@@ -79,6 +79,3 @@ class VoiceOverTiggers:
             return None
 
         return self.randomized_voiceovers.pop(0)
-
-    def any(self):
-        return any(self.randomized_voiceovers)
