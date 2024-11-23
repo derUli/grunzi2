@@ -1,11 +1,12 @@
 """ Move clouds """
 
 from app.constants.layers import LAYER_CLOUD
+from app.effects.effect import Effect
 
 CLOUD_SPEED = 0.25
 
 
-class CloudAnimation:
+class CloudAnimation(Effect):
     """ Move clouds """
 
     def __init__(self):
