@@ -275,6 +275,10 @@ class Level:
             first=found == LAYER_FIRST_VOICEOVER
         )
 
+        if not voiceover:
+            logging.info('All voiceovers played')
+            return
+
         pyglet.clock.schedule_once(
             self._voiceover_triggers.play_voiceover,
             2,

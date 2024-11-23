@@ -66,10 +66,12 @@ class VoiceOverTiggers:
 
         return playback
 
-    def pop(self, first=False) -> str:
+    def pop(self, first=False) -> str|None:
         """ Pop voiceover """
 
         if first:
             return VOICEOVER_DEFAULT
 
+        if not any(self.randomized_voiceovers):
+            return None
         return self.randomized_voiceovers.pop(0)
