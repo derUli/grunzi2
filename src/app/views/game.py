@@ -3,6 +3,7 @@ from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
+from app.constants.layers import LAYER_RANDOM_VOICEOVER
 from app.utils.level import Level
 from app.views.view import View
 

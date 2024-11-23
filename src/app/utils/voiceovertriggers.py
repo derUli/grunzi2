@@ -24,7 +24,7 @@ class VoiceOverTiggers:
 
         voiceovers = []
 
-        for i in range(1, 5):
+        for i in range(1, 6):
             voiceovers.append("text" + str(i).rjust(2, '0') + '.mp3')
 
         random.shuffle(voiceovers)
@@ -54,7 +54,7 @@ class VoiceOverTiggers:
     ):
         """ Play voiceover """
 
-        logging.info(label_value('Speech completed', voiceover))
+        logging.info(label_value('Play speech', voiceover))
 
         sound = arcade.load_sound(
             self.voiceover_path(root_dir, voiceover),
