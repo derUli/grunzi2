@@ -9,16 +9,6 @@ CLOUD_SPEED = 0.25
 class CloudAnimation(Effect):
     """ Move clouds """
 
-    def __init__(self):
-        """ Constructor """
-        self._scene = None
-        self._tilemap = None
-
-    def setup(self, scene, tilemap):
-        """ Setup animation """
-        self._scene = scene
-        self._tilemap = tilemap
-
     def update(self):
         """ Update animation"""
         clouds = self._scene[LAYER_CLOUD]

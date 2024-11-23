@@ -3,6 +3,7 @@ LAYER_BACKDROP = 'Backdrop'
 LAYER_PLAYER = 'Player'
 LAYER_WALL = 'Wall'
 LAYER_CLOUD = 'Cloud'
+LAYER_BUSH = 'Bush'
 
 LAYER_FIRST_VOICEOVER = 'FirstVoiceOver'
 LAYER_RANDOM_VOICEOVER = 'RandomVoiceOver'

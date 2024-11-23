@@ -14,6 +14,7 @@ from app.constants.layers import (
     LAYER_FIRST_VOICEOVER, LAYER_RANDOM_VOICEOVER
 )
 from app.effects.cloudanimation import CloudAnimation
+from app.effects.bushes import Bushes
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovertriggers import VoiceOverTiggers
 
@@ -81,7 +82,8 @@ class Level:
         self._voiceover_triggers = VoiceOverTiggers().setup()
         self.scroll_to_player()
         self._animations = [
-            CloudAnimation()
+            CloudAnimation(),
+            Bushes()
         ]
 
         for animation in self._animations:
