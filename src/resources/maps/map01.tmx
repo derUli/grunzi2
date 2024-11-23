@@ -558,11 +558,11 @@
  </objectgroup>
  <objectgroup id="16" name="RandomVoiceOver">
   <object id="7" gid="72" x="7612.34" y="1736" width="128" height="128"/>
-  <object id="9" gid="72" x="18864" y="812" width="128" height="128"/>
+  <object id="9" gid="72" x="19321.6" y="921.091" width="128" height="128"/>
   <object id="15" gid="72" x="20502" y="2264" width="128" height="128"/>
   <object id="17" gid="72" x="4171.15" y="1762.79" width="128" height="128"/>
-  <object id="19" gid="72" x="22068.9" y="2696.12" width="128" height="128"/>
-  <object id="23" gid="72" x="16521.9" y="2399.39" width="128" height="128"/>
+  <object id="19" gid="72" x="22102.2" y="2380.97" width="128" height="128"/>
+  <object id="23" gid="72" x="16515.9" y="2337.39" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="6" name="Player">
   <object id="2" gid="3" x="10956" y="209.243" width="200" height="200"/>
