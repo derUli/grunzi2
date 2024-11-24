@@ -159,10 +159,13 @@ class Startup:
         antialiasing = samples > 0
 
         # Draw rate
-        draw_rate = 1 / 9999
+        draw_rate = 1 / 99999
+
 
         if args.draw_rate > 0:
             draw_rate = 1 / args.draw_rate
+        elif vsync:
+            draw_rate = 1 / pyglet.display.get_display().get_default_screen().get_mode().rate
 
         # Update rate
 

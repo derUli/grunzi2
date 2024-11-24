@@ -2,12 +2,12 @@
 import logging
 import os
 import random
+import tkinter.messagebox
 
 import arcade
 
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.string import label_value
-
 VOICEOVER_DEFAULT = 'text00.mp3'
 
 
@@ -43,6 +43,8 @@ class VoiceOverTiggers:
 
         if not any(self.randomized_voiceovers):
             logging.info('All voiceovers played')
+            # tkinter.messagebox.showinfo(title=_('Demo completed'), message=_('To be continued'))
+
 
         self.playing = False
 

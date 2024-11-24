@@ -11,7 +11,7 @@ from app.constants.layers import (
     LAYER_PLAYER,
     LAYER_WALL,
     LAYERS_VOICEOVER,
-    LAYER_FIRST_VOICEOVER, LAYER_RANDOM_VOICEOVER
+    LAYER_FIRST_VOICEOVER
 )
 from app.effects.cloudanimation import CloudAnimation
 from app.effects.bushes import Bushes
