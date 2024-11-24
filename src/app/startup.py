@@ -1,7 +1,5 @@
 """ Game startup """
 
-# pylint: disable=C0103:
-
 import argparse
 import gettext
 import locale
