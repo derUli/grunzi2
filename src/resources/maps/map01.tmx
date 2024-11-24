@@ -505,7 +505,7 @@
  <objectgroup id="16" name="RandomVoiceOver">
   <object id="7" gid="73" x="7612.34" y="1736" width="128" height="128"/>
   <object id="9" gid="73" x="19321.6" y="921.091" width="128" height="128"/>
-  <object id="15" gid="73" x="20502" y="2264" width="128" height="128"/>
+  <object id="15" gid="73" x="20519.3" y="2189.33" width="128" height="128"/>
   <object id="17" gid="73" x="4171.15" y="1762.79" width="128" height="128"/>
   <object id="23" gid="73" x="16471.9" y="2337.39" width="128" height="128"/>
  </objectgroup>
