@@ -1,6 +1,5 @@
 import arcade
 import arcade.gui
-
 from app.constants.ui import BUTTON_WIDTH
 
 class PauseMenu(arcade.View):
@@ -58,19 +57,26 @@ class PauseMenu(arcade.View):
         self.window.set_mouse_visible(False)
         self.manager = None
 
-    def on_draw(self):
+    def on_draw(self) -> None:
+        """ On draw menu """
         self.clear()
         self.manager.draw()
 
 
-    def on_continue(self):
+    def on_update(self, delta_time: float) -> None:
+        """ On update menu """
+
+        self.manager.on_update(delta_time)
+
+    def on_continue(self) -> None:
+        """ On continue game """
+
         self.window.show_view(self.previous_view)
 
-    def on_exit(self):
-        from app.views.startscreen import StartScreen
+    def on_exit(self) -> None:
+        """ On exit to menu """
+
+        from .startscreen import StartScreen
         start_screen = StartScreen()
         start_screen.setup(self._root_dir)
         self.window.show_view(start_screen)
-
-    def on_update(self, delta_time: float):
-        self.manager.on_update(delta_time)
