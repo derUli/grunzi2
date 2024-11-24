@@ -12,6 +12,7 @@ import arcade
 import psutil
 import pyglet
 
+from app.constants.gameinfo import VERSION_STRING
 from app.constants.settings import (
     SETTINGS_DEFAULT_FULLSCREEN,
     SETTINGS_DEFAULT_VSYNC,
@@ -72,6 +73,15 @@ class Startup:
         locale_path = os.path.join(self._root_dir, 'resources', 'locales')
         os.environ['LANG'] = ':'.join(locale.getlocale())
         gettext.install('messages', locale_path)
+
+    @staticmethod
+    def log_version_info():
+        """ Log version info"""
+
+        logging.info(label_value('Amerre version', VERSION_STRING))
+        logging.info(label_value('Python version', sys.version))
+        logging.info(label_value('Arcade version', arcade.version))
+        logging.info(label_value('Pyglet version', pyglet.version))
 
     @staticmethod
     def log_system_info(window: arcade.Window) -> None:
@@ -204,6 +214,7 @@ class Startup:
         window.set_location(x, y)
         window.set_visible(True)
 
+        self.log_version_info()
         self.log_system_info(window)
 
         volume_music = args.volume_music
