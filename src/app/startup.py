@@ -21,7 +21,7 @@ from app.constants.settings import (
     SETTINGS_ANTIALIASING_CHOICES,
     SETTINGS_DEFAULT_ANTIALIASING, SETTINGS_DEFAULT_DRAW_RATE, SETTINGS_DEFAULT_UPDATE_RATE,
     SETTINGS_DEFAULT_VOLUME_MUSIC, SETTINGS_DEFAULT_VOLUME_SOUND, SETTINGS_DEFAULT_VOLUME_MASTER,
-    SETTINGS_DEFAULT_VOLUME_SPEECH
+    SETTINGS_DEFAULT_VOLUME_SPEECH, SETTINGS_WINDOW_STYLE_CHOICES, SETTINGS_DEFAULT_WINDOW_STYLE
 )
 from app.gamewindow import GameWindow
 from app.utils.audiovolumes import AudioVolumes
@@ -176,9 +176,13 @@ class Startup:
         if args.update_rate > 0:
             update_rate = 1 / args.update_rate
 
+        if str(args.window_style).lower() == 'none':
+            args.window_style = None
+
         window = GameWindow(
             fullscreen=fullscreen,
             visible=False,
+            style=args.window_style,
             vsync=vsync,
             width=width,
             height=height,
@@ -286,6 +290,15 @@ class Startup:
             action='store_true',
             default=False,
             help='Disable VSync'
+        )
+
+        parser.add_argument(
+            '--window-style',
+            action='store',
+            type=str,
+            help='The window style',
+            choices=SETTINGS_WINDOW_STYLE_CHOICES,
+            default=SETTINGS_DEFAULT_WINDOW_STYLE
         )
 
         parser.add_argument(

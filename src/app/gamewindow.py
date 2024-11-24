@@ -33,6 +33,7 @@ class GameWindow(arcade.Window):
             height: int = 720,
             fullscreen: bool = True,
             visible: bool = True,
+            style: str | None = None,
             vsync: bool = True,
             draw_rate: int = 1 / 60,
             update_rate=1 / 60,
@@ -59,6 +60,7 @@ class GameWindow(arcade.Window):
             title=_('Welcome to Amerre'),
             fullscreen=fullscreen,
             visible=visible,
+            style=style,
             vsync=vsync,
             resizable=False,
             draw_rate=draw_rate,
@@ -223,8 +225,8 @@ class GameWindow(arcade.Window):
 
         if symbol in KEY_SCREENSHOT:
             self.on_screenshot()
-        # if symbol in KEY_TOGGLE_FULLSCREEN:
-        #     self.set_fullscreen(not self.fullscreen)
+        if symbol in KEY_TOGGLE_FULLSCREEN:
+            self.set_fullscreen(not self.fullscreen)
 
     def on_screenshot(self):
         """ Save a screenshot """
