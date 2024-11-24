@@ -51,6 +51,7 @@ class PauseMenu(arcade.View):
         self.manager.enable()
 
     def on_hide_view(self) -> None:
+        """ On hide view """
 
         self.manager.disable()
         self.manager.clear()
@@ -59,6 +60,7 @@ class PauseMenu(arcade.View):
 
     def on_draw(self) -> None:
         """ On draw menu """
+
         self.clear()
         self.manager.draw()
 
@@ -76,7 +78,8 @@ class PauseMenu(arcade.View):
     def on_exit(self) -> None:
         """ On exit to menu """
 
-        from .startscreen import StartScreen
+        self.previous_view.unsetup()
+        from app.views.startscreen import StartScreen
         start_screen = StartScreen()
         start_screen.setup(self._root_dir)
         self.window.show_view(start_screen)

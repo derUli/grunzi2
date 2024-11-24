@@ -309,3 +309,14 @@ class Level:
         if self._launching_sprite.bottom > map_height:
             self._launching_sprite.remove_from_sprite_lists()
             self._launching_sprite = None
+
+    def unsetup(self):
+        sounds = [
+            self._music,
+            self._atmo,
+            self._voiceover_triggers.media,
+        ]
+
+        for sound in sounds:
+            if sound:
+                arcade.stop_sound(sound)

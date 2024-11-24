@@ -18,6 +18,7 @@ class VoiceOverTiggers:
         """ Voice over trigger handling """
         self.playing = False
         self.randomized_voiceovers = []
+        self._media = None
 
     def setup(self):
         """ Setup """
@@ -38,8 +39,11 @@ class VoiceOverTiggers:
 
         logging.info('Speech completed')
 
+        self._media = None
+
         if not any(self.randomized_voiceovers):
             logging.info('All voiceovers played')
+
         self.playing = False
 
     @staticmethod
@@ -50,7 +54,7 @@ class VoiceOverTiggers:
 
     def play_voiceover(
             self,
-            dt: float,
+            delta_time: float,
             root_dir: str,
             voiceover: str,
             audio_volumes: AudioVolumes
@@ -67,6 +71,7 @@ class VoiceOverTiggers:
         playback = sound.play(volume=audio_volumes.volume_speech)
         playback.on_player_eos = self.on_speech_completed
 
+        self._media = playback
         return playback
 
     def pop(self, first=False) -> str|None:
@@ -79,3 +84,8 @@ class VoiceOverTiggers:
             return None
 
         return self.randomized_voiceovers.pop(0)
+
+
+    @property
+    def media(self):
+        return self._media

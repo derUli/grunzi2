@@ -1,11 +1,10 @@
 """ Main game class """
+import arcade
 from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT, KEY_ESCAPE
-from app.constants.layers import LAYER_RANDOM_VOICEOVER
 from app.utils.level import Level
-from app.views.pausemenu import PauseMenu
 from app.views.view import View
 
 
@@ -63,10 +62,7 @@ class Game(View):
         """ On key press """
 
         if symbol in KEY_ESCAPE:
-            menu = PauseMenu(previous_view=self)
-            menu.setup(root_dir=self._root_dir)
-            self.window.show_view(menu)
-            return
+            self.on_pause()
 
         if symbol in KEY_LEFT:
             self._move_horizontal = FACE_LEFT
@@ -124,3 +120,13 @@ class Game(View):
 
         if key == KEY_LEFT:
             self._sprint = False
+
+    def on_pause(self):
+        from app.views.pausemenu import PauseMenu
+        menu = PauseMenu(previous_view=self)
+        menu.setup(root_dir=self._root_dir)
+        self.window.show_view(menu)
+        return
+
+    def unsetup(self):
+        self._level.unsetup()
