@@ -2,9 +2,10 @@
 from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER
-from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT
+from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT, KEY_ESCAPE
 from app.constants.layers import LAYER_RANDOM_VOICEOVER
 from app.utils.level import Level
+from app.views.pausemenu import PauseMenu
 from app.views.view import View
 
 
@@ -60,6 +61,12 @@ class Game(View):
 
     def on_key_press(self, symbol: int, modifiers: int):
         """ On key press """
+
+        if symbol in KEY_ESCAPE:
+            menu = PauseMenu(previous_view=self)
+            menu.setup(root_dir=self._root_dir)
+            self.window.show_view(menu)
+            return
 
         if symbol in KEY_LEFT:
             self._move_horizontal = FACE_LEFT
