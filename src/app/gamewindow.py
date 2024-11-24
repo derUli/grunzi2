@@ -11,7 +11,7 @@ import pyglet
 import userpaths
 
 from app.constants.gameinfo import DIRECTORY_GAME_NAME
-from app.constants.input.keyboard import KEY_SCREENSHOT
+from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_TOGGLE_FULLSCREEN
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.fpscounter import FPSCounter
@@ -223,6 +223,8 @@ class GameWindow(arcade.Window):
 
         if symbol in KEY_SCREENSHOT:
             self.on_screenshot()
+        # if symbol in KEY_TOGGLE_FULLSCREEN:
+        #     self.set_fullscreen(not self.fullscreen)
 
     def on_screenshot(self):
         """ Save a screenshot """

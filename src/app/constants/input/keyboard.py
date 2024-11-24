@@ -9,6 +9,7 @@ KEY_CONFIRM = [
 ]
 
 KEY_SCREENSHOT = [arcade.key.F12]
+KEY_TOGGLE_FULLSCREEN = [arcade.key.F11]
 
 KEY_LEFT = [arcade.key.A, arcade.key.LEFT, arcade.key.NUM_LEFT]
 KEY_RIGHT = [arcade.key.D, arcade.key.RIGHT, arcade.key.NUM_RIGHT]

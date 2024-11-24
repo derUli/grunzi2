@@ -144,6 +144,7 @@ class Startup:
         size = args.size
         size = size.lower()
         width, height = size.split('x')
+        width, height = int(width), int(height)
 
         try:
             width, height = int(width), int(height)
@@ -154,6 +155,8 @@ class Startup:
         if width == 0 or height == 0:
             logging.error('Width and height must be greater than 0')
             return
+
+        mode = arcade.get_screens()[0].get_closest_mode(width, height)
 
         samples = args.antialiasing
         antialiasing = samples > 0
