@@ -5,7 +5,7 @@ import random
 import arcade
 import pyglet
 
-from app.views.startscreen import StartScreen
+from app.views.mainmenu import MainMenu
 from app.views.view import View
 
 SCENE_LAYER_LOGO = 'Logo'
@@ -58,7 +58,7 @@ class Logo(View):
         super().on_update(delta_time)
 
         if self._phase == PHASE_NEXT:
-            self.window.show_view(StartScreen().setup(root_dir=self._root_dir))
+            self.window.show_view(MainMenu().setup(root_dir=self._root_dir))
 
         if self._phase == PHASE_FADE_IN:
             self._fade_sprite.alpha = max(self._fade_sprite.alpha - FADE_SPEED, 0)

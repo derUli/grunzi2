@@ -98,8 +98,8 @@ class PauseMenu(arcade.View):
             return
 
         self.previous_view.unsetup()
-        from app.views.startscreen import StartScreen
-        start_screen = StartScreen()
+        from app.views.mainmenu import MainMenu
+        start_screen = MainMenu()
         start_screen.setup(self._root_dir)
         self.window.show_view(start_screen)
 

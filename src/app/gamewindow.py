@@ -17,7 +17,7 @@ from app.utils.audiovolumes import AudioVolumes
 from app.utils.fpscounter import FPSCounter
 from app.utils.string import label_value
 from app.views.logo import Logo
-from app.views.startscreen import StartScreen
+from app.views.mainmenu import MainMenu
 
 MARGIN = 10
 
@@ -97,7 +97,7 @@ class GameWindow(arcade.Window):
         if show_intro:
             view = Logo
         else:
-            view = StartScreen
+            view = MainMenu
 
         if show_fps:
             arcade.enable_timings()

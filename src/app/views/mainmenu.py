@@ -43,7 +43,7 @@ PARTICLES_COUNT = 500
 URL_ITCH_IO = 'https://hog-games.itch.io/'
 
 
-class StartScreen(View):
+class MainMenu(View):
     """ The main menu """
 
     def __init__(self) -> None:

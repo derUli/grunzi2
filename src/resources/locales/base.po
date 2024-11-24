@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-24 15:15+0100\n"
+"POT-Creation-Date: 2024-11-24 16:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: app/gamewindow.py:59
+#: app/gamewindow.py:60
 msgid "Welcome to Amerre"
+msgstr ""
+
+#: app/views/mainmenu.py:90
+msgid "Press SPACE key to start"
+msgstr ""
+
+#: app/views/mainmenu.py:93
+msgid "Press START button to start"
+msgstr ""
+
+#: app/views/mainmenu.py:112
+msgid "Version"
 msgstr ""
 
 #: app/views/pausemenu.py:26
@@ -39,17 +51,5 @@ msgstr ""
 
 #: app/views/pausemenu.py:89
 msgid "No"
-msgstr ""
-
-#: app/views/startscreen.py:90
-msgid "Press SPACE key to start"
-msgstr ""
-
-#: app/views/startscreen.py:93
-msgid "Press START button to start"
-msgstr ""
-
-#: app/views/startscreen.py:112
-msgid "Version"
 msgstr ""
 
