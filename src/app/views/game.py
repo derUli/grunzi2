@@ -2,7 +2,7 @@
 import arcade
 from arcade import FACE_LEFT, FACE_RIGHT
 
-from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER
+from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER, KEY_START
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT, KEY_ESCAPE
 from app.utils.level import Level
 from app.views.view import View
@@ -109,8 +109,12 @@ class Game(View):
 
     def on_button_press(self, joystick, key) -> None:
         """ On controller button press """
+
         if key == KEY_A:
             self._jump = True
+
+        if key == KEY_START:
+            self.on_pause()
 
         if key == LEFTSTICK:
             self._sprint = True

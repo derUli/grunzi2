@@ -1,5 +1,7 @@
 import arcade
 import arcade.gui
+
+from app.constants.input.keyboard import KEY_ESCAPE
 from app.constants.ui import BUTTON_WIDTH
 
 class PauseMenu(arcade.View):
@@ -83,3 +85,8 @@ class PauseMenu(arcade.View):
         start_screen = StartScreen()
         start_screen.setup(self._root_dir)
         self.window.show_view(start_screen)
+
+
+    def on_key_press(self, symbol: int, modifiers: int) -> bool | None:
+        if symbol in KEY_ESCAPE:
+            self.on_continue()
