@@ -1,9 +1,13 @@
 import arcade
 import arcade.gui
+from arcade.gui import UIOnActionEvent
 
 from app.constants.input.controllers import KEY_START
 from app.constants.input.keyboard import KEY_ESCAPE
 from app.constants.ui import BUTTON_WIDTH
+
+MODAL_WIDTH = 300
+MODAL_HEIGHT = 200
 
 class PauseMenu(arcade.View):
     def __init__(self, previous_view: arcade.View):
@@ -78,8 +82,22 @@ class PauseMenu(arcade.View):
 
         self.window.show_view(self.previous_view)
 
-    def on_exit(self) -> None:
+    def on_exit(self, event: UIOnActionEvent|None = None) -> None:
         """ On exit to menu """
+
+        if not event:
+            dialog = arcade.gui.UIMessageBox(
+                message_text=_('Exit to main menu?'),
+                buttons=(_('Yes'), _('No')),
+                width= MODAL_WIDTH,
+                height = MODAL_HEIGHT
+            )
+            dialog.on_action = self.on_exit
+            self.manager.add(dialog)
+            return
+
+        if event.action != _('Yes'):
+            return
 
         self.previous_view.unsetup()
         from app.views.startscreen import StartScreen
