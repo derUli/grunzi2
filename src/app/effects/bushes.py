@@ -9,6 +9,7 @@ ALPHA_MIN = 255 * 0.5
 
 MIN_DISTANCE = 64
 
+
 class Bushes(Effect):
 
     def update(self):

@@ -13,8 +13,8 @@ from app.constants.layers import (
     LAYERS_VOICEOVER,
     LAYER_FIRST_VOICEOVER
 )
-from app.effects.cloudanimation import CloudAnimation
 from app.effects.bushes import Bushes
+from app.effects.cloudanimation import CloudAnimation
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovertriggers import VoiceOverTiggers
 

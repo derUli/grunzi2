@@ -1,5 +1,4 @@
 """ Main game class """
-import arcade
 from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER, KEY_START

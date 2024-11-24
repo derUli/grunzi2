@@ -161,7 +161,6 @@ class Startup:
         # Draw rate
         draw_rate = 1 / 99999
 
-
         if args.draw_rate > 0:
             draw_rate = 1 / args.draw_rate
         elif vsync:

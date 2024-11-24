@@ -7,6 +7,7 @@ import arcade
 
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.string import label_value
+
 VOICEOVER_DEFAULT = 'text00.mp3'
 
 
@@ -44,7 +45,6 @@ class VoiceOverTiggers:
             logging.info('All voiceovers played')
             # tkinter.messagebox.showinfo(title=_('Demo completed'), message=_('To be continued'))
 
-
         self.playing = False
 
     @staticmethod
@@ -75,7 +75,7 @@ class VoiceOverTiggers:
         self._media = playback
         return playback
 
-    def pop(self, first=False) -> str|None:
+    def pop(self, first=False) -> str | None:
         """ Pop voiceover """
 
         if first:
@@ -85,7 +85,6 @@ class VoiceOverTiggers:
             return None
 
         return self.randomized_voiceovers.pop(0)
-
 
     @property
     def media(self):

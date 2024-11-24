@@ -9,6 +9,7 @@ from app.constants.ui import BUTTON_WIDTH
 MODAL_WIDTH = 300
 MODAL_HEIGHT = 200
 
+
 class PauseMenu(arcade.View):
     def __init__(self, previous_view: arcade.View):
         super().__init__()
@@ -22,7 +23,7 @@ class PauseMenu(arcade.View):
         self.window.set_mouse_visible(True)
         self.manager = arcade.gui.UIManager()
         btn_continue = arcade.gui.UIFlatButton(
-            text = _('Continue'),
+            text=_('Continue'),
             width=BUTTON_WIDTH,
         )
 
@@ -39,11 +40,9 @@ class PauseMenu(arcade.View):
         def on_click_btn_exit(event):
             self.on_exit()
 
-
         grid = arcade.gui.UIGridLayout(column_count=2, row_count=2, vertical_spacing=20)
         grid.add(btn_continue, row=0)
         grid.add(btn_exit, row=1)
-
 
         # Passing the main view into menu view as an argument.
         anchor = self.manager.add(arcade.gui.UIAnchorLayout())
@@ -71,7 +70,6 @@ class PauseMenu(arcade.View):
         self.clear()
         self.manager.draw()
 
-
     def on_update(self, delta_time: float) -> None:
         """ On update menu """
 
@@ -82,15 +80,15 @@ class PauseMenu(arcade.View):
 
         self.window.show_view(self.previous_view)
 
-    def on_exit(self, event: UIOnActionEvent|None = None) -> None:
+    def on_exit(self, event: UIOnActionEvent | None = None) -> None:
         """ On exit to menu """
 
         if not event:
             dialog = arcade.gui.UIMessageBox(
                 message_text=_('Exit to main menu?'),
                 buttons=(_('Yes'), _('No')),
-                width= MODAL_WIDTH,
-                height = MODAL_HEIGHT
+                width=MODAL_WIDTH,
+                height=MODAL_HEIGHT
             )
             dialog.on_action = self.on_exit
             self.manager.add(dialog)
@@ -104,7 +102,6 @@ class PauseMenu(arcade.View):
         start_screen = StartScreen()
         start_screen.setup(self._root_dir)
         self.window.show_view(start_screen)
-
 
     def on_key_press(self, symbol: int, modifiers: int) -> bool | None:
         if symbol in KEY_ESCAPE:

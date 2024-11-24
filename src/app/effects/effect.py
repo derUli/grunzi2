@@ -1,5 +1,4 @@
 """ Effect """
-import logging
 
 
 class Effect:
