@@ -103,7 +103,9 @@ class PauseMenu(arcade.View):
         start_screen.setup(self._root_dir)
         self.window.show_view(start_screen)
 
-    def on_key_press(self, symbol: int, modifiers: int) -> bool | None:
+    def on_key_press(self, symbol: int, modifiers: int) -> None:
+        """ On key press """
+
         if symbol in KEY_ESCAPE:
             self.on_continue()
 
