@@ -1,7 +1,14 @@
 """ Main game class """
 from arcade import FACE_LEFT, FACE_RIGHT
 
-from app.constants.input.controllers import KEY_A, LEFTSTICK, AXIS_RIGHT, AXIS_LEFT, LEFT_TRIGGER, KEY_START
+from app.constants.input.controllers import (
+    KEY_A,
+    LEFTSTICK,
+    AXIS_RIGHT,
+    AXIS_LEFT,
+    LEFT_TRIGGER,
+    KEY_START
+)
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT, KEY_ESCAPE
 from app.utils.level import Level
 from app.views.view import View

@@ -1,3 +1,5 @@
+""" Pause Menu """
+
 import arcade
 import arcade.gui
 from arcade.gui import UIOnActionEvent
@@ -11,6 +13,8 @@ MODAL_HEIGHT = 200
 
 
 class PauseMenu(arcade.View):
+    """ Pause Menu """
+
     def __init__(self, previous_view: arcade.View):
         super().__init__()
 
