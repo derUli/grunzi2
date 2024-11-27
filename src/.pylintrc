@@ -1,3 +1,6 @@
+[MASTER]
+ignore=build
+
 [PYLINT]
 max-positional-arguments=10
 max-args=10
