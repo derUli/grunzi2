@@ -14,13 +14,6 @@ def translations(ctx: Context):
 
 
 @duty
-def hello(ctx: Context):
-    """ Print out hello world """
-
-    print('Hello world')
-
-
-@duty
 def optimize(ctx: Context):
     """ Optimize images """
 

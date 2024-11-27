@@ -1,4 +1,5 @@
 """ Pause Menu """
+import logging
 
 import arcade
 import arcade.gui
@@ -34,6 +35,7 @@ class PauseMenu(arcade.View):
 
         @btn_continue.event("on_click")
         def on_click_btn_continue(event):
+            logging.debug(event)
             self.on_continue()
 
         btn_exit = arcade.gui.UIFlatButton(
@@ -43,6 +45,7 @@ class PauseMenu(arcade.View):
 
         @btn_exit.event("on_click")
         def on_click_btn_exit(event):
+            logging.debug(event)
             self.on_exit()
 
         grid = arcade.gui.UIGridLayout(column_count=2, row_count=2, vertical_spacing=20)
