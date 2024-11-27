@@ -16,6 +16,7 @@ class PauseMenu(arcade.View):
     """ Pause Menu """
 
     def __init__(self, previous_view: arcade.View):
+        """ Constructor """
         super().__init__()
 
         self.previous_view = previous_view
