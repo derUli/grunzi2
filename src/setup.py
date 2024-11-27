@@ -41,7 +41,8 @@ options = {
         ],
         'include_files': [
             'resources/',
-            '../CREDITS.txt'
+            '../CREDITS.txt',
+            '../CHANGES.txt'
         ],
     }
 }

@@ -1,10 +1,13 @@
 """ Voice over trigger handling """
+import gettext
+import locale
 import logging
 import os
 import random
 
 import arcade
 
+from app.constants.gameinfo import DEFAULT_LOCALE
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.string import label_value
 
@@ -48,10 +51,15 @@ class VoiceOverTiggers:
         self.playing = False
 
     @staticmethod
-    def voiceover_path(root_dir: str, voiceover: str) -> str:
+    def voiceover_path(root_dir: str, languages: list, voiceover: str) -> str:
         """ Get path to voiceover """
 
-        return os.path.join(root_dir, 'resources', 'speech', voiceover)
+        for l in languages:
+            path = os.path.join(root_dir, 'resources', 'speech', l[0], voiceover)
+            if os.path.isfile(path):
+                return path
+
+        return os.path.join(root_dir, 'resources', 'speech', DEFAULT_LOCALE, voiceover)
 
     def play_voiceover(
             self,
@@ -64,8 +72,10 @@ class VoiceOverTiggers:
 
         logging.info(label_value('Play speech', voiceover))
 
+        languages = list(map(lambda x: x.split('_'), os.environ['LANG'].split(':')))
+
         sound = arcade.load_sound(
-            self.voiceover_path(root_dir, voiceover),
+            self.voiceover_path(root_dir, languages, voiceover),
             streaming=audio_volumes.streaming
         )
 

@@ -8,3 +8,5 @@ DIRECTORY_GAME_NAME = 'Amerre'
 MAPS = [
     'map01'
 ]
+
+DEFAULT_LOCALE = 'de'
