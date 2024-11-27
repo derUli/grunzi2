@@ -1,4 +1,5 @@
 """ Main game class """
+
 from arcade import FACE_LEFT, FACE_RIGHT
 
 from app.constants.input.controllers import (
@@ -131,12 +132,16 @@ class Game(View):
         if key == KEY_LEFT:
             self._sprint = False
 
-    def on_pause(self):
+    def on_pause(self) -> None:
+        """ On pause game """
+
         from app.views.pausemenu import PauseMenu
         menu = PauseMenu(previous_view=self)
         menu.setup(root_dir=self._root_dir)
         self.window.show_view(menu)
         return
 
-    def unsetup(self):
+    def unsetup(self) -> None:
+        """ Unsetup game """
+
         self._level.unsetup()
