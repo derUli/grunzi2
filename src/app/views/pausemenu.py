@@ -85,6 +85,8 @@ class PauseMenu(arcade.View):
 
         self.window.show_view(self.previous_view)
 
+        self.previous_view.on_continue()
+
     def on_exit(self, event: UIOnActionEvent | None = None) -> None:
         """ On exit to menu """
 

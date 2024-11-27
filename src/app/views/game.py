@@ -139,7 +139,11 @@ class Game(View):
         menu = PauseMenu(previous_view=self)
         menu.setup(root_dir=self._root_dir)
         self.window.show_view(menu)
+        self._level.on_pause()
         return
+
+    def on_continue(self) -> None:
+        self._level.on_continue()
 
     def unsetup(self) -> None:
         """ Unsetup game """
