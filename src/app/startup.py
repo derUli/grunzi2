@@ -71,8 +71,8 @@ class Startup:
         """ setup locale """
 
         locale_path = os.path.join(self._root_dir, 'resources', 'locales')
-        os.environ['LANG'] = ':' + lang[0]
-        print(lang[0])
+        os.environ['LANG'] = lang[0]
+        logging.info(label_value('Language', lang[0]))
         gettext.install('messages', locale_path)
 
     @staticmethod
@@ -172,8 +172,6 @@ class Startup:
 
         if not any(lang):
             lang = [DEFAULT_LOCALE]
-
-        print(lang)
 
         self.setup_locale(lang)
 
