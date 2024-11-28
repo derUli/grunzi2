@@ -11,8 +11,9 @@ import sys
 import arcade
 import psutil
 import pyglet
+from attr.converters import optional
 
-from app.constants.gameinfo import VERSION_STRING
+from app.constants.gameinfo import VERSION_STRING, DEFAULT_LOCALE
 from app.constants.settings import (
     SETTINGS_DEFAULT_FULLSCREEN,
     SETTINGS_DEFAULT_VSYNC,
@@ -51,7 +52,6 @@ class Startup:
 
         self._root_dir = root_dir
         self.setup_logging()
-        self.setup_locale()
 
         return self
 
@@ -67,11 +67,12 @@ class Startup:
             handlers=handlers
         )
 
-    def setup_locale(self) -> None:
+    def setup_locale(self, lang) -> None:
         """ setup locale """
 
         locale_path = os.path.join(self._root_dir, 'resources', 'locales')
-        os.environ['LANG'] = ':'.join(locale.getlocale())
+        os.environ['LANG'] = ':' + lang[0]
+        print(lang[0])
         gettext.install('messages', locale_path)
 
     @staticmethod
@@ -164,7 +165,17 @@ class Startup:
             logging.error('Width and height must be greater than 0')
             return
 
-        mode = arcade.get_screens()[0].get_closest_mode(width, height)
+        lang = list(locale.getlocale())
+
+        if args.language:
+            lang = [args.language]
+
+        if not any(lang):
+            lang = [DEFAULT_LOCALE]
+
+        print(lang)
+
+        self.setup_locale(lang)
 
         samples = args.antialiasing
         antialiasing = samples > 0
@@ -407,6 +418,12 @@ class Startup:
             action='store_true',
             default=False,
             help='Disable audio streaming'
+        )
+
+        parser.add_argument(
+            '--language',
+            help='The language',
+            type=str
         )
 
         return parser.parse_args()
