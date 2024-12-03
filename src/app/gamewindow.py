@@ -240,7 +240,7 @@ class GameWindow(arcade.Window):
 
         start = time.time()
         image = arcade.get_image().convert('RGB')
-        image.save(filename)
+        image.save(filename, subsampling=0, quality=100)
         end = time.time() - start
 
         logging.info(f"Screenshot saved as {filename} in {end} seconds")
