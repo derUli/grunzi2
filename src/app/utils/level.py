@@ -15,6 +15,7 @@ from app.constants.layers import (
 )
 from app.effects.bushes import Bushes
 from app.effects.cloudanimation import CloudAnimation
+from app.effects.filmgrain import Filmgrain
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovertriggers import VoiceOverTiggers
 
@@ -83,11 +84,12 @@ class Level:
         self.scroll_to_player()
         self._animations = [
             CloudAnimation(),
-            Bushes()
+            Bushes(),
+            Filmgrain()
         ]
 
         for animation in self._animations:
-            animation.setup(self._scene, self.tilemap)
+            animation.setup(self._scene, self.tilemap, root_dir)
 
     def setup_physics_engine(self):
         """ Setup physics engine """
@@ -139,7 +141,7 @@ class Level:
         self.update_collision_light()
 
         for animation in self._animations:
-            animation.update()
+            animation.update(delta_time)
 
         if self._music and not self._music.playing:
             self._music.delete()
@@ -165,6 +167,9 @@ class Level:
 
         self._camera.use()
         self._scene.draw()
+
+        for animation in self._animations:
+            animation.draw()
 
     def move_left(self, sprint: bool = False):
         """ Move left """
