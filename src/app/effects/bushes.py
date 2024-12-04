@@ -12,7 +12,11 @@ MIN_DISTANCE = 64
 
 class Bushes(Effect):
 
-    def update(self, delta_time):
+    def update(self, delta_time: float) -> None:
+        """
+        Update it
+        @param delta_time: Float
+        """
 
         sprites = self._scene[LAYER_BUSH]
 

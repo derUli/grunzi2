@@ -9,7 +9,7 @@ CLOUD_SPEED = 0.25
 class CloudAnimation(Effect):
     """ Move clouds """
 
-    def update(self, delta_time):
+    def update(self, delta_time: float):
         """ Update animation"""
         clouds = self._scene[LAYER_CLOUD]
 

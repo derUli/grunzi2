@@ -1,6 +1,9 @@
+""" Filmgrain effect """
+
 import os
 
 import arcade
+
 from app.effects.effect import Effect
 
 FADE_SPEED = 1
@@ -8,8 +11,11 @@ ALPHA = 20
 
 
 class Filmgrain(Effect):
+    """ Filmgrain effect """
 
     def __init__(self):
+        """ Constructor """
+
         super().__init__()
 
         self._camera = None
@@ -30,9 +36,14 @@ class Filmgrain(Effect):
 
         self._spritelist.alpha = ALPHA
 
-    def update(self, delta_time):
+    def update(self, delta_time: float) -> None:
+        """
+        Update it
+        @param delta_time: Float
+        """
         self._grain.update_animation(delta_time=delta_time)
 
-    def draw(self):
+    def draw(self) -> None:
+        """ Draw it """
         self._camera.use()
         self._spritelist.draw()
