@@ -23,6 +23,8 @@ class Filmgrain(Effect):
         self._spritelist = None
 
     def setup(self, scene, tilemap, root_dir):
+        """ Setup animation """
+
         super().setup(scene, tilemap, root_dir)
 
         self._camera = arcade.camera.Camera2D()
@@ -41,9 +43,11 @@ class Filmgrain(Effect):
         Update it
         @param delta_time: Float
         """
+        
         self._grain.update_animation(delta_time=delta_time)
 
     def draw(self) -> None:
         """ Draw it """
+
         self._camera.use()
         self._spritelist.draw()
