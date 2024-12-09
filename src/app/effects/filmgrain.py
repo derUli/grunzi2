@@ -7,7 +7,7 @@ import arcade
 from app.effects.effect import Effect
 
 FADE_SPEED = 1
-ALPHA = 24
+ALPHA = 21
 
 
 class Filmgrain(Effect):
@@ -43,7 +43,7 @@ class Filmgrain(Effect):
         Update it
         @param delta_time: Float
         """
-        
+
         self._grain.update_animation(delta_time=delta_time)
 
     def draw(self) -> None:
