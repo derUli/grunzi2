@@ -11,7 +11,6 @@ import sys
 import arcade
 import psutil
 import pyglet
-from attr.converters import optional
 
 from app.constants.gameinfo import VERSION_STRING, DEFAULT_LOCALE
 from app.constants.settings import (

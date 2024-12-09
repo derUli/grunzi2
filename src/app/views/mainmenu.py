@@ -196,7 +196,6 @@ class MainMenu(View):
         self._icon_exit.right = self.window.width - MARGIN
         self._icon_exit.top = self.window.height - MARGIN
 
-
         for effect in self._effects:
             effect.update(delta_time)
 
@@ -216,7 +215,6 @@ class MainMenu(View):
                     view.setup_level(MAPS[0])
 
                     self.window.show_view(view)
-
 
     def on_update_particles(self):
         """ Update particles """

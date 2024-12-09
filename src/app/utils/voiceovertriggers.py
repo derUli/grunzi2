@@ -1,6 +1,4 @@
 """ Voice over trigger handling """
-import gettext
-import locale
 import logging
 import os
 import random

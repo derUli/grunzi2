@@ -11,7 +11,6 @@ from app.constants.input.controllers import (
     KEY_START
 )
 from app.constants.input.keyboard import KEY_LEFT, KEY_RIGHT, KEY_JUMP, KEY_SPRINT, KEY_ESCAPE
-from app.constants.layers import LAYER_PLAYER
 from app.utils.level import Level
 from app.views.view import View
 

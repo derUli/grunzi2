@@ -14,6 +14,7 @@ PARTICLE_SPEED = 0.2
 
 PARTICLES_COLOR = (255, 255, 255)
 
+
 class Particles(Effect):
     """ Effect """
 
@@ -39,7 +40,6 @@ class Particles(Effect):
             # sprite.change_y -= random.uniform(-PARTICLE_SPEED, PARTICLE_SPEED)
 
             scene.add_sprite(LAYER_PARTICLES, sprite)
-
 
     def update(self, delta_time: float) -> None:
         """

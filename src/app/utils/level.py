@@ -328,7 +328,6 @@ class Level:
             if sound:
                 arcade.stop_sound(sound)
 
-
     def on_pause(self):
         sounds = [
             self._music,
@@ -339,7 +338,6 @@ class Level:
         for sound in sounds:
             if sound:
                 sound.pause()
-
 
     def on_continue(self):
         sounds = [
