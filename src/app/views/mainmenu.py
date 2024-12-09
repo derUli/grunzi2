@@ -12,6 +12,7 @@ from app.constants.gameinfo import VERSION_STRING, MAPS
 from app.constants.input.controllers import KEY_START, KEY_BACK
 from app.constants.input.keyboard import KEY_ESCAPE, KEY_CONFIRM
 from app.constants.input.mouse import BUTTON_LEFT_CLICK
+from app.effects.filmgrain import Filmgrain
 from app.views.game import Game
 from app.views.view import View
 
@@ -62,6 +63,8 @@ class MainMenu(View):
 
         self._sound_hover = None
 
+        self._effects = []
+
     def setup(self, root_dir: str):
         """ Setup the start screen """
 
@@ -81,6 +84,13 @@ class MainMenu(View):
         self.setup_sounds(root_dir)
 
         self.on_update(0)
+
+        self._effects = [
+            Filmgrain()
+        ]
+
+        for effect in self._effects:
+            effect.setup(self._scene, None, root_dir)
 
         return self
 
@@ -186,6 +196,10 @@ class MainMenu(View):
         self._icon_exit.right = self.window.width - MARGIN
         self._icon_exit.top = self.window.height - MARGIN
 
+
+        for effect in self._effects:
+            effect.update(delta_time)
+
         # On fading in
         if self._fade_sprite is not None:
 
@@ -202,6 +216,7 @@ class MainMenu(View):
                     view.setup_level(MAPS[0])
 
                     self.window.show_view(view)
+
 
     def on_update_particles(self):
         """ Update particles """
@@ -225,6 +240,9 @@ class MainMenu(View):
 
         if SCENE_LAYER_FADEIN in self._scene:
             self._scene[SCENE_LAYER_FADEIN].draw()
+
+        for effect in self._effects:
+            effect.draw()
 
         self.window.draw_after()
 
