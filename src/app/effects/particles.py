@@ -1,4 +1,4 @@
-""" Effect """
+""" Particles """
 import random
 
 import arcade.sprite
@@ -8,8 +8,8 @@ from app.effects.effect import Effect
 
 PARTICLES_COUNT = 300
 PARTICLES_RADIUS = 6
-PARTICLES_Y_MIN = 372
-PARTICLES_Y_MAX = 550
+PARTICLES_Y_MIN = 370
+PARTICLES_Y_MAX = 730
 PARTICLE_SPEED = 0.2
 
 PARTICLES_COLOR = (255, 255, 255)
@@ -24,7 +24,7 @@ class Particles(Effect):
         width = tilemap.width * tilemap.tile_width
         for i in range(0, PARTICLES_COUNT):
             r, g, b = PARTICLES_COLOR
-            a = random.randint(100, 200)
+            a = random.randint(80, 180)
             color = r, g, b, a
 
             sprite = arcade.sprite.SpriteCircle(
