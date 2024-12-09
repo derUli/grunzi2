@@ -82,6 +82,12 @@ class Startup:
         logging.info(label_value('Python version', sys.version))
         logging.info(label_value('Arcade version', arcade.version))
         logging.info(label_value('Pyglet version', pyglet.version))
+        try:
+            gil = sys._is_gil_enabled()
+        except AttributeError:
+            gil = None
+
+        logging.info(label_value('GIL', gil))
 
     @staticmethod
     def log_system_info(window: arcade.Window) -> None:
