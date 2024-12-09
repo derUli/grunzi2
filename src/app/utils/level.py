@@ -16,6 +16,7 @@ from app.constants.layers import (
 from app.effects.bushes import Bushes
 from app.effects.cloudanimation import CloudAnimation
 from app.effects.filmgrain import Filmgrain
+from app.effects.particles import Particles
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.voiceovertriggers import VoiceOverTiggers
 
@@ -83,6 +84,7 @@ class Level:
         self._voiceover_triggers = VoiceOverTiggers().setup()
         self.scroll_to_player()
         self._animations = [
+            Particles(),
             CloudAnimation(),
             Bushes(),
             Filmgrain()

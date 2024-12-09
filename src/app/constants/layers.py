@@ -5,7 +5,7 @@ LAYER_WALL = 'Wall'
 LAYER_CLOUD = 'Cloud'
 LAYER_BUSH = 'Bush'
 LAYER_FILM_GRAIN = 'FilmGrain'
-
+LAYER_PARTICLES = 'Particles'
 LAYER_FIRST_VOICEOVER = 'FirstVoiceOver'
 LAYER_RANDOM_VOICEOVER = 'RandomVoiceOver'
 
