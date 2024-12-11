@@ -11,7 +11,7 @@ import pyglet
 import userpaths
 
 from app.constants.gameinfo import DIRECTORY_GAME_NAME
-from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_TOGGLE_FULLSCREEN
+from app.constants.input.keyboard import KEY_SCREENSHOT, KEY_TOGGLE_FULLSCREEN, KEY_TOGGLE_FPS
 from app.constants.settings import SETTINGS_SIZE_MINIUM
 from app.utils.audiovolumes import AudioVolumes
 from app.utils.fpscounter import FPSCounter
@@ -227,6 +227,8 @@ class GameWindow(arcade.Window):
             self.on_screenshot()
         if symbol in KEY_TOGGLE_FULLSCREEN:
             self.set_fullscreen(not self.fullscreen)
+        if symbol in KEY_TOGGLE_FPS:
+            self.on_toggle_fps()
 
     def on_screenshot(self):
         """ Save a screenshot """
@@ -251,6 +253,15 @@ class GameWindow(arcade.Window):
         sound.play(volume=self._audio_volumes.volume_sound)
 
         return filename
+
+    def on_toggle_fps(self):
+        """ Toggle fps counter """
+        if self._fps_counter:
+            arcade.disable_timings()
+            self._fps_counter = None
+        else:
+            arcade.enable_timings()
+            self._fps_counter = FPSCounter().setup(self)
 
     def on_update(self, delta_time: float):
         """ On update """
