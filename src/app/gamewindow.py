@@ -256,6 +256,7 @@ class GameWindow(arcade.Window):
 
     def on_toggle_fps(self):
         """ Toggle fps counter """
+
         if self._fps_counter:
             arcade.disable_timings()
             self._fps_counter = None
