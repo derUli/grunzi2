@@ -11,6 +11,7 @@ class CloudAnimation(Effect):
 
     def update(self, delta_time: float):
         """ Update animation"""
+
         clouds = self._scene[LAYER_CLOUD]
 
         width = self._tilemap.width * self._tilemap.tile_width

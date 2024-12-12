@@ -6,6 +6,7 @@ class Effect:
 
     def __init__(self):
         """ Constructor """
+
         self._scene = None
         self._tilemap = None
         self._root_dir = None
@@ -22,8 +23,10 @@ class Effect:
         Update it
         @param delta_time: float
         """
+
         return
 
     def draw(self) -> None:
         """ Draw effect """
+
         return

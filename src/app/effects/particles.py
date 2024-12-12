@@ -46,6 +46,7 @@ class Particles(Effect):
         Update it
         @param delta_time: float
         """
+
         for sprite in self._scene[LAYER_PARTICLES]:
             sprite.center_x -= PARTICLE_SPEED
             if sprite.right < 0:
@@ -54,4 +55,5 @@ class Particles(Effect):
 
     def draw(self) -> None:
         """ Draw effect """
+
         return
