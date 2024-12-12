@@ -27,8 +27,8 @@ PLAYER_JUMP_SPEED = 16
 PLAYER_MOVE_ANGLE = 2
 
 MODIFIER_WALK = 1.0
-MODIFIER_SPRINT = 1.5
-MODIFIER_SPEECH = 1.0
+MODIFIER_SPRINT = 1.2
+MODIFIER_SPEECH = MODIFIER_WALK
 
 GRAVITY_SLOWMO = 0.002
 GRAVITY_DEFAULT = 1
@@ -323,6 +323,8 @@ class Level:
             self._launching_sprite = None
 
     def unsetup(self):
+        """ On exit stop and delete sounds """
+
         sounds = [
             self._music,
             self._atmo,
@@ -334,30 +336,43 @@ class Level:
                 arcade.stop_sound(sound)
 
     def on_pause(self):
+        """ On pause game """
+
         sounds = [
             self._music,
             self._atmo,
             self._voiceover_triggers.media,
         ]
 
+        # Pause audio
         for sound in sounds:
             if sound:
                 sound.pause()
 
     def on_continue(self):
+        """ On continue """
+
         sounds = [
             self._music,
             self._atmo,
             self._voiceover_triggers.media,
         ]
 
+        # Start sound playback
         for sound in sounds:
             if sound:
                 sound.play()
 
     def on_level_completed(self):
+        """ Called when a level is completed """
+
         w, h = arcade.get_window().get_size()
+
+        # Add fade sprite to scene
         sprite = arcade.sprite.SpriteSolidColor(width=w, height=h, color=WHITE)
+
+        # It is initially hidden
+        # On next update it will change to visible
         sprite.alpha = 0
         sprite.visible = False
 
@@ -365,7 +380,7 @@ class Level:
         self.update_fade()
 
     def update_fade(self):
-
+        """ Update fade """
         if not LAYER_FADEOUT in self._scene:
             return
 
@@ -373,8 +388,6 @@ class Level:
             return
 
         sprite = self._scene[LAYER_FADEOUT][0]
-
-        w, h = arcade.get_window().get_size()
 
         camera_x, camera_y = self._camera.position
 
