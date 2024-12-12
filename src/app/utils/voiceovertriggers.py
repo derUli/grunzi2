@@ -7,6 +7,7 @@ import arcade
 
 from app.constants.gameinfo import DEFAULT_LOCALE
 from app.utils.audiovolumes import AudioVolumes
+from app.utils.callbacks import Callbacks
 from app.utils.string import label_value
 
 VOICEOVER_DEFAULT = 'text00.mp3'
@@ -20,9 +21,12 @@ class VoiceOverTiggers:
         self.playing = False
         self.randomized_voiceovers = []
         self._media = None
+        self._callbacks = None
 
-    def setup(self):
+    def setup(self, callbacks: Callbacks):
         """ Setup """
+
+        self._callbacks = callbacks
 
         voiceovers = []
 
@@ -44,7 +48,7 @@ class VoiceOverTiggers:
 
         if not any(self.randomized_voiceovers):
             logging.info('All voiceovers played')
-            # tkinter.messagebox.showinfo(title=_('Demo completed'), message=_('To be continued'))
+            self._callbacks.on_level_completed()
 
         self.playing = False
 

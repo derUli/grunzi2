@@ -11,13 +11,14 @@ from app.constants.layers import (
     LAYER_PLAYER,
     LAYER_WALL,
     LAYERS_VOICEOVER,
-    LAYER_FIRST_VOICEOVER
+    LAYER_FIRST_VOICEOVER, LAYER_FADEOUT
 )
 from app.effects.bushes import Bushes
 from app.effects.cloudanimation import CloudAnimation
 from app.effects.filmgrain import Filmgrain
 from app.effects.particles import Particles
 from app.utils.audiovolumes import AudioVolumes
+from app.utils.callbacks import Callbacks
 from app.utils.voiceovertriggers import VoiceOverTiggers
 
 VIEWPORT_BASE_H = 1440
@@ -32,7 +33,7 @@ MODIFIER_SPEECH = 1.0
 GRAVITY_SLOWMO = 0.002
 GRAVITY_DEFAULT = 1
 
-ALPHA_SPEED = 1
+ALPHA_SPEED = 2
 ALPHA_MAX = 255
 
 LIGHT_LAUNCHING_MOVEMENT_SPEED = 10
@@ -42,6 +43,7 @@ LIGHT_COLLISION_CHECK_THRESHOLD = 100
 VOLUME_MUSIC_MODIFIER = 0.4
 VOLUME_ATMO_MODIFIER = 0.1
 
+WHITE = arcade.csscolor.WHITE
 
 class Level:
     """ Level """
@@ -59,6 +61,7 @@ class Level:
         self._music = None
         self._atmo = None
         self._animations = []
+
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
@@ -81,7 +84,8 @@ class Level:
         atmo = arcade.load_sound(atmo_file, streaming=audio_volumes.streaming)
         self._atmo = atmo.play(volume=audio_volumes.volume_sound * VOLUME_ATMO_MODIFIER, loop=True)
 
-        self._voiceover_triggers = VoiceOverTiggers().setup()
+        callbacks = Callbacks(on_level_completed=self.on_level_completed)
+        self._voiceover_triggers = VoiceOverTiggers().setup(callbacks=callbacks)
         self.scroll_to_player()
         self._animations = [
             Particles(),
@@ -141,6 +145,7 @@ class Level:
         self._scene.update_animation(delta_time)
         self.check_collision_lights(window.root_dir, window.audio_volumes)
         self.update_collision_light()
+        self.update_fade()
 
         for animation in self._animations:
             animation.update(delta_time)
@@ -349,3 +354,35 @@ class Level:
         for sound in sounds:
             if sound:
                 sound.play()
+
+    def on_level_completed(self):
+        w, h = arcade.get_window().get_size()
+        sprite = arcade.sprite.SpriteSolidColor(width=w, height=h, color=WHITE)
+        sprite.alpha = 0
+        sprite.visible = False
+
+        self._scene.add_sprite(LAYER_FADEOUT, sprite)
+        self.update_fade()
+
+    def update_fade(self):
+
+        if not LAYER_FADEOUT in self._scene:
+            return
+
+        if not any(self._scene[LAYER_FADEOUT]):
+            return
+
+        sprite = self._scene[LAYER_FADEOUT][0]
+
+        w, h = arcade.get_window().get_size()
+
+        camera_x, camera_y = self._camera.position
+
+        sprite.center_x = camera_x
+        sprite.center_y = camera_y
+        sprite.visible = True
+
+        if sprite.alpha < ALPHA_MAX:
+            sprite.alpha = min(sprite.alpha + ALPHA_SPEED, ALPHA_MAX)
+            if sprite.alpha >= ALPHA_MAX:
+                logging.info('TODO: To be continued')
