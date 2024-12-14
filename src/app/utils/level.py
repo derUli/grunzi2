@@ -21,6 +21,8 @@ from app.utils.audiovolumes import AudioVolumes
 from app.utils.callbacks import Callbacks
 from app.utils.voiceovertriggers import VoiceOverTiggers
 
+from app.views.tobecontinued import ToBeContinued
+
 VIEWPORT_BASE_H = 1440
 PLAYER_MOVE_SPEED = 4
 PLAYER_JUMP_SPEED = 16
@@ -62,10 +64,13 @@ class Level:
         self._atmo = None
         self._animations = []
 
+        self._root_dir = None
+
 
     def setup(self, root_dir: str, map_name: str, audio_volumes: AudioVolumes):
         """ Setup level """
 
+        self._root_dir = root_dir
         path = os.path.join(root_dir, 'resources', 'maps', f"{map_name}.tmx")
 
         self.load_tilemap(path)
@@ -397,5 +402,9 @@ class Level:
 
         if sprite.alpha < ALPHA_MAX:
             sprite.alpha = min(sprite.alpha + ALPHA_SPEED, ALPHA_MAX)
+
             if sprite.alpha >= ALPHA_MAX:
-                logging.info('TODO: To be continued')
+                arcade.get_window().show_view(
+                    ToBeContinued().setup(self._root_dir)
+                )
+
