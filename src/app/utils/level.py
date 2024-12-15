@@ -404,6 +404,8 @@ class Level:
             sprite.alpha = min(sprite.alpha + ALPHA_SPEED, ALPHA_MAX)
 
             if sprite.alpha >= ALPHA_MAX:
+                self.unsetup()
+
                 arcade.get_window().show_view(
                     ToBeContinued().setup(self._root_dir)
                 )
