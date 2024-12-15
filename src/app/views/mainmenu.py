@@ -275,7 +275,6 @@ class MainMenu(View):
 
         for sprite in sprites:
             if sprite.collides_with_point((x, y)):
-                logging.info('Mouse entering item')
 
                 self._sound_hover.play(volume=self.window.audio_volumes.volume_sound)
 

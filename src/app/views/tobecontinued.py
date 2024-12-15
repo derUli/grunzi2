@@ -83,7 +83,9 @@ class ToBeContinued(View):
         if key == KEY_START:
             self.on_main_menu()
 
-    def on_main_menu(self):
+    def on_main_menu(self) -> None:
+        """ On go to main menu """
+
         if self._fade_sprite:
             return
 
