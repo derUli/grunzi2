@@ -1,6 +1,5 @@
 """ To be continued screen"""
 
-
 import arcade
 
 from app.constants.fonts import FONT_MARKER_FELT
@@ -11,6 +10,7 @@ from app.views.view import View
 FONT_SIZE = 60
 
 SCENE_LAYER_TEXT = 'Text'
+
 
 class ToBeContinued(View):
 
@@ -47,7 +47,6 @@ class ToBeContinued(View):
     def on_key_press(self, symbol: int, modifiers: int):
         """ Handle keyboard input """
 
-
         if symbol in KEY_CONFIRM and self._fade_sprite is None:
             self.on_main_menu()
 
@@ -68,8 +67,6 @@ class ToBeContinued(View):
 
         if key == KEY_START:
             self.on_main_menu()
-
-
 
     def on_main_menu(self):
         from app.views.mainmenu import MainMenu
