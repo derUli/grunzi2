@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-28 01:25+0100\n"
+"POT-Creation-Date: 2024-12-15 09:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,15 +21,15 @@ msgstr ""
 msgid "Welcome to Amerre"
 msgstr ""
 
-#: app/views/mainmenu.py:90
+#: app/views/mainmenu.py:100
 msgid "Press SPACE key to start"
 msgstr ""
 
-#: app/views/mainmenu.py:93
+#: app/views/mainmenu.py:103
 msgid "Press START button to start"
 msgstr ""
 
-#: app/views/mainmenu.py:112
+#: app/views/mainmenu.py:122
 msgid "Version"
 msgstr ""
 
@@ -51,5 +51,9 @@ msgstr ""
 
 #: app/views/pausemenu.py:99
 msgid "No"
+msgstr ""
+
+#: app/views/tobecontinued.py:30
+msgid "To be continued"
 msgstr ""
 
