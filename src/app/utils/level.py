@@ -132,8 +132,7 @@ class Level:
             sprint: bool = False
     ):
         """ Update """
-        # TODO: remove
-        self.on_level_completed()
+
         if jump:
             self.jump()
 

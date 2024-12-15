@@ -8,9 +8,11 @@ from app.constants.input.keyboard import KEY_CONFIRM
 from app.views.view import View
 
 FONT_SIZE = 60
-
+FADE_SPEED = 4
+FADE_MAX = 255
 SCENE_LAYER_TEXT = 'Text'
-
+SCENE_LAYER_FADE = 'Fade'
+BACKGROUND_COLOR = (58, 158, 236, 255)
 
 class ToBeContinued(View):
 
@@ -20,7 +22,9 @@ class ToBeContinued(View):
         super().__init__()
 
         self._text_completed = None
+        self._fade_sprite = None
         self.window = None
+        self._fade_sprite = None
         self.background_color = arcade.csscolor.WHITE
 
     def setup(self, root_dir: str):
@@ -47,7 +51,7 @@ class ToBeContinued(View):
     def on_key_press(self, symbol: int, modifiers: int):
         """ Handle keyboard input """
 
-        if symbol in KEY_CONFIRM and self._fade_sprite is None:
+        if symbol in KEY_CONFIRM:
             self.on_main_menu()
 
     def on_update(self, delta_time: float):
@@ -55,6 +59,17 @@ class ToBeContinued(View):
         self._text_completed.center_x = w / 2
         self._text_completed.center_y = h / 2
         self._scene[SCENE_LAYER_TEXT].visible = True
+
+        if SCENE_LAYER_FADE in self._scene:
+            self._fade_sprite.visible = True
+            self._fade_sprite.center_x = w / 2
+            self._fade_sprite.center_y = h / 2
+
+            if self._fade_sprite.alpha >= FADE_MAX:
+                from app.views.mainmenu import MainMenu
+                self.window.show_view(MainMenu().setup(self._root_dir))
+
+            self._fade_sprite.alpha = min(self._fade_sprite.alpha + FADE_SPEED, FADE_MAX)
 
     def on_draw(self):
         """ On draw """
@@ -69,5 +84,16 @@ class ToBeContinued(View):
             self.on_main_menu()
 
     def on_main_menu(self):
-        from app.views.mainmenu import MainMenu
-        self.window.show_view(MainMenu().setup(self._root_dir))
+        if self._fade_sprite:
+            return
+
+        self._fade_sprite = arcade.sprite.SpriteSolidColor(
+            width=self.window.width,
+            height=self.window.height,
+            color=BACKGROUND_COLOR
+        )
+        self._fade_sprite.visible = False
+        self._fade_sprite.alpha = 0
+
+        self._scene.add_sprite(SCENE_LAYER_FADE, self._fade_sprite)
+

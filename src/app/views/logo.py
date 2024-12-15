@@ -77,7 +77,7 @@ class Logo(View):
 
                 self._phase = PHASE_WAIT
 
-                pyglet.clock.schedule_interval(self.fade_to_startscreen, LOGO_LENGTH)
+                pyglet.clock.schedule_interval(self.fade_to_main_menu, LOGO_LENGTH)
 
         if self._phase == PHASE_FADE_OUT:
             self._fade_sprite.alpha = min(self._fade_sprite.alpha + FADE_SPEED, 255)
@@ -94,6 +94,6 @@ class Logo(View):
 
         self.window.draw_after()
 
-    def fade_to_startscreen(self, dt: float):
+    def fade_to_main_menu(self, dt: float):
         """ Show StartScreen """
         self._phase = PHASE_FADE_OUT
