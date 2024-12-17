@@ -24,8 +24,8 @@ from app.utils.voiceovertriggers import VoiceOverTiggers
 from app.views.tobecontinued import ToBeContinued
 
 VIEWPORT_BASE_H = 1440
-PLAYER_MOVE_SPEED = 5
-PLAYER_JUMP_SPEED = 13
+PLAYER_MOVE_SPEED = 4
+PLAYER_JUMP_SPEED = 14
 PLAYER_MOVE_ANGLE = 2
 
 MODIFIER_WALK = 1.0
