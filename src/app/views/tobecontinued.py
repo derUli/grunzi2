@@ -1,4 +1,4 @@
-""" To be continued screen"""
+""" To be continued screen """
 
 import arcade
 
@@ -14,7 +14,9 @@ SCENE_LAYER_TEXT = 'Text'
 SCENE_LAYER_FADE = 'Fade'
 BACKGROUND_COLOR = (58, 158, 236, 255)
 
+
 class ToBeContinued(View):
+    """ To be continued screen """
 
     def __init__(self):
         """ To be continued screen """
@@ -98,4 +100,3 @@ class ToBeContinued(View):
         self._fade_sprite.alpha = 0
 
         self._scene.add_sprite(SCENE_LAYER_FADE, self._fade_sprite)
-

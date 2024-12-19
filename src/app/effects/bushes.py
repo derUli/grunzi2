@@ -1,3 +1,5 @@
+""" Bush effect """
+
 import arcade
 
 from app.constants.layers import LAYER_BUSH, LAYER_PLAYER
@@ -11,6 +13,7 @@ MIN_DISTANCE = 64
 
 
 class Bushes(Effect):
+    """ Bushes effect """
 
     def update(self, delta_time: float) -> None:
         """
