@@ -7,7 +7,7 @@ import arcade
 from app.effects.effect import Effect
 
 FADE_SPEED = 1
-ALPHA = 21
+ALPHA = 20
 
 
 class Filmgrain(Effect):
