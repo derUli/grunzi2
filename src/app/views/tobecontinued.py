@@ -1,10 +1,12 @@
 """ To be continued screen """
 
 import arcade
+from arcade import TileMap
 
 from app.constants.fonts import FONT_MARKER_FELT
 from app.constants.input.controllers import KEY_START
 from app.constants.input.keyboard import KEY_CONFIRM
+from app.effects.filmgrain import Filmgrain
 from app.views.view import View
 
 FONT_SIZE = 60
@@ -29,6 +31,8 @@ class ToBeContinued(View):
         self._fade_sprite = None
         self.background_color = arcade.csscolor.WHITE
 
+        self._effects = []
+
     def setup(self, root_dir: str):
         """ Setup logo screen """
 
@@ -48,6 +52,14 @@ class ToBeContinued(View):
         self._scene.add_sprite(SCENE_LAYER_TEXT, self._text_completed)
         self._scene[SCENE_LAYER_TEXT].visible = False
 
+        self._effects = [
+            Filmgrain()
+        ]
+
+        for effect in self._effects:
+            effect.setup(self._scene, None, root_dir)
+
+
         return self
 
     def on_key_press(self, symbol: int, modifiers: int):
@@ -61,6 +73,9 @@ class ToBeContinued(View):
         self._text_completed.center_x = w / 2
         self._text_completed.center_y = h / 2
         self._scene[SCENE_LAYER_TEXT].visible = True
+
+        for effect in self._effects:
+            effect.update(delta_time)
 
         if SCENE_LAYER_FADE in self._scene:
             self._fade_sprite.visible = True
@@ -78,6 +93,9 @@ class ToBeContinued(View):
 
         self.clear()
         self._scene.draw()
+
+        for effect in self._effects:
+            effect.draw()
 
     def on_button_press(self, joystick, key) -> None:
         """ On controller button press """
