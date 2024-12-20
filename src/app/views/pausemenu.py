@@ -28,6 +28,7 @@ class PauseMenu(arcade.View):
         self._root_dir = root_dir
         self.window.set_mouse_visible(True)
         self.manager = arcade.gui.UIManager()
+
         btn_continue = arcade.gui.UIFlatButton(
             text=_('Continue'),
             width=BUTTON_WIDTH,
@@ -99,7 +100,7 @@ class PauseMenu(arcade.View):
                 buttons=(_('Yes'), _('No')),
                 width=MODAL_WIDTH,
                 height=MODAL_HEIGHT
-            )
+            ).with_background(color=self.window.background_color)
             dialog.on_action = self.on_exit
             self.manager.add(dialog)
             return
