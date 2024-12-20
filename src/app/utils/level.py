@@ -233,8 +233,10 @@ class Level:
 
     def jump(self):
         """ Do jump """
+        if not self._can_walk:
+            return
 
-        if not self._physics_engine.can_jump(y_distance=5):
+        if not self._physics_engine.can_jump():
             return
 
         speed = PLAYER_JUMP_SPEED
