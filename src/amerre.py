@@ -5,8 +5,8 @@
 import logging
 import os
 import sys
-
 import pyglet
+from stopwatch import Stopwatch
 
 pyglet.options['debug_gl'] = False
 
@@ -17,7 +17,15 @@ else:
 
 from app.startup import Startup
 
+stopwatch = Stopwatch() # Start a stopwatch
+stopwatch.start()
+
 try:
     Startup().setup(root_dir).start()
 except KeyboardInterrupt as e:
     logging.debug(e)
+
+stopwatch.stop()
+
+logging.info(f'Running time: {stopwatch.duration}')
+logging.info('Exit')
