@@ -8,3 +8,4 @@ Babel
 duty
 optimize-images
 cx-Freeze
+python-stopwatch

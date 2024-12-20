@@ -27,5 +27,5 @@ except KeyboardInterrupt as e:
 
 stopwatch.stop()
 
-logging.info(f'Running time: {stopwatch.duration}')
+logging.info(f'Running time: {stopwatch.elapsed}')
 logging.info('Exit')
